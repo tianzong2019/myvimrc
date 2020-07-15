@@ -5,13 +5,18 @@
 "
 "--------------------------------------------"
 filetype plugin on   "检测文件类型，并加载文件类插件“
-set encoding=utf-8  "使用 utf-8 编码"
+
+set t_Co=256         "开启256色阶"
+set cursorline       "突出显示当前行"
+set cursorcolumn     "高亮显示光标列"
+highlight cursorline cterm=none ctermbg=236     "配置高亮行背景颜色"
+highlight cursorcolumn cterm=none ctermbg=236
+
 ""
 "添加待安装的插件"
 ""
 call plug#begin('~/.vim/plugged')
-"替代taglist，更加智能
-Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/taglist.vim'
 Plug 'preservim/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -22,15 +27,16 @@ Plug 'garbas/vim-snipmate'
 Plug 'tianzong2019/vim-snippets' "massive common snippets
 call plug#end()
 
-set t_Co=256         "开启256色阶"
-set cursorline       "突出显示当前行"
-set cursorcolumn     "高亮显示光标列"
-highlight cursorline cterm=none ctermbg=236     "配置高亮行背景颜色"
-highlight cursorcolumn cterm=none ctermbg=236
 
+"-------------------------------------------------"
+"
+"basic config
+"
+"-------------------------------------------------"
 syntax on
 set number
-nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>    "用< F2>开启/关闭行号
+"用< F2>开启/关闭行号"
+nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>    
 
 set ignorecase smartcase  "搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感"
 set incsearch  "输入搜索内容时就显示搜索结果"
@@ -44,7 +50,7 @@ set shiftwidth=4            "设定 << 和 >> 命令移动时的宽度为 4"
 set softtabstop=4           "使得按退格键时可以一次删掉 4 个空格"
 set tabstop=4               "设定 tab 长度为 4"
 
-set magic                  "显示括号配对情况
+set magic                  "显示括号配对情况"
 set hidden                 "允许在有未保存的修改时切换缓冲区，此时的修改由 vim 负责保存
 set pastetoggle=<F7>       "在粘贴代码之前，进入insert模式，按F7,就可以关闭自动缩进"
 
@@ -66,6 +72,22 @@ set foldlevelstart=99       " 打开文件是默认不折叠代码
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
                             " 用空格键来开关折叠
 
+"-------------------------------------------------"
+"quickfix
+"F8 打开隐藏
+"
+"-------------------------------------------------"
+let g:quickfixname=1
+function! QuickfixFunc()
+	if g:quickfixname
+		let g:quickfixname=0
+		exec ":copen 20"
+	else
+		let g:quickfixname=1
+		exec ":ccl"
+	endif
+endfunction
+nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
 
 
 "-------------------------------------------------"
@@ -78,7 +100,6 @@ inoremap [ []<Esc>i
 inoremap { {}<Esc>i
 inoremap " ""<Esc>i
 inoremap ' ''<Esc>i
-
 
 
 "-------------------------------------------------"
@@ -126,55 +147,6 @@ nnoremap zx <esc>:call Zoom() <cr><esc>
 
 
 "-------------------------------------------------"
-"quickfix
-"F8 打开隐藏
-"
-"-------------------------------------------------"
-let g:quickfixname=1
-function! QuickfixFunc()
-	if g:quickfixname
-		let g:quickfixname=0
-		exec ":copen 20"
-	else
-		let g:quickfixname=1
-		exec ":ccl"
-	endif
-endfunction
-nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
-
-
-"-------------------------------------------------"
-"tagbar代替taglist
-"F4 打开隐藏
-"
-"-------------------------------------------------"
-let g:tagbar_width=30                   "窗口宽度的设置
-map <F4> :Tagbar<CR>
-
-
-"-------------------------------------------------"
-"winmanager配置
-"F3 打开隐藏nerdtree
-"
-"-------------------------------------------------"
-let g:NERDTreeHidden=0     "不显示隐藏文件
-map <F3> <esc>:NERDTreeMirror<CR><esc>
-map <F3> <esc>:NERDTreeToggle<CR><esc>
-
-
-"-------------------------------------------------"
-"NERD Commenter,注释工具
-"
-"默认<leader>是逗号‘，’
-"<leader>cc   加注释
-"<leader>cu   解开注释
-"<leader>c<space>  加上/解开注释, 智能判断
-"<leader>cy        先复制, 再注解(p可以进行黏贴))>>>>>
-"-------------------------------------------------"
-let g:NERDSpaceDelims=1  "注释符号后面空一格
-
-
-"-------------------------------------------------"
 "CtrlP配置
 "
 "ctrl + j/k 进行上下选择
@@ -196,6 +168,41 @@ let g:ctrlp_max_height=15
 let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
+
+
+"-------------------------------------------------"
+"
+"F3 打开隐藏nerdtree
+"
+"-------------------------------------------------"
+let g:NERDTreeHidden=0     "不显示隐藏文件
+map <F3> <esc>:NERDTreeMirror<CR><esc>
+map <F3> <esc>:NERDTreeToggle<CR><esc>
+
+
+"-------------------------------------------------"
+"NERD Commenter,注释工具
+"
+"默认<leader>是逗号‘，’
+"<leader>cc   加注释
+"<leader>cu   解开注释
+"<leader>c<space>  加上/解开注释, 智能判断
+"<leader>cy        先复制, 再注解(p可以进行黏贴))>>>>>
+"-------------------------------------------------"
+let g:NERDSpaceDelims=1  "注释符号后面空一格
+
+
+"-------------------------------------------------"
+"
+" Tag list (ctags) 
+"
+"-------------------------------------------------"
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'   "Ctags可执行文件的路径，千万要写对了，否则显示no such file
+let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Auto_Open=0               "打开文件时候不自动打开Taglist窗口
+let Tlist_Use_Right_Window = 0      "在右侧窗口中显示taglist窗口
+map <F4> :TlistToggle<CR>
 
 
 "-------------------------------------------------"
@@ -250,8 +257,5 @@ if has("cscope")
 	nmap qf :cs find f <C-R>=expand("<cfile>")<CR><CR>
 	nmap qi :cs find i ^<C-R>=expand("<cfile>")<CR>{1}lt;CR>
 endif
-
-
-
 
 
