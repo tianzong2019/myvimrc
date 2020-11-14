@@ -1,0 +1,15 @@
+基本语法
+使用#来注释
+extends 关键字来组合snippet文件，比如在cpp.snippets第一行加入
+
+```
+    extends c
+```
+那么在UltiSnipes激活cpp类型snippets文件的时候，会同时搜索c类型的snippets并激活
+
+
+
+
+
+
+
