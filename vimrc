@@ -1,100 +1,69 @@
-"--------------------------------------------"
+"=========================================================================
 "
-" VIM定制，打造个性IDE
-" 2020-07-01
+" 描述: 打造适合自己的vimrc
 "
-"--------------------------------------------"
-filetype plugin on   "检测文件类型，并加载文件类插件“
+" 日期: 2020.11.12
+"
+" 版本: 0.1
+"
+"
+"--注
+" 
+" bcompare在ubuntu的配置文件的路径是：.config/bcompare
+" cd .config/bcompare/
+" 在该路径下找到 registry.dat 删除即可继续免费30day
+" rm registry.dat
+"
+"--atags.sh
+"#!/bin/bash
+"echo "delete cscope.files cscope.out cscope.in.out cscope.po.out tags"
+"rm -rf cscope.files cscope.out cscope.in.out cscope.po.out tags
+"echo "create cscope.files"
+"## for kernel
+"find ./ -name "*.c" -o -name "*.cpp" >> cscope.files
+"echo "cscope add cscope.files"
+"cscope -Rbq -i cscope.files
+"ctags --langmap=c:+.h --languages=c,c++,java --links=yes --c-kinds=+px --c++-kinds=+px --fields=+iaKSz --extra=+q -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --if0=no -R -L cscope.files
+"
+"=========================================================================
 
-set t_Co=256         "开启256色阶"
-set cursorline       "突出显示当前行"
-set cursorcolumn     "高亮显示光标列"
-highlight cursorline cterm=none ctermbg=236     "配置高亮行背景颜色"
+filetype plugin on
+set nocompatible            " 关闭 vi 兼容模式
+
+set t_Co=256                " 开启256色阶
+set cursorline              " 突出显示当前行
+set cursorcolumn            " 高亮显示光标列
+highlight cursorline cterm=none ctermbg=236     
 highlight cursorcolumn cterm=none ctermbg=236
+                            " 配置高亮行背景颜色
 
-""
-"添加待安装的插件"
-""
-call plug#begin('~/.vim/plugged')
-Plug 'vim-scripts/taglist.vim'
-Plug 'preservim/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'ctrlpvim/ctrlp.vim'
-"代码片段"
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
-Plug 'tianzong2019/vim-snippets' "massive common snippets
-call plug#end()
+set ignorecase smartcase    " 搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感
+set incsearch               " 输入搜索内容时就显示搜索结果
+set hlsearch                " 搜索时高亮显示被找到的文本
+set noerrorbells            " 关闭错误信息响铃
+set novisualbell            " 关闭使用可视响铃代替呼叫
 
+set magic                   " 显示括号配对情况
+syntax on                   " 自动语法高亮
+set number                  " 显示行号
+nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
+                            " 用< F2>开启/关闭行号
 
-"-------------------------------------------------"
-"
-"basic config
-"
-"-------------------------------------------------"
-syntax on
-set number
-"用< F2>开启/关闭行号"
-nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>    
-
-set ignorecase smartcase  "搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感"
-set incsearch  "输入搜索内容时就显示搜索结果"
-set hlsearch   "搜索时高亮显示被找到的文本"
-set noerrorbells "关闭错误信息响铃"
-
-set nobackup    "覆盖文件时不备份"
+set nobackup                " 覆盖文件时不备份
 set noswapfile
 
-set shiftwidth=4            "设定 << 和 >> 命令移动时的宽度为 4"
-set softtabstop=4           "使得按退格键时可以一次删掉 4 个空格"
-set tabstop=4               "设定 tab 长度为 4"
+set shiftwidth=4            " 设定 << 和 >> 命令移动时的宽度为 4
+set softtabstop=4           " 使得按退格键时可以一次删掉 4 个空格
+set tabstop=4               " 设定 tab 长度为 4
 
-set magic                  "显示括号配对情况"
-set hidden                 "允许在有未保存的修改时切换缓冲区，此时的修改由 vim 负责保存
-set pastetoggle=<F7>       "在粘贴代码之前，进入insert模式，按F7,就可以关闭自动缩进"
+set pastetoggle=<F7>        " 在粘贴代码之前，进入insert模式，按F7,就可以关闭自动缩进
+set laststatus=2            " 显示状态栏 (默认值为 1, 无法显示状态栏)
+set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\ 
+                            " 设置在状态行显示的信息
 
 
-"-------------------------------------------------"
-"配置折叠方式
+"---- 括号自动补全 ------------------------------------
 "
-"  zc 关闭折叠
-"  zo 打开折叠
-"  za 打开/关闭折叠互相切换
-"
-"-------------------------------------------------"
-set foldenable              " 开始折叠
-set foldmethod=syntax       " 设置语法折叠
-set foldcolumn=0            " 设置折叠区域的宽度
-setlocal foldlevel=1        " 设置折叠层数为
-set foldlevelstart=99       " 打开文件是默认不折叠代码
-"set foldclose=all          " 设置为自动关闭折叠
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-                            " 用空格键来开关折叠
-
-"-------------------------------------------------"
-"quickfix
-"F8 打开隐藏
-"
-"-------------------------------------------------"
-let g:quickfixname=1
-function! QuickfixFunc()
-	if g:quickfixname
-		let g:quickfixname=0
-		exec ":copen 20"
-	else
-		let g:quickfixname=1
-		exec ":ccl"
-	endif
-endfunction
-nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
-
-
-"-------------------------------------------------"
-"
-"括号自动补全"
-"
-"-------------------------------------------------"
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap { {}<Esc>i
@@ -102,11 +71,8 @@ inoremap " ""<Esc>i
 inoremap ' ''<Esc>i
 
 
-"-------------------------------------------------"
+"---- 窗口移动及resize --------------------------------
 "
-"窗口移动及resize"
-"
-"-------------------------------------------------"
 nnoremap <c-h>    <esc><c-w>h<esc>
 nnoremap <c-j>    <esc><c-w>j<esc>
 nnoremap <c-k>    <esc><c-w>k<esc>
@@ -123,11 +89,23 @@ nmap v,    <esc>:vertical resize +3<cr><esc>
 nmap v.    <esc>:vertical resize -3<cr><esc>
 
 
-"-------------------------------------------------"
+"---- F8 打开隐藏quickfix -----------------------------
 "
-"最大化当前窗口及返回
+let g:quickfixname=1
+function! QuickfixFunc()
+	if g:quickfixname
+		let g:quickfixname=0
+		exec ":copen 20"
+	else
+		let g:quickfixname=1
+		exec ":ccl"
+	endif
+endfunction
+nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
+
+
+"---- 最大化当前窗口及返回 ----------------------------
 "
-"-------------------------------------------------"
 function! Zoom ()
     " check if is the zoomed state (tabnumber > 1 && window == 1)
     if tabpagenr('$') > 1 && tabpagewinnr(tabpagenr(), '$') == 1
@@ -146,79 +124,66 @@ endfunction
 nnoremap zx <esc>:call Zoom() <cr><esc>
 
 
-"-------------------------------------------------"
-"CtrlP配置
+"---- F3 打开隐藏nerdtree -----------------------------
 "
-"ctrl + j/k 进行上下选择
-"ctrl + x 在当前窗口水平分屏打开文件
-"ctrl + v 同上, 垂直分屏
-"ctrl + t 在tab中打开
-"
-"-------------------------------------------------"
-let g:ctrlp_map = '<leader>p'
-let g:ctrlp_cmd = 'CtrlP'
-map <leader>f :CtrlPMRU<CR>
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
-    \ }
-let g:ctrlp_working_path_mode=0
-let g:ctrlp_match_window_bottom=1
-let g:ctrlp_max_height=15
-let g:ctrlp_match_window_reversed=0
-let g:ctrlp_mruf_max=500
-let g:ctrlp_follow_symlinks=1
-
-
-"-------------------------------------------------"
-"
-"F3 打开隐藏nerdtree
-"
-"-------------------------------------------------"
-let g:NERDTreeHidden=0     "不显示隐藏文件
+let g:NERDTreeHidden=0                   " 不显示隐藏文件
 map <F3> <esc>:NERDTreeMirror<CR><esc>
 map <F3> <esc>:NERDTreeToggle<CR><esc>
 
 
-"-------------------------------------------------"
-"NERD Commenter,注释工具
+"---- Tag list ----------------------------------------
 "
-"默认<leader>是逗号‘，’
-"<leader>cc   加注释
-"<leader>cu   解开注释
-"<leader>c<space>  加上/解开注释, 智能判断
-"<leader>cy        先复制, 再注解(p可以进行黏贴))>>>>>
-"-------------------------------------------------"
-let g:NERDSpaceDelims=1  "注释符号后面空一格
-
-
-"-------------------------------------------------"
-"
-" Tag list (ctags) 
-"
-"-------------------------------------------------"
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'   "Ctags可执行文件的路径，千万要写对了，否则显示no such file
-let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
-let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Auto_Open=0               "打开文件时候不自动打开Taglist窗口
-let Tlist_Use_Right_Window = 0      "在右侧窗口中显示taglist窗口
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'   " Ctags可执行文件的路径，千万要写对了，否则显示no such file
+let Tlist_Show_One_File = 1              " 不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1            " 如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Auto_Open=0                    " 打开文件时候不自动打开Taglist窗口
+let Tlist_Use_Right_Window = 1           " 在右侧窗口中显示taglist窗口
 map <F4> :TlistToggle<CR>
 
 
-"-------------------------------------------------"
-"ctags配置
+"---- OmniComplete 为 C/C++ 自动补全 ------------------
 "
+" 在插入模式编辑 C/C++ 源文件时按下 . 或 -> 或 ::，
+" 或者手动按下 Ctrl+X Ctrl+O 后就会弹出自动补全窗口，
+" 此时可以用 Ctrl+N 和 Ctrl+P 上下移动光标进行选择。
 "
-"-------------------------------------------------"
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1      " 显示函数参数列表
+let OmniCpp_MayCompleteDot = 1           " 输入 .  后自动补全
+let OmniCpp_MayCompleteArrow = 1         " 输入 -> 后自动补全
+let OmniCpp_MayCompleteScope = 1         " 输入 :: 后自动补全
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" 自动关闭补全窗口
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest
+"
+let g:SuperTabDefaultCompletionType="context" " supertab配置
+
+
+"---- 使用 tab 来触发代码片段补全 ---------------------
+"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"     " 使用 tab 切换下一个触发点，shit+tab 上一个触发点
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+let g:UltiSnipsEditSplit="vertical"           " 使用 UltiSnipsEdit 命令时垂直分割屏幕
+
+if has('python')
+	let g:UltiSnipsUsePythonVersion=2 "or 3
+elseif has('python3')
+	let g:UltiSnipsUsePythonVersion=3 "or 2
+endif
+
+
+"---- ctags配置 ---------------------------------------
+"
 set tags=tags;
 set autochdir
 
 
-"-------------------------------------------------"
-"cscope配置
+"---- cscope配置 --------------------------------------
 "
-"
-"-------------------------------------------------"
 if has("cscope")  
     set csprg=/usr/bin/cscope  
     set csto=0 
