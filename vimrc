@@ -2,31 +2,11 @@
 "
 " 描述: 打造适合自己的vimrc
 "
-" 日期: 2020.11.12
+" 日期: 2020.12.23
 "
-" 版本: 0.1
-"
-"
-"--注
-" 
-" bcompare在ubuntu的配置文件的路径是：.config/bcompare
-" cd .config/bcompare/
-" 在该路径下找到 registry.dat 删除即可继续免费30day
-" rm registry.dat
-"
-"--atags.sh
-"#!/bin/bash
-"echo "delete cscope.files cscope.out cscope.in.out cscope.po.out tags"
-"rm -rf cscope.files cscope.out cscope.in.out cscope.po.out tags
-"echo "create cscope.files"
-"## for kernel
-"find ./ -name "*.c" -o -name "*.cpp" >> cscope.files
-"echo "cscope add cscope.files"
-"cscope -Rbq -i cscope.files
-"ctags --langmap=c:+.h --languages=c,c++,java --links=yes --c-kinds=+px --c++-kinds=+px --fields=+iaKSz --extra=+q -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --if0=no -R -L cscope.files
+" 版本: 0.2
 "
 "=========================================================================
-
 filetype plugin on
 set nocompatible            " 关闭 vi 兼容模式
 
@@ -61,6 +41,21 @@ set laststatus=2            " 显示状态栏 (默认值为 1, 无法显示状�
 set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\ 
                             " 设置在状态行显示的信息
 
+"---- 括号自动补全 ------------------------------------
+"
+"zc 关闭折叠
+"zo 打开折叠
+"za 打开/关闭折叠互相切换
+"
+set foldenable              " 开始折叠
+set foldmethod=syntax       " 设置语法折叠
+set foldcolumn=0            " 设置折叠区域的宽度
+setlocal foldlevel=1        " 设置折叠层数为
+set foldlevelstart=99       " 打开文件是默认不折叠代码
+"set foldclose=all          " 设置为自动关闭折叠                
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+                            " 用空格键来开关折叠
+
 
 "---- 括号自动补全 ------------------------------------
 "
@@ -89,21 +84,6 @@ nmap v,    <esc>:vertical resize +3<cr><esc>
 nmap v.    <esc>:vertical resize -3<cr><esc>
 
 
-"---- F8 打开隐藏quickfix -----------------------------
-"
-let g:quickfixname=1
-function! QuickfixFunc()
-	if g:quickfixname
-		let g:quickfixname=0
-		exec ":copen 20"
-	else
-		let g:quickfixname=1
-		exec ":ccl"
-	endif
-endfunction
-nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
-
-
 "---- 最大化当前窗口及返回 ----------------------------
 "
 function! Zoom ()
@@ -124,11 +104,95 @@ endfunction
 nnoremap zx <esc>:call Zoom() <cr><esc>
 
 
+"---- F8 打开隐藏quickfix -----------------------------
+"
+let g:quickfixname=1
+function! QuickfixFunc()
+	if g:quickfixname
+		let g:quickfixname=0
+		exec ":copen 20"
+	else
+		let g:quickfixname=1
+		exec ":ccl"
+	endif
+endfunction
+nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
+
+
 "---- F3 打开隐藏nerdtree -----------------------------
+" u 打开上层目录
 "
 let g:NERDTreeHidden=0                   " 不显示隐藏文件
 map <F3> <esc>:NERDTreeMirror<CR><esc>
 map <F3> <esc>:NERDTreeToggle<CR><esc>
+
+
+"---- nerdcommenter -----------------------------
+" [count]<leader>cc ：注释从当前行往下数的 count 行，count 可省略，默认值为 1
+" \cc 注释当前行和选中行
+" [count]<leader>cu：取消注释从当前行往下数的 count 行，count 可省略，默认值为1
+"
+let g:NERDSpaceDelims=1              " 注释的时候自动加个空格, 强迫症必配
+let g:NERDCompactSexyComs=1          " 多行注释时，样子更好看
+
+
+"---- Bufexplorer -----------------------------
+"
+let g:bufExplorerDefaultHelp=0       " Do not show default help.
+let g:bufExplorerShowRelativePath=1  " Show relative paths.
+let g:bufExplorerSortBy='mru'        " Sort by most recently used.
+let g:bufExplorerSplitRight=1        " Split left.
+let g:bufExplorerSplitVertical=1     " Split vertically.
+let g:bufExplorerSplitVertSize = 30  " Split width
+let g:bufExplorerUseCurrentWindow=1  " Open in new window.
+let g:bufExplorerDisableDefaultKeyMapping =0 " Do not disable default key mappings.
+nnoremap <silent> <F9> :ToggleBufExplorer<CR>  " F9打开关闭
+
+
+"---- mark -----------------------------
+"
+" 基本用法：
+" ：Mark <word>    查找并高亮显示；若已经高亮则查找并去掉高亮
+" ：MarkClear        去除所有高亮
+" 
+" \m 高亮或反高亮一个单词
+" \n 清除当前的单词高亮(光标处)若光标处无高亮的单词就清除所有的单词高亮显示
+" \r 按照输入的正则表达式高亮单词
+"  
+" 搜索
+" \* 跳转到当前高亮的下一个单词
+" \# 跳转到当前高亮的上一个单词
+" \/ 跳转到任一下一个高亮单词
+" /? 跳转到任一上一高亮单词
+"
+
+
+"---- ctrlp -----------------------------
+" :CtrlP 或 :CtrlP 路径 可以调用ctrlp并进入查找文件模式
+" 按下 Esc 或 <Ctrl-c> 可退出ctrlp，返回到Vim窗口中
+"
+"<Leader>p搜索当前目录下文件
+let g:ctrlp_map = '<c-p>'            " 在Vim 普通模式下，默认按下 <Ctrl>+p 即可打开ctrlp搜索窗口
+let g:ctrlp_cmd = 'CtrlP'
+"<Leader>f搜索MRU文件
+nmap <Leader>f :CtrlPMRUFiles<CR>
+"<Leader>b显示缓冲区文件，并可通过序号进行跳转
+nmap <Leader>b :CtrlPBuffer<CR>
+"设置搜索时忽略的文件
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_match_window_bottom = 1
+let g:ctrlp_max_height = 15 "修改QuickFix窗口显示的最大条目数
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_mruf_max = 500 "设置MRU最大条目数为500
+let g:ctrlp_follow_symlinks = 1
+let g:ctrlp_by_filename = 1 "默认使用全路径搜索，置1后按文件名搜索，准确率会有所提高，可以用<C-d>进行切换
+let g:ctrlp_regexp = 0 "默认不使用正则表达式，置1改为默认使用正则表达式，可以用<C-r>进行切换
+let g:ctrlp_line_prefix = '♪ ' "自定义搜索列表的提示符
+
 
 
 "---- Tag list ----------------------------------------
@@ -158,17 +222,22 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 " 自动关闭补全窗口
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest
+
+
+"---- supertab ------------------
 "
 let g:SuperTabDefaultCompletionType="context" " supertab配置
+let g:SuperTabMappingForward = "<s-tab>"
+let g:SuperTabMappingBackward= "<s-tab>"
 
 
-"---- 使用 tab 来触发代码片段补全 ---------------------
+"---- UltiSnips 使用 tab 来触发代码片段补全 ---------------------
 "
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"     " 使用 tab 切换下一个触发点，shit+tab 上一个触发点
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 let g:UltiSnipsEditSplit="vertical"           " 使用 UltiSnipsEdit 命令时垂直分割屏幕
-
+"
 if has('python')
 	let g:UltiSnipsUsePythonVersion=2 "or 3
 elseif has('python3')
@@ -222,5 +291,8 @@ if has("cscope")
 	nmap qf :cs find f <C-R>=expand("<cfile>")<CR><CR>
 	nmap qi :cs find i ^<C-R>=expand("<cfile>")<CR>{1}lt;CR>
 endif
+
+
+
 
 
