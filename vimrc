@@ -1,21 +1,41 @@
 "=========================================================================
 "
-" 描述: 打造适合自己的vimrc
+" 描述: 打造适合自己的vim IDE
 "
-" 日期: 2020.12.23
+" 日期: 2021.5.13
 "
-" 版本: 0.2
+" 版本: 0.4
 "
+"
+" 使用插件
+"    bufexplorer-7.4.21.zip
+"    LeaderF-master.zip
+"    lightline.vim-master.zip
+"    nerdcommenter.zip
+"    NERD_tree.zip
+"    omnicppcomplete-0.41.zip
+"    supertab-master.zip
+"    taglist.vim-master.zip
+"    UltiSnips-2.2.zip
+"    vim-mark-master.zip
+"    Ctags 5.9
+"    cscope 15.8b
 "=========================================================================
 filetype plugin on
-set nocompatible            " 关闭 vi 兼容模式
+set encoding=utf8
 
-set t_Co=256                " 开启256色阶
+set nobackup                " 覆盖文件时不备份
+set noswapfile
+
+set t_Co=256
 set cursorline              " 突出显示当前行
 set cursorcolumn            " 高亮显示光标列
 highlight cursorline cterm=none ctermbg=236     
 highlight cursorcolumn cterm=none ctermbg=236
-                            " 配置高亮行背景颜色
+
+set laststatus=2                                   "startup the lightline.vim
+let g:lightline = { 'colorscheme': 'powerline', }  "set status-line
+let g:Powerline_symbols= 'unicode'
 
 set ignorecase smartcase    " 搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感
 set incsearch               " 输入搜索内容时就显示搜索结果
@@ -28,20 +48,19 @@ syntax on                   " 自动语法高亮
 set number                  " 显示行号
 nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
                             " 用< F2>开启/关闭行号
-
-set nobackup                " 覆盖文件时不备份
-set noswapfile
+set pastetoggle=<F7>        " 在粘贴代码之前，进入insert模式，按F7,就可以关闭自动缩进
 
 set shiftwidth=4            " 设定 << 和 >> 命令移动时的宽度为 4
 set softtabstop=4           " 使得按退格键时可以一次删掉 4 个空格
 set tabstop=4               " 设定 tab 长度为 4
 
-set pastetoggle=<F7>        " 在粘贴代码之前，进入insert模式，按F7,就可以关闭自动缩进
-set laststatus=2            " 显示状态栏 (默认值为 1, 无法显示状态栏)
-set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\ 
-                            " 设置在状态行显示的信息
+set autoindent              "设置自动缩进：即每行的缩进值与上一行相等
+set cindent                 "使用 C/C++ 语言的自动缩进方式
 
-"---- 括号自动补全 ------------------------------------
+
+
+
+"---- 配置代码折叠 ------------------------------------
 "
 "zc 关闭折叠
 "zo 打开折叠
@@ -55,16 +74,6 @@ set foldlevelstart=99       " 打开文件是默认不折叠代码
 "set foldclose=all          " 设置为自动关闭折叠                
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
                             " 用空格键来开关折叠
-
-
-"---- 括号自动补全 ------------------------------------
-"
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap { {}<Esc>i
-inoremap " ""<Esc>i
-inoremap ' ''<Esc>i
-
 
 "---- 窗口移动及resize --------------------------------
 "
@@ -104,19 +113,19 @@ endfunction
 nnoremap zx <esc>:call Zoom() <cr><esc>
 
 
-"---- F8 打开隐藏quickfix -----------------------------
+"---- Leaderf常用指令 ---------------------------------
 "
-let g:quickfixname=1
-function! QuickfixFunc()
-	if g:quickfixname
-		let g:quickfixname=0
-		exec ":copen 20"
-	else
-		let g:quickfixname=1
-		exec ":ccl"
-	endif
-endfunction
-nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
+"查询文件：Leaderf file      默认是从根目录内的文件中查找。
+"查询函数：Leaderf function  默认是再当前文件中查找函数。
+"模糊查询字符串：Leaderf rg   默认从根目录内的文件中查找，模糊查找，智能且迅速。
+"查询最近打开过的文件：Leaderf mru  这个功能特别是在你关闭vim后，下次再打开继续编辑时很有用
+"查询Buffer：Leaderf buffer  当前buffer一览眼底，很爽。
+"
+nnoremap <silent> <Leader>f :Leaderf file<CR>
+nnoremap <silent> <Leader>fc :Leaderf function<CR>
+nnoremap <silent> <Leader>m :Leaderf mru<CR>
+nnoremap <silent> <Leader>rg :Leaderf rg<CR>
+nnoremap <silent> <Leader>b :Leaderf buffer<CR>
 
 
 "---- F3 打开隐藏nerdtree -----------------------------
@@ -134,6 +143,21 @@ map <F3> <esc>:NERDTreeToggle<CR><esc>
 "
 let g:NERDSpaceDelims=1              " 注释的时候自动加个空格, 强迫症必配
 let g:NERDCompactSexyComs=1          " 多行注释时，样子更好看
+
+
+"---- F8 打开隐藏quickfix -----------------------------
+"
+let g:quickfixname=1
+function! QuickfixFunc()
+	if g:quickfixname
+		let g:quickfixname=0
+		exec ":copen 20"
+	else
+		let g:quickfixname=1
+		exec ":ccl"
+	endif
+endfunction
+nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
 
 
 "---- Bufexplorer -----------------------------
@@ -165,34 +189,6 @@ nnoremap <silent> <F9> :ToggleBufExplorer<CR>  " F9打开关闭
 " \/ 跳转到任一下一个高亮单词
 " /? 跳转到任一上一高亮单词
 "
-
-
-"---- ctrlp -----------------------------
-" :CtrlP 或 :CtrlP 路径 可以调用ctrlp并进入查找文件模式
-" 按下 Esc 或 <Ctrl-c> 可退出ctrlp，返回到Vim窗口中
-"
-"<Leader>p搜索当前目录下文件
-let g:ctrlp_map = '<c-p>'            " 在Vim 普通模式下，默认按下 <Ctrl>+p 即可打开ctrlp搜索窗口
-let g:ctrlp_cmd = 'CtrlP'
-"<Leader>f搜索MRU文件
-nmap <Leader>f :CtrlPMRUFiles<CR>
-"<Leader>b显示缓冲区文件，并可通过序号进行跳转
-nmap <Leader>b :CtrlPBuffer<CR>
-"设置搜索时忽略的文件
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
-    \ }
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_match_window_bottom = 1
-let g:ctrlp_max_height = 15 "修改QuickFix窗口显示的最大条目数
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_mruf_max = 500 "设置MRU最大条目数为500
-let g:ctrlp_follow_symlinks = 1
-let g:ctrlp_by_filename = 1 "默认使用全路径搜索，置1后按文件名搜索，准确率会有所提高，可以用<C-d>进行切换
-let g:ctrlp_regexp = 0 "默认不使用正则表达式，置1改为默认使用正则表达式，可以用<C-r>进行切换
-let g:ctrlp_line_prefix = '♪ ' "自定义搜索列表的提示符
-
 
 
 "---- Tag list ----------------------------------------
@@ -291,8 +287,5 @@ if has("cscope")
 	nmap qf :cs find f <C-R>=expand("<cfile>")<CR><CR>
 	nmap qi :cs find i ^<C-R>=expand("<cfile>")<CR>{1}lt;CR>
 endif
-
-
-
 
 
