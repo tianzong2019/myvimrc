@@ -123,7 +123,7 @@ nnoremap zx <esc>:call Zoom() <cr><esc>
 "
 nnoremap <silent> <Leader>f :Leaderf file<CR>
 nnoremap <silent> <Leader>fc :Leaderf function<CR>
-nnoremap <silent> <Leader>m :Leaderf mru<CR>
+nnoremap <silent> <Leader>mr :Leaderf mru<CR>
 nnoremap <silent> <Leader>rg :Leaderf rg<CR>
 nnoremap <silent> <Leader>b :Leaderf buffer<CR>
 
