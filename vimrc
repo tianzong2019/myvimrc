@@ -40,6 +40,8 @@ let g:Powerline_symbols= 'unicode'
 set ignorecase smartcase    " 搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感
 set incsearch               " 输入搜索内容时就显示搜索结果
 set hlsearch                " 搜索时高亮显示被找到的文本
+hi Search term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+
 set noerrorbells            " 关闭错误信息响铃
 set novisualbell            " 关闭使用可视响铃代替呼叫
 
