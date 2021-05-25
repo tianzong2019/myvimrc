@@ -123,6 +123,18 @@ nnoremap zx <esc>:call Zoom() <cr><esc>
 "查询最近打开过的文件：Leaderf mru  这个功能特别是在你关闭vim后，下次再打开继续编辑时很有用
 "查询Buffer：Leaderf buffer  当前buffer一览眼底，很爽。
 "
+set encoding=utf-8
+let &termencoding=&encoding
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,latin1,gbk,gb2312
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git', '.hg']
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_WindowHeight = 0.30
+let g:Lf_ShowRelativePath = 0 
+let g:Lf_HideHelp = 1 
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+
 nnoremap <silent> <Leader>f :Leaderf file<CR>
 nnoremap <silent> <Leader>fc :Leaderf function<CR>
 nnoremap <silent> <Leader>mr :Leaderf mru<CR>
