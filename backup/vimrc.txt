@@ -1,0 +1,38 @@
+" 使用插件
+"    lightline.vim-master.zip
+"    bufexplorer-7.4.21
+"    nerdcommenter-2.5.2
+"    The-NERD-tree-5.0.0
+"    OmniCppComplete-0.41
+"    vim-mark-3.1.1
+"    SuperTab-0.41
+"    a.vim-2.18
+"    taglist_4.6
+"    LeaderF-1.23
+"    UltiSnips-2.2
+"    Ctags 5.9
+"    cscope 15.8b
+
+
+==== leaderf ==========================================
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
+" popup mode
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+
+
+
+
+
+
+
+
+
+
+

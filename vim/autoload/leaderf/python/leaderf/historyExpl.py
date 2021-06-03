@@ -75,14 +75,14 @@ class HistoryExplManager(Manager):
         if self._getExplorer().getHistoryType() == "Cmd_History":
             try:
                 lfCmd(cmd)
-            except vim.error:
-                lfPrintTraceback()
+            except vim.error as e:
+                lfPrintError(e)
             lfCmd("call histadd(':', '%s')" % escQuote(cmd))
         elif self._getExplorer().getHistoryType() == "Search_History":
             try:
                 lfCmd("/%s" % cmd)
-            except vim.error:
-                lfPrintTraceback()
+            except vim.error as e:
+                lfPrintError(e)
 
     def _getDigest(self, line, mode):
         """

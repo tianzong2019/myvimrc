@@ -182,8 +182,8 @@ class MruExplManager(Manager):
                         lfCmd("setlocal bufhidden=wipe")
 
                     lfCmd("hide edit %s" % escSpecial(file))
-        except vim.error: # E37
-            lfPrintTraceback()
+        except vim.error as e: # E37
+            lfPrintError(e)
 
     def _getDigest(self, line, mode):
         """

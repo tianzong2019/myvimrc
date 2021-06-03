@@ -9,10 +9,8 @@ from .utils import *
 
 if sys.version_info >= (3, 0):
     import queue as Queue
-    lfDEVNULL = subprocess.DEVNULL
 else:
     import Queue
-    lfDEVNULL = open(os.devnull)
 
 
 class AsyncExecutor(object):
@@ -38,7 +36,7 @@ class AsyncExecutor(object):
     def execute(self, cmd, encoding=None, cleanup=None, env=None, raise_except=True, format_line=None):
         if os.name == 'nt':
             self._process = subprocess.Popen(cmd, bufsize=-1,
-                                             stdin=lfDEVNULL,
+                                             stdin=subprocess.PIPE,
                                              stdout=subprocess.PIPE,
                                              stderr=subprocess.PIPE,
                                              shell=True,
@@ -46,7 +44,6 @@ class AsyncExecutor(object):
                                              universal_newlines=False)
         else:
             self._process = subprocess.Popen(cmd, bufsize=-1,
-                                             stdin=lfDEVNULL,
                                              stdout=subprocess.PIPE,
                                              stderr=subprocess.PIPE,
                                              preexec_fn=os.setsid,
@@ -111,7 +108,6 @@ class AsyncExecutor(object):
                         if self._process:
                             self._process.stdout.close()
                             self._process.stderr.close()
-                            self._process.poll()
                     except IOError:
                         pass
 
@@ -159,7 +155,6 @@ class AsyncExecutor(object):
                         if self._process:
                             self._process.stdout.close()
                             self._process.stderr.close()
-                            self._process.poll()
                     except IOError:
                         pass
 

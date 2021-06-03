@@ -124,8 +124,7 @@ call s:InitDict('g:Lf_PreviewResult', {
             \ 'BufTag': 1,
             \ 'Function': 1,
             \ 'Line': 0,
-            \ 'Colorscheme': 0,
-            \ 'Jumps': 1
+            \ 'Colorscheme': 0
             \})
 call s:InitDict('g:Lf_NormalMap', {})
 call s:InitVar('g:Lf_Extensions', {})
@@ -353,12 +352,11 @@ endfunction
 " return the visually selected text and quote it with double quote
 function! leaderf#visual() abort
     try
-        let x_save = getreg("x", 1)
-        let type = getregtype("x")
+        let x_save = @x
         norm! gv"xy
         return '"' . escape(@x, '"') . '"'
     finally
-        call setreg("x", x_save, type)
+        let @x = x_save
     endtry
 endfunction
 

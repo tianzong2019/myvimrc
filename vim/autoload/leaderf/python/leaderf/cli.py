@@ -641,12 +641,14 @@ class LfCli(object):
             self._blinkon = True
             idle = 10000
             update = False
-            prefix = ""
 
-            if lfEval("has('nvim') && exists('g:GuiLoaded')") == '1':
-                threshold = 2
+            if len(self._instance._manager._content) < 100000:
+                threshold = 0
             else:
-                threshold = 25
+                if lfEval("has('nvim') && exists('g:GuiLoaded')") == '1':
+                    threshold = 2
+                else:
+                    threshold = 25
 
             while 1:
                 self._buildPrompt()
@@ -669,15 +671,12 @@ class LfCli(object):
                             if idle >= threshold:
                                 update = False
                                 idle = 0
-                                if ''.join(self._cmdline).startswith(prefix):
-                                    yield '<Update>'
-                                else:
-                                    yield '<Shorten>'
+                                yield '<Update>'
                         else:
                             try:
                                 callback()
-                            except Exception:
-                                lfPrintTraceback()
+                            except Exception as e:
+                                lfPrintError(e)
                                 break
 
                         continue
@@ -696,15 +695,12 @@ class LfCli(object):
                             if idle >= threshold:
                                 update = False
                                 idle = 0
-                                if ''.join(self._cmdline).startswith(prefix):
-                                    yield '<Update>'
-                                else:
-                                    yield '<Shorten>'
+                                yield '<Update>'
                         else:
                             try:
                                 callback()
-                            except Exception:
-                                lfPrintTraceback()
+                            except Exception as e:
+                                lfPrintError(e)
                                 break
 
                         continue
@@ -713,26 +709,22 @@ class LfCli(object):
                         lfCmd("let ch = !type(nr) ? nr2char(nr) : nr")
                         self._blinkon = True
                 else:
-                    threshold = 0
                     lfCmd("let nr = getchar()")
                     lfCmd("let ch = !type(nr) ? nr2char(nr) : nr")
                     self._blinkon = True
 
                 if lfEval("!type(nr) && nr >= 0x20") == '1':
-                    if update == False:
-                        update = True
-                        prefix = ''.join(self._cmdline)
-
                     self._insert(lfEval("ch"))
                     self._buildPattern()
                     if self._pattern is None or (self._refine and self._pattern[1] == ''): # e.g. abc;
                         continue
 
+                    update = True
                     if idle < threshold:
                         continue
                     else:
-                        update = False
                         idle = 0
+                        update = False
                         yield '<Update>'
                 else:
                     cmd = ''
@@ -759,20 +751,9 @@ class LfCli(object):
                     elif equal(cmd, '<BS>') or equal(cmd, '<C-H>'):
                         if not self._pattern and self._refine == False:
                             continue
-
-                        if update == False:
-                            update = True
-                            prefix = ''.join(self._cmdline)
-
                         self._backspace()
                         self._buildPattern()
-
-                        if self._pattern and idle < threshold:
-                            continue
-                        else:
-                            idle = 0
-                            update = False
-                            yield '<Shorten>'
+                        yield '<Shorten>'
                     elif equal(cmd, '<C-U>'):
                         if not self._pattern and self._refine == False:
                             continue

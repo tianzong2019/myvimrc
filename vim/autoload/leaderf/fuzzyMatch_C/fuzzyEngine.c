@@ -1523,8 +1523,6 @@ static PyObject* fuzzyEngine_getHighlights(PyObject* self, PyObject* args, PyObj
         free(pGroup);
     }
 
-    free(pEngine->source);
-    free(tasks);
     free(pEngine->highlights);
 
     return res;

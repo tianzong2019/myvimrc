@@ -2,67 +2,75 @@
 "
 " 描述: 打造适合自己的vim IDE
 "
-" 日期: 2021.5.13
+" 日期: 2021.6.3
 "
-" 版本: 0.4
+" 版本: 0.6
 "
 "
 " 使用插件
-"    bufexplorer-7.4.21.zip
-"    LeaderF-master.zip
-"    lightline.vim-master.zip
-"    nerdcommenter.zip
-"    NERD_tree.zip
-"    omnicppcomplete-0.41.zip
-"    supertab-master.zip
-"    taglist.vim-master.zip
-"    UltiSnips-2.2.zip
-"    vim-mark-master.zip
+"    lightline.vim-master
+"    vim-mark-3.1.1
+"    bufexplorer-7.4.21
+"    nerdcommenter-2.5.2
+"    The-NERD-tree-5.0.0
+"    supertab-2.0
+"    LeaderF-1.23            需要>vim7.4.330
+"    UltiSnips-2.2
+"    a.vim-2.18
+"    taglist_46
 "    Ctags 5.9
 "    cscope 15.8b
+"
+"
+" 升级vim
+"    sudo add-apt-repository ppa:jonathonf/vim
+"    sudo apt update 
+"    sudo apt install vim
+"    #删除源
+"    sudo add-apt-repository -r ppa:jonathonf/vim
 "=========================================================================
 filetype plugin on
-set encoding=utf8
+set nocompatible            " 配置不兼容vi
+
+set pastetoggle=<F7>        " 在粘贴代码之前，进入insert模式，按F7,就可以关闭自动缩进
 
 set nobackup                " 覆盖文件时不备份
 set noswapfile
-
-set t_Co=256
-set cursorline              " 突出显示当前行
-set cursorcolumn            " 高亮显示光标列
-highlight cursorline cterm=none ctermbg=236     
-highlight cursorcolumn cterm=none ctermbg=236
+set noerrorbells            " 关闭错误信息响铃
+set novisualbell            " 关闭使用可视响铃代替呼叫
 
 set laststatus=2                                   "startup the lightline.vim
 let g:lightline = { 'colorscheme': 'powerline', }  "set status-line
 let g:Powerline_symbols= 'unicode'
+
+set t_Co=256
+set cursorline              " 突出显示当前行
+set cursorcolumn            " 高亮显示光标列
+highlight cursorline cterm=none ctermbg=236    
+highlight cursorcolumn cterm=none ctermbg=236
 
 set ignorecase smartcase    " 搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感
 set incsearch               " 输入搜索内容时就显示搜索结果
 set hlsearch                " 搜索时高亮显示被找到的文本
 hi Search term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
 
-set noerrorbells            " 关闭错误信息响铃
-set novisualbell            " 关闭使用可视响铃代替呼叫
-
 set magic                   " 显示括号配对情况
-syntax on                   " 自动语法高亮
 set number                  " 显示行号
 nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
                             " 用< F2>开启/关闭行号
-set pastetoggle=<F7>        " 在粘贴代码之前，进入insert模式，按F7,就可以关闭自动缩进
+
+syntax on                   " 自动语法高亮
+set autoindent              "设置自动缩进：即每行的缩进值与上一行相等
+set cindent                 "使用 C/C++ 语言的自动缩进方式
 
 set shiftwidth=4            " 设定 << 和 >> 命令移动时的宽度为 4
 set softtabstop=4           " 使得按退格键时可以一次删掉 4 个空格
 set tabstop=4               " 设定 tab 长度为 4
 
-set autoindent              "设置自动缩进：即每行的缩进值与上一行相等
-set cindent                 "使用 C/C++ 语言的自动缩进方式
 
 
-
-
-"---- 配置代码折叠 ------------------------------------
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"配置代码折叠
 "
 "zc 关闭折叠
 "zo 打开折叠
@@ -77,7 +85,9 @@ set foldlevelstart=99       " 打开文件是默认不折叠代码
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
                             " 用空格键来开关折叠
 
-"---- 窗口移动及resize --------------------------------
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"窗口移动及resize
 "
 nnoremap <c-h>    <esc><c-w>h<esc>
 nnoremap <c-j>    <esc><c-w>j<esc>
@@ -95,7 +105,9 @@ nmap v,    <esc>:vertical resize +3<cr><esc>
 nmap v.    <esc>:vertical resize -3<cr><esc>
 
 
-"---- 最大化当前窗口及返回 ----------------------------
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"最大化当前窗口及返回
 "
 function! Zoom ()
     " check if is the zoomed state (tabnumber > 1 && window == 1)
@@ -115,79 +127,9 @@ endfunction
 nnoremap zx <esc>:call Zoom() <cr><esc>
 
 
-"---- Leaderf常用指令 ---------------------------------
-"
-"查询文件：Leaderf file      默认是从根目录内的文件中查找。
-"查询函数：Leaderf function  默认是再当前文件中查找函数。
-"模糊查询字符串：Leaderf rg   默认从根目录内的文件中查找，模糊查找，智能且迅速。
-"查询最近打开过的文件：Leaderf mru  这个功能特别是在你关闭vim后，下次再打开继续编辑时很有用
-"查询Buffer：Leaderf buffer  当前buffer一览眼底，很爽。
-"
-set encoding=utf-8
-let &termencoding=&encoding
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,latin1,gbk,gb2312
-let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git', '.hg']
-let g:Lf_WorkingDirectoryMode = 'Ac'
-let g:Lf_WindowHeight = 0.30
-let g:Lf_ShowRelativePath = 0 
-let g:Lf_HideHelp = 1 
-let g:Lf_StlColorscheme = 'powerline'
-let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 
-nnoremap <silent> <Leader>f :Leaderf file<CR>
-nnoremap <silent> <Leader>fc :Leaderf function<CR>
-nnoremap <silent> <Leader>mr :Leaderf mru<CR>
-nnoremap <silent> <Leader>rg :Leaderf rg<CR>
-nnoremap <silent> <Leader>b :Leaderf buffer<CR>
-
-
-"---- F3 打开隐藏nerdtree -----------------------------
-" u 打开上层目录
-"
-let g:NERDTreeHidden=0                   " 不显示隐藏文件
-map <F3> <esc>:NERDTreeMirror<CR><esc>
-map <F3> <esc>:NERDTreeToggle<CR><esc>
-
-
-"---- nerdcommenter -----------------------------
-" [count]<leader>cc ：注释从当前行往下数的 count 行，count 可省略，默认值为 1
-" \cc 注释当前行和选中行
-" [count]<leader>cu：取消注释从当前行往下数的 count 行，count 可省略，默认值为1
-"
-let g:NERDSpaceDelims=1              " 注释的时候自动加个空格, 强迫症必配
-let g:NERDCompactSexyComs=1          " 多行注释时，样子更好看
-
-
-"---- F8 打开隐藏quickfix -----------------------------
-"
-let g:quickfixname=1
-function! QuickfixFunc()
-	if g:quickfixname
-		let g:quickfixname=0
-		exec ":copen 20"
-	else
-		let g:quickfixname=1
-		exec ":ccl"
-	endif
-endfunction
-nnoremap <F8> <esc>:call QuickfixFunc() <cr><esc>
-
-
-"---- Bufexplorer -----------------------------
-"
-let g:bufExplorerDefaultHelp=0       " Do not show default help.
-let g:bufExplorerShowRelativePath=1  " Show relative paths.
-let g:bufExplorerSortBy='mru'        " Sort by most recently used.
-let g:bufExplorerSplitRight=1        " Split left.
-let g:bufExplorerSplitVertical=1     " Split vertically.
-let g:bufExplorerSplitVertSize = 30  " Split width
-let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-let g:bufExplorerDisableDefaultKeyMapping =0 " Do not disable default key mappings.
-nnoremap <silent> <F9> :ToggleBufExplorer<CR>  " F9打开关闭
-
-
-"---- mark -----------------------------
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"vim-mark-3.1.1
 "
 " 基本用法：
 " ：Mark <word>    查找并高亮显示；若已经高亮则查找并去掉高亮
@@ -205,7 +147,169 @@ nnoremap <silent> <F9> :ToggleBufExplorer<CR>  " F9打开关闭
 "
 
 
-"---- Tag list ----------------------------------------
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"bufexplorer-7.4.21
+"
+"
+"To start exploring in the current window, use: >
+" <Leader>be   or   :BufExplorer   or   Your custom key mapping
+"To toggle bufexplorer on or off in the current window, use: >
+" <Leader>bt   or   :ToggleBufExplorer   or   Your custom key mapping
+"To start exploring in a newly split horizontal window, use: >
+" <Leader>bs   or   :BufExplorerHorizontalSplit   or   Your custom key mapping
+"To start exploring in a newly split vertical window, use: >
+" <Leader>bv   or   :BufExplorerVerticalSplit   or   Your custom key mapping
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"nerdcommenter-2.5.2
+"
+"<leader>ca在可选的注释方式之间切换，比如C/C++ 的块注释/* */和行注释//  
+"<leader>cc注释当前行
+"<leader>c<space> 切换注释/非注释状态
+"<leader>cs 以”性感”的方式注释
+"<leader>cA 在当前行尾添加注释符，并进入Insert模式
+"<leader>cu 取消注释
+"<leader>c$ 从光标开始到行尾注释  ，这个要说说因为c$也是从光标到行尾的快捷键，这个按过逗号（，）要快一点按c$
+"2<leader>cc 光标以下count行添加注释 
+"2<leader>cu 光标以下count行取消注释
+"2<leader>cm:光标以下count行添加块注释(2,cm)
+"Normal模式下，几乎所有命令前面都可以指定行数
+"Visual模式下执行命令，会对选中的特定区块进行注释/反注释
+"
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"The-NERD-tree-5.0.0
+"
+" u 打开上层目录
+"
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeHidden=0                   " 不显示隐藏文件
+map <F3> <esc>:NERDTreeMirror<CR><esc>
+map <F3> <esc>:NERDTreeToggle<CR><esc>
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"SuperTab-0.41
+"
+let g:SuperTabDefaultCompletionType="context" " supertab配置
+let g:SuperTabMappingForward = "<s-tab>"
+let g:SuperTabMappingBackward= "<s-tab>"
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"LeaderF-1.23
+"
+"
+set encoding=utf-8
+let &termencoding=&encoding
+"set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,latin1,gbk,gb2312
+"navigate the result list just like `<C-K>` and `<C-J>`
+let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
+" Show icons, icons are shown by default
+let g:Lf_ShowDevIcons = 0
+" For GUI vim, the icon font can be specify like this, for example
+"let g:Lf_DevIconsFont = "DroidSansMono Nerd Font Mono"
+" If needs
+set ambiwidth=double
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
+" popup mode
+"  'fullScreen' - the LeaderF window take up the full screen
+"  'top' - the LeaderF window is at the top of the screen.
+"  'bottom' - the LeaderF window is at the bottom of the screen.
+"  'left' - the LeaderF window is at the left of the screen.
+"  'right' - the LeaderF window is at the right of the screen.
+"  'popup' - the LeaderF window is a popup window or floating window.
+"let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+let g:Lf_RootMarkers = ['.git', '.hg', '.svn', '.repo', '.project', '.project2']
+" 自定义
+let g:Lf_WindowHeight = 0.30
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_ShortcutF = "<leader>ff"
+noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"UltiSnips 2.2
+"
+"
+if has('python')
+        let g:UltiSnipsUsePythonVersion=2
+elseif has('python3')
+        let g:UltiSnipsUsePythonVersion=3
+endif
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"a.vim-2.18
+"
+"
+":A switches to the header file corresponding to the current file being edited
+"(or vise versa)
+":AS splits and switches
+":AV vertical splits and switches
+":AT new tab and switches
+":AN cycles through matches
+":IH switches to file under cursor
+":IHS splits and switches
+":IHV vertical splits and switches
+":IHT new tab and switches
+":IHN cycles through matches
+"<Leader>ih switches to file under cursor
+"<Leader>is switches to the alternate file of file under cursor (e.g. on
+"<foo.h> switches to foo.cpp)
+"<Leader>ihn cycles through matches
+"
+"E.g. if you are editing foo.c and need to edit foo.h simply execute :A and
+"you will be editting foo.h, to switch back to foo.c execute :A again.
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"taglist_4.6
+"
 "
 let Tlist_Ctags_Cmd = '/usr/bin/ctags'   " Ctags可执行文件的路径，千万要写对了，否则显示no such file
 let Tlist_Show_One_File = 1              " 不同时显示多个文件的tag，只显示当前文件的
@@ -215,53 +319,18 @@ let Tlist_Use_Right_Window = 1           " 在右侧窗口中显示taglist窗口
 map <F4> :TlistToggle<CR>
 
 
-"---- OmniComplete 为 C/C++ 自动补全 ------------------
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"Ctags 5.9
 "
-" 在插入模式编辑 C/C++ 源文件时按下 . 或 -> 或 ::，
-" 或者手动按下 Ctrl+X Ctrl+O 后就会弹出自动补全窗口，
-" 此时可以用 Ctrl+N 和 Ctrl+P 上下移动光标进行选择。
-"
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1      " 显示函数参数列表
-let OmniCpp_MayCompleteDot = 1           " 输入 .  后自动补全
-let OmniCpp_MayCompleteArrow = 1         " 输入 -> 后自动补全
-let OmniCpp_MayCompleteScope = 1         " 输入 :: 后自动补全
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" 自动关闭补全窗口
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest
-
-
-"---- supertab ------------------
-"
-let g:SuperTabDefaultCompletionType="context" " supertab配置
-let g:SuperTabMappingForward = "<s-tab>"
-let g:SuperTabMappingBackward= "<s-tab>"
-
-
-"---- UltiSnips 使用 tab 来触发代码片段补全 ---------------------
-"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"     " 使用 tab 切换下一个触发点，shit+tab 上一个触发点
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-let g:UltiSnipsEditSplit="vertical"           " 使用 UltiSnipsEdit 命令时垂直分割屏幕
-"
-if has('python')
-	let g:UltiSnipsUsePythonVersion=2 "or 3
-elseif has('python3')
-	let g:UltiSnipsUsePythonVersion=3 "or 2
-endif
-
-
-"---- ctags配置 ---------------------------------------
 "
 set tags=tags;
 set autochdir
+   
 
-
-"---- cscope配置 --------------------------------------
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"cscope 15.8b
+"
 "
 if has("cscope")  
     set csprg=/usr/bin/cscope  
@@ -280,26 +349,81 @@ if has("cscope")
             exe "cs add" cscope_file cscope_pre  
         endif        
     endif  
-	"------------------ cscope key maping
-	"
-	" s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
-	" g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
-	" d: 查找本函数调用的函数
-	" c: 查找调用本函数的函数
-	" t: 查找指定的字符串
-	" e: 查找egrep模式，相当于egrep功能，但查找速度快多了
-	" f: 查找并打开文件，类似vim的find功能
-	" i: 查找包含本文件的文件
-	"
-	set cscopequickfix=s-,c-,d-,i-,t-,e-
-	nmap qs :cs find s <C-R>=expand("<cword>")<CR><CR>
-	nmap qg :cs find g <C-R>=expand("<cword>")<CR><CR>
-	nmap qd :cs find d <C-R>=expand("<cword>")<CR><CR> 
-	nmap qc :cs find c <C-R>=expand("<cword>")<CR><CR>
-	nmap qt :cs find t <C-R>=expand("<cword>")<CR><CR>
-	nmap qe :cs find e <C-R>=expand("<cword>")<CR><CR>
-	nmap qf :cs find f <C-R>=expand("<cfile>")<CR><CR>
-	nmap qi :cs find i ^<C-R>=expand("<cfile>")<CR>{1}lt;CR>
+    "------------------ cscope key maping
+    "
+    " s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
+    " g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
+    " d: 查找本函数调用的函数
+    " c: 查找调用本函数的函数
+    " t: 查找指定的字符串
+    " e: 查找egrep模式，相当于egrep功能，但查找速度快多了
+    " f: 查找并打开文件，类似vim的find功能
+    " i: 查找包含本文件的文件
+    "
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    nmap qs :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap qg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap qd :cs find d <C-R>=expand("<cword>")<CR><CR> 
+    nmap qc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap qt :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap qe :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap qf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap qi :cs find i ^<C-R>=expand("<cfile>")<CR>{1}lt;CR>
 endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

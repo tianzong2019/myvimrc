@@ -358,7 +358,7 @@ class FileExplorer(Explorer):
                 cmd = cd_cmd + 'rg --no-messages --files %s %s %s %s %s' % (color, ignore, followlinks, show_hidden, no_ignore)
             else:
                 cmd = 'rg --no-messages --files %s %s %s %s %s %s' % (color, ignore, followlinks, show_hidden, no_ignore, cur_dir)
-        elif default_tool["pt"] and lfEval("executable('pt')") == '1':
+        elif default_tool["pt"] and lfEval("executable('pt')") == '1' and os.name != 'nt': # there is bug on Windows
             wildignore = lfEval("g:Lf_WildIgnore")
             ignore = ""
             for i in wildignore.get("dir", []):
@@ -387,7 +387,7 @@ class FileExplorer(Explorer):
                 cmd = cd_cmd + 'pt --nocolor %s %s %s %s -g=""' % (ignore, followlinks, show_hidden, no_ignore)
             else:
                 cmd = 'pt --nocolor %s %s %s %s -g="" "%s"' % (ignore, followlinks, show_hidden, no_ignore, dir)
-        elif default_tool["ag"] and lfEval("executable('ag')") == '1':
+        elif default_tool["ag"] and lfEval("executable('ag')") == '1' and os.name != 'nt': # https://github.com/vim/vim/issues/3236
             wildignore = lfEval("g:Lf_WildIgnore")
             ignore = ""
             for i in wildignore.get("dir", []):
@@ -844,7 +844,7 @@ class FileExplManager(Manager):
                 else:
                     lfCmd("tabe %s" % escSpecial(file))
             else:
-                if (lfEval("get(g:, 'Lf_JumpToExistingWindow', 1) == '1'") or kwargs.get("mode", 'dr')) and lfEval("bufloaded('%s')" % escQuote(file)) == '1':
+                if lfEval("get(g:, 'Lf_JumpToExistingWindow', 1)") == '1' and lfEval("bufloaded('%s')" % escQuote(file)) == '1':
                     if (kwargs.get("mode", '') == '' and lfEval("get(g:, 'Lf_DiscardEmptyBuffer', 1)") == '1'
                             and vim.current.buffer.name == ''
                             and vim.current.buffer.number == 1
@@ -862,8 +862,8 @@ class FileExplManager(Manager):
                         lfCmd("setlocal bufhidden=wipe")
 
                     lfCmd("hide edit %s" % escSpecial(file))
-        except vim.error: # E37
-            lfPrintTraceback()
+        except vim.error as e: # E37
+            lfPrintError(e)
 
 #*****************************************************
 # fileExplManager is a singleton

@@ -7,7 +7,6 @@ import re
 import os
 import os.path
 import locale
-import traceback
 
 lfCmd = vim.command
 lfEval = vim.eval
@@ -160,14 +159,6 @@ def lfPrintError(error):
         error = lfEncode(str(repr(error)))
         lfCmd("echohl Error | redraw | echo '%s' | echohl None" % escQuote(error))
 
-def lfPrintTraceback(msg=''):
-    error = traceback.format_exc()
-    error = error[error.find("\n") + 1:].strip()
-    if msg:
-        error = msg + "\n" + error
-    lfCmd("echohl WarningMsg | redraw")
-    lfCmd("echom '%s' | echohl None" % escQuote(error))
-
 def lfActualLineCount(buffer, start, end, col_width):
     num = 0
     for i in buffer[start:end]:
@@ -181,7 +172,7 @@ def lfDrop(type, file_name, line_num=None):
     if line_num:
         line_num = int(line_num)
 
-    if lfEval("has('patch-8.0.1508')") == '1':
+    if lfEval("exists(':drop')") == '2':
         if type == "tab":
             if line_num:
                 lfCmd("keepj tab drop %s | %d" % (escSpecial(file_name), line_num))

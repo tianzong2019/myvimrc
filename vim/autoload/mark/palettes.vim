@@ -2,40 +2,88 @@
 "
 " DEPENDENCIES:
 "
-" Copyright: (C) 2012 Ingo Karkat
+" Copyright: (C) 2012-2019 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 " Contributors: rockybalboa4
 "
-" Version:     2.7.0
-" Changes:
-" 04-Jul-2012, Ingo Karkat
-" - Add "maximum" palette contributed by rockybalboa4 and move it and the
-"   "extended" palette to a separate mark/palettes.vim autoload script.
+" Version:     3.1.0
 
 function! mark#palettes#Extended()
 	return [
-		\   { 'ctermbg':'114', 'ctermfg':'Black', 'guibg':'#98D98E', 'guifg':'Black' },
-		\   { 'ctermbg':'219', 'ctermfg':'Black', 'guibg':'#FFB3FF', 'guifg':'Black' },
-		\   { 'ctermbg':'191', 'ctermfg':'Black', 'guibg':'#CCFF66', 'guifg':'Black' },
-		\   { 'ctermbg':'105', 'ctermfg':'Black', 'guibg':'#9999FF', 'guifg':'Black' },
-		\   { 'ctermbg':'214', 'ctermfg':'Black', 'guibg':'#FFB61E', 'guifg':'Black' },
-		\   { 'ctermbg':'117', 'ctermfg':'Black', 'guibg':'#8CCBEA', 'guifg':'Black' },
-		\   { 'ctermbg':'210', 'ctermfg':'Black', 'guibg':'#EE827C', 'guifg':'Black' },
-		\   { 'ctermbg':'227', 'ctermfg':'Black', 'guibg':'#FAFF72', 'guifg':'Black' },
-		\   { 'ctermbg':'79',  'ctermfg':'Black', 'guibg':'#3DE1AD', 'guifg':'Black' },
-		\   { 'ctermbg':'180', 'ctermfg':'Black', 'guibg':'#D3B17D', 'guifg':'Black' },
-		\   { 'ctermbg':'194', 'ctermfg':'Black', 'guibg':'#C0EBD7', 'guifg':'Black' },
-		\   { 'ctermbg':'187', 'ctermfg':'Black', 'guibg':'#EEDEB0', 'guifg':'Black' },
-		\   { 'ctermbg':'150', 'ctermfg':'Black', 'guibg':'#B9D08B', 'guifg':'Black' },
-		\   { 'ctermbg':'217', 'ctermfg':'Black', 'guibg':'#F5B1AA', 'guifg':'Black' },
-		\   { 'ctermbg':'189', 'ctermfg':'Black', 'guibg':'#CCCCFF', 'guifg':'Black' },
-		\   { 'ctermbg':'224', 'ctermfg':'Black', 'guibg':'#EDD1D8', 'guifg':'Black' },
-		\   { 'ctermbg':'254', 'ctermfg':'Black', 'guibg':'#E9E7EF', 'guifg':'Black' },
-		\   { 'ctermbg':'195', 'ctermfg':'Black', 'guibg':'#CCFFFF', 'guifg':'Black' },
-		\   { 'ctermbg':'231', 'ctermfg':'Black', 'guibg':'#FFFFFF', 'guifg':'Black' },
-		\   { 'ctermbg':'196', 'ctermfg':'Black', 'guibg':'#FF0033', 'guifg':'Black' },
+		\   { 'ctermbg':'Blue',       'ctermfg':'Black', 'guibg':'#A1B7FF', 'guifg':'#001E80' },
+		\   { 'ctermbg':'Magenta',    'ctermfg':'Black', 'guibg':'#FFA1C6', 'guifg':'#80005D' },
+		\   { 'ctermbg':'Green',      'ctermfg':'Black', 'guibg':'#ACFFA1', 'guifg':'#0F8000' },
+		\   { 'ctermbg':'Yellow',     'ctermfg':'Black', 'guibg':'#FFE8A1', 'guifg':'#806000' },
+		\   { 'ctermbg':'DarkCyan',   'ctermfg':'Black', 'guibg':'#D2A1FF', 'guifg':'#420080' },
+		\   { 'ctermbg':'Cyan',       'ctermfg':'Black', 'guibg':'#A1FEFF', 'guifg':'#007F80' },
+		\   { 'ctermbg':'DarkBlue',   'ctermfg':'Black', 'guibg':'#A1DBFF', 'guifg':'#004E80' },
+		\   { 'ctermbg':'DarkMagenta','ctermfg':'Black', 'guibg':'#A29CCF', 'guifg':'#120080' },
+		\   { 'ctermbg':'DarkRed',    'ctermfg':'Black', 'guibg':'#F5A1FF', 'guifg':'#720080' },
+		\   { 'ctermbg':'Brown',      'ctermfg':'Black', 'guibg':'#FFC4A1', 'guifg':'#803000' },
+		\   { 'ctermbg':'DarkGreen',  'ctermfg':'Black', 'guibg':'#D0FFA1', 'guifg':'#3F8000' },
+		\   { 'ctermbg':'Red',        'ctermfg':'Black', 'guibg':'#F3FFA1', 'guifg':'#6F8000' },
+		\   { 'ctermbg':'White',      'ctermfg':'Gray',  'guibg':'#E3E3D2', 'guifg':'#999999' },
+		\   { 'ctermbg':'LightGray',  'ctermfg':'White', 'guibg':'#D3D3C3', 'guifg':'#666666' },
+		\   { 'ctermbg':'Gray',       'ctermfg':'Black', 'guibg':'#A3A396', 'guifg':'#222222' },
+		\   { 'ctermbg':'Black',      'ctermfg':'White', 'guibg':'#53534C', 'guifg':'#DDDDDD' },
+		\   { 'ctermbg':'Black',      'ctermfg':'Gray',  'guibg':'#131311', 'guifg':'#AAAAAA' },
+		\   { 'ctermbg':'Blue',       'ctermfg':'White', 'guibg':'#0000FF', 'guifg':'#F0F0FF' },
+		\   { 'ctermbg':'DarkRed',    'ctermfg':'White', 'guibg':'#FF0000', 'guifg':'#FFFFFF' },
+		\   { 'ctermbg':'DarkGreen',  'ctermfg':'White', 'guibg':'#00FF00', 'guifg':'#355F35' },
+		\   { 'ctermbg':'DarkYellow', 'ctermfg':'White', 'guibg':'#FFFF00', 'guifg':'#6F6F4C' },
+		\]
+endfunction
+
+function! mark#palettes#Soft()
+	return [
+		\   {                                            'guibg':'#d1dbff', 'guifg':'#001250' },
+		\   {                                            'guibg':'#ffd1e2', 'guifg':'#500039' },
+		\   {                                            'guibg':'#d6ffd1', 'guifg':'#095000' },
+		\   {                                            'guibg':'#fff3d1', 'guifg':'#503c00' },
+		\   {                                            'guibg':'#e8d1ff', 'guifg':'#280050' },
+		\   {                                            'guibg':'#d1feff', 'guifg':'#004e50' },
+		\   {                                            'guibg':'#d1edff', 'guifg':'#003050' },
+		\   {                                            'guibg':'#d6d1ff', 'guifg':'#0a0050' },
+		\   {                                            'guibg':'#f9d1ff', 'guifg':'#460050' },
+		\   {                                            'guibg':'#ffe1d1', 'guifg':'#501d00' },
+		\   {                                            'guibg':'#e8ffd1', 'guifg':'#265000' },
+		\   {                                            'guibg':'#f8ffd1', 'guifg':'#455000' },
+		\   {                                            'guibg':'#f8f8f8', 'guifg':'#101010' },
+		\   {                                            'guibg':'#f0f0f0', 'guifg':'#202020' },
+		\   {                                            'guibg':'#e8e8e8', 'guifg':'#303030' },
+		\   {                                            'guibg':'#d8d8d8', 'guifg':'#404040' },
+		\   {                                            'guibg':'#c8c8c8', 'guifg':'#505050' },
+		\   {                                            'guibg':'#b0b0ff', 'guifg':'#4c4c6f' },
+		\   {                                            'guibg':'#ffb0b0', 'guifg':'#5f4141' },
+		\   {                                            'guibg':'#b0ffb0', 'guifg':'#415f41' },
+		\   {                                            'guibg':'#ffff80', 'guifg':'#4f4f27' },
+		\]
+endfunction
+function! mark#palettes#Softer()
+	return [
+		\   {                                            'guibg':'#e9edff', 'guifg':'#001250' },
+		\   {                                            'guibg':'#ffe9f1', 'guifg':'#500039' },
+		\   {                                            'guibg':'#ebffe9', 'guifg':'#095000' },
+		\   {                                            'guibg':'#fff9e9', 'guifg':'#503c00' },
+		\   {                                            'guibg':'#f4e9ff', 'guifg':'#280050' },
+		\   {                                            'guibg':'#e9feff', 'guifg':'#004e50' },
+		\   {                                            'guibg':'#e9f6ff', 'guifg':'#003050' },
+		\   {                                            'guibg':'#ebe9ff', 'guifg':'#0a0050' },
+		\   {                                            'guibg':'#fce9ff', 'guifg':'#460050' },
+		\   {                                            'guibg':'#fff0e9', 'guifg':'#501d00' },
+		\   {                                            'guibg':'#f4ffe9', 'guifg':'#265000' },
+		\   {                                            'guibg':'#fbffe9', 'guifg':'#455000' },
+		\   {                                            'guibg':'#f8f8f8', 'guifg':'#101010' },
+		\   {                                            'guibg':'#f2f2f2', 'guifg':'#202020' },
+		\   {                                            'guibg':'#ececec', 'guifg':'#303030' },
+		\   {                                            'guibg':'#e3e3e3', 'guifg':'#404040' },
+		\   {                                            'guibg':'#dcdcdc', 'guifg':'#505050' },
+		\   {                                            'guibg':'#c8c8ff', 'guifg':'#4c4c6f' },
+		\   {                                            'guibg':'#ffc8c8', 'guifg':'#5f4141' },
+		\   {                                            'guibg':'#c8ffc8', 'guifg':'#415f41' },
+		\   {                                            'guibg':'#ffff98', 'guifg':'#4f4f27' },
 		\]
 endfunction
 
