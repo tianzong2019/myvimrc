@@ -332,6 +332,7 @@ set autochdir
 "cscope 15.8b
 "
 "
+set cscoperelative  "一定要配置该项，否则会与leaderf冲突，导致cscope找不到文件
 if has("cscope")  
     set csprg=/usr/bin/cscope  
     set csto=0 
@@ -370,60 +371,6 @@ if has("cscope")
     nmap qf :cs find f <C-R>=expand("<cfile>")<CR><CR>
     nmap qi :cs find i ^<C-R>=expand("<cfile>")<CR>{1}lt;CR>
 endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
