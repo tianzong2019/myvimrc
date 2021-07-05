@@ -352,7 +352,6 @@ set autochdir
 "cscope 15.8b
 "
 "
-set cscoperelative  "一定要配置该项，否则会与leaderf冲突，导致cscope找不到文件
 if has("cscope")  
     set csprg=/usr/bin/cscope  
     set csto=0 
@@ -381,6 +380,7 @@ if has("cscope")
     " f: 查找并打开文件，类似vim的find功能
     " i: 查找包含本文件的文件
     "
+    set cscoperelative  "一定要配置该项，否则会与leaderf冲突，导致cscope找不到文件
     set cscopequickfix=s-,c-,d-,i-,t-,e-
     nmap qs :cs find s <C-R>=expand("<cword>")<CR><CR>
     nmap qg :cs find g <C-R>=expand("<cword>")<CR><CR>
