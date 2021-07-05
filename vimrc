@@ -352,7 +352,8 @@ set autochdir
 "cscope 15.8b
 "
 "
-if has("cscope")  
+if has("cscope")
+    set cscoperelative
     set csprg=/usr/bin/cscope  
     set csto=0 
     set cst  
@@ -370,6 +371,7 @@ if has("cscope")
         endif        
     endif  
     "------------------ cscope key maping
+    "set cscoperelative  "一定要配置该项，否则会与leaderf冲突，导致cscope找不到文件
     "
     " s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
     " g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
@@ -380,7 +382,6 @@ if has("cscope")
     " f: 查找并打开文件，类似vim的find功能
     " i: 查找包含本文件的文件
     "
-    set cscoperelative  "一定要配置该项，否则会与leaderf冲突，导致cscope找不到文件
     set cscopequickfix=c-,d-,e-,g-,i-,s-,t-
     nmap qs :cs find s <C-R>=expand("<cword>")<CR><CR>
     nmap qg :cs find g <C-R>=expand("<cword>")<CR><CR>
