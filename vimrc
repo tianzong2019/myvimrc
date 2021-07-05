@@ -381,7 +381,7 @@ if has("cscope")
     " i: 查找包含本文件的文件
     "
     set cscoperelative  "一定要配置该项，否则会与leaderf冲突，导致cscope找不到文件
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    set cscopequickfix=c-,d-,e-,g-,i-,s-,t-
     nmap qs :cs find s <C-R>=expand("<cword>")<CR><CR>
     nmap qg :cs find g <C-R>=expand("<cword>")<CR><CR>
     nmap qd :cs find d <C-R>=expand("<cword>")<CR><CR> 
