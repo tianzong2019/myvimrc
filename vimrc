@@ -67,6 +67,8 @@ set shiftwidth=4            " 设定 << 和 >> 命令移动时的宽度为 4
 set softtabstop=4           " 使得按退格键时可以一次删掉 4 个空格
 set tabstop=4               " 设定 tab 长度为 4
 
+" 手动触发放弃当前修改，强制重新载入                
+nnoremap <leader>e :e!<CR> 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -127,6 +129,23 @@ endfunction
 nnoremap zx <esc>:call Zoom() <cr><esc>
 
 
+"-------------------------------------------------"
+"quickfix
+"F8 打开隐藏
+"  
+"-------------------------------------------------"
+let g:quickfixname=1
+function! QuickfixFunc()
+    if g:quickfixname
+        let g:quickfixname=0
+        exec ":copen 20"
+    else
+        let g:quickfixname=1
+        exec ":ccl"
+    endif
+endfunction
+nnoremap <F8> <esc>:call QuickfixFunc()<cr><esc>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "vim-mark-3.1.1
@@ -160,7 +179,8 @@ nnoremap zx <esc>:call Zoom() <cr><esc>
 " <Leader>bs   or   :BufExplorerHorizontalSplit   or   Your custom key mapping
 "To start exploring in a newly split vertical window, use: >
 " <Leader>bv   or   :BufExplorerVerticalSplit   or   Your custom key mapping
-
+"打开关闭bufexplorer
+nnoremap <F9> :ToggleBufExplorer<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
