@@ -136,6 +136,7 @@ nnoremap zx <esc>:call Zoom() <cr><esc>
 "-------------------------------------------------"
 let g:quickfixname=1
 function! QuickfixFunc()
+    autocmd!
     if g:quickfixname
         let g:quickfixname=0
         exec ":copen 20"
