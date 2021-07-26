@@ -19,9 +19,14 @@ function cyimg(){
 	if [[ $cdirName == *kernel* ]]
 	then
 		rm -rf ${tftDir}/*
-		cp ${rdir}/arch/arm64/boot/Image ${tftDir}
+		if [[ $cdirName == fpga.* ]]
+		then
+			cp ${rdir}/arch/arm64/boot/Image ${tftDir}/Image.fpga
+		else
+			cp ${rdir}/arch/arm64/boot/Image ${tftDir}
+		fi
 		cp ${rdir}/arch/arm64/boot/dts/horizon/hobot-j5-fpga-camera.dtb ${tftDir}
-		# cp ${rdir}/arch/arm64/boot/dts/horizon/hobot-j3-fpga.dtb ${tftDir}
+		cp ${rdir}/arch/arm64/boot/dts/horizon/hobot-j3-fpga.dtb ${tftDir}
 		#cp `find ${rdir}/drivers/ips -name "*.ko"` ${nfsDir}/test/bin
 	elif [[ $cdirName == *u-boot* ]]
 	then
