@@ -10,6 +10,8 @@ function  croot(){
 #echo $serverHost
 
 function cyimg(){
+	flag=${1:-0}
+	#echo $flag
 	cpath=`pwd`
 	cdirName=`basename ${cpath}`
 	tftDir="/home/albter/devnet/tftp"
@@ -18,7 +20,10 @@ function cyimg(){
 	echo "当前目录："${cdirName}
 	if [[ $cdirName == *kernel* ]]
 	then
-		rm -rf ${tftDir}/*
+		if [[ $flag == 1 ]]
+		then
+			rm -rf ${tftDir}/*
+		fi
 		if [[ $cdirName == fpga.* ]]
 		then
 			cp ${rdir}/arch/arm64/boot/Image ${tftDir}/Image.fpga
