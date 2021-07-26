@@ -29,7 +29,8 @@ then
 	find ./hobot_app/test/src/j3_vio -name "*.c" -o -name "*.cpp" -o -name "*.h" >> cscope.files
 	find ./hobot_app/test/src/isp -name "*.c" -o -name "*.cpp" -o -name "*.h" >> cscope.files
 else
-  echo "请检查当前所在路径："${cpath}
+	echo "请检查当前所在路径："${cpath}
+	find ./ -name "*.c" -o -name "*.cpp" -o -name "*.h" >> cscope.files
 fi
 
 
