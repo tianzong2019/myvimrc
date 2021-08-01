@@ -41,11 +41,11 @@ nnoremap <leader>e :e!<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"配置代码折叠
-"
-"zc 关闭折叠
-"zo 打开折叠
-"za 打开/关闭折叠互相切换
+" 配置代码折叠
+" 
+" zc 关闭折叠
+" zo 打开折叠
+" za 打开/关闭折叠互相切换
 "
 set foldenable              " 开始折叠
 set foldmethod=syntax       " 设置语法折叠
@@ -58,7 +58,7 @@ nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"窗口移动及resize
+" 窗口移动及resize
 "
 nnoremap <c-h>    <esc><c-w>h<esc>
 nnoremap <c-j>    <esc><c-w>j<esc>
@@ -78,7 +78,7 @@ nmap v.    <esc>:vertical resize -3<cr><esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"最大化当前窗口及返回
+" 最大化当前窗口及返回
 "
 function! Zoom ()
     " check if is the zoomed state (tabnumber > 1 && window == 1)
@@ -99,8 +99,8 @@ nnoremap zx <esc>:call Zoom() <cr><esc>
 
 
 "-------------------------------------------------"
-"quickfix
-"F8 打开隐藏
+" quickfix
+" F8 打开隐藏
 "  
 "-------------------------------------------------"
 let g:quickfixname=1
@@ -117,7 +117,16 @@ nnoremap <F8> <esc>:call QuickfixFunc()<cr><esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"vim-mark-3.1.1
+" incsearch.vim
+"
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-mark-3.1.1
 "
 " 基本用法：
 " ：Mark <word>    查找并高亮显示；若已经高亮则查找并去掉高亮
@@ -136,7 +145,7 @@ nnoremap <F8> <esc>:call QuickfixFunc()<cr><esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"bufexplorer-7.4.21
+" bufexplorer-7.4.21
 "
 "
 "To start exploring in the current window, use: >
@@ -152,7 +161,7 @@ nnoremap <F9> :ToggleBufExplorer<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"nerdcommenter-2.5.2
+" nerdcommenter-2.5.2
 "
 "<leader>ca在可选的注释方式之间切换，比如C/C++ 的块注释/* */和行注释//  
 "<leader>cc注释当前行
@@ -187,7 +196,7 @@ let g:NERDToggleCheckAllLines = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"The-NERD-tree-5.0.0
+" The-NERD-tree-5.0.0
 "
 " u 打开上层目录
 "
@@ -200,7 +209,7 @@ map <F3> <esc>:NERDTreeToggle<CR><esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"UltiSnips 2.2
+" UltiSnips 2.2
 "
 "
 if has('python')
@@ -218,7 +227,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"taglist_4.6
+" taglist_4.6
 "
 "
 let Tlist_Ctags_Cmd = '/usr/bin/ctags'   " Ctags可执行文件的路径，千万要写对了，否则显示no such file
@@ -230,7 +239,7 @@ map <F4> :TlistToggle<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"Ctags 5.9
+" Ctags 5.9
 "
 "
 set tags=tags;
@@ -238,7 +247,7 @@ set autochdir
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"LeaderF-1.23
+" LeaderF-1.23
 "
 "
 set encoding=utf-8
@@ -281,7 +290,7 @@ noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"cscope 15.8b
+" cscope 15.8b
 "
 "
 if has("cscope")

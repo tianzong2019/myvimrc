@@ -1,171 +1,156 @@
 let s:suite = themis#suite('highlight')
 let s:assert = themis#helper('assert')
 
+" Helper:
+function! s:add_line(str)
+  put! =a:str
+endfunction
+function! s:add_lines(lines)
+  for line in reverse(a:lines)
+    put! =line
+  endfor
+endfunction
+function! s:get_pos_char()
+  return getline('.')[col('.')-1]
+endfunction
+
+function! s:reset_buffer()
+  :1,$ delete
+  call s:add_lines(s:line_texts)
+  normal! Gddgg0zt
+endfunction
+
+function! s:suite.before()
+  set wrapscan&
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+  map g/ <Plug>(incsearch-stay)
+  let s:line_texts = ['1pattern_a', '2pattern_b', '3pattern_c', '4pattern_d', '5pattern_e']
+  call s:reset_buffer()
+endfunction
+
+function! s:suite.after()
+  :1,$ delete
+endfunction
+
 function! s:suite.before_each()
-  hi clear
+  :1
+  call s:assert.equals(s:get_pos_char(), '1')
+  call clearmatches()
+  call s:assert.equals(getmatches(), [])
 endfunction
 
-function! s:hi(name)
-  redir => hi
-    silent! exec 'hi' a:name
-  redir END
-  return substitute(join(split(hi, "\n"), ''), ' \+', ' ', 'g')
+function! s:suite.hlsearch()
+  if !exists('v:hlsearch')
+    call s:assert.skip("Skip because vim version are too low to test it")
+  endif
+  set hlsearch
+  " FIXME: <- why...???
+  for keyseq in ['/', '?', 'g/']
+    nohlsearch
+    call s:assert.equals(v:hlsearch, 0)
+    exec "normal" keyseq . "pattern\<CR>"
+    call s:assert.equals(v:hlsearch, 1)
+  endfor
+  nohlsearch
+  call s:assert.equals(v:hlsearch, 0)
+  exec "normal!" "hl" | " dummy
+  call s:assert.equals(v:hlsearch, 0)
+  set hlsearch&
 endfunction
 
-function! s:pattern(xs, ...) abort
-  let ys = a:0 ? a:xs[1:] : a:xs
-  let zs = get(a:000, 0, a:xs)
-  return 'ctermfg=' . ys[2] . ' ctermbg=' . zs[3] . '.*guifg=' . ys[0] . ' guibg=' . zs[1]
+function! s:suite.preserve_nohlsearch() abort
+  for keyseq in ['/', '?', 'g/']
+    set nohlsearch
+    nohlsearch
+    call s:assert.equals(&hlsearch, 0)
+    exec "normal" keyseq . "pattern\<CR>"
+    call s:assert.equals(&hlsearch, 0)
+  endfor
+  set hlsearch&
 endfunction
 
-function! s:suite.highlight()
-  let g:lightline = {}
-  call lightline#init()
-  call lightline#colorscheme()
-  let palette = lightline#palette()
-  call s:assert.match(s:hi('LightlineLeft_normal_0'), s:pattern(palette.normal.left[0]))
-  call s:assert.match(s:hi('LightlineLeft_normal_1'), s:pattern(palette.normal.left[1]))
-  call s:assert.match(s:hi('LightlineLeft_normal_2'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineRight_normal_0'), s:pattern(palette.normal.right[0]))
-  call s:assert.match(s:hi('LightlineRight_normal_1'), s:pattern(palette.normal.right[1]))
-  call s:assert.match(s:hi('LightlineRight_normal_2'), s:pattern(palette.normal.right[2]))
-  call s:assert.match(s:hi('LightlineRight_normal_3'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineMiddle_normal'), s:pattern(palette.normal.middle[0]))
+function! s:suite.incremental_highlight()
+  call incsearch#highlight#incremental_highlight('\vvimvimvim')
+  call s:assert.equals(len(getmatches()), 3)
+  let groups = map(getmatches(), 'v:val.group')
+  let patterns = map(getmatches(), 'v:val.pattern')
+  call s:assert.not_equals(index(groups, 'IncSearchMatch'), -1)
+  call s:assert.not_equals(index(groups, 'IncSearchCursor'), -1)
+  call s:assert.not_equals(index(groups, 'IncSearchOnCursor'), -1)
+  call s:assert.not_equals(index(patterns, '\vvimvimvim'), -1)
 endfunction
 
-function! s:suite.insert()
-  let g:lightline = {}
-  call lightline#init()
-  call lightline#colorscheme()
-  call lightline#highlight('insert')
-  let palette = lightline#palette()
-  call s:assert.match(s:hi('LightlineLeft_insert_0'), s:pattern(palette.insert.left[0]))
-  call s:assert.match(s:hi('LightlineLeft_insert_1'), s:pattern(palette.insert.left[1]))
-  call s:assert.match(s:hi('LightlineLeft_insert_2'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineRight_insert_0'), s:pattern(palette.insert.right[0]))
-  call s:assert.match(s:hi('LightlineRight_insert_1'), s:pattern(palette.insert.right[1]))
-  call s:assert.match(s:hi('LightlineRight_insert_2'), s:pattern(palette.insert.right[2]))
-  call s:assert.match(s:hi('LightlineRight_insert_3'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineMiddle_insert'), s:pattern(palette.insert.middle[0]))
-endfunction
-
-
-function! s:suite.visual()
-  let g:lightline = {}
-  call lightline#init()
-  call lightline#colorscheme()
-  call lightline#highlight('visual')
-  let palette = lightline#palette()
-  call s:assert.match(s:hi('LightlineLeft_visual_0'), s:pattern(palette.visual.left[0]))
-  call s:assert.match(s:hi('LightlineLeft_visual_1'), s:pattern(palette.visual.left[1]))
-  call s:assert.match(s:hi('LightlineLeft_visual_2'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineRight_visual_0'), s:pattern(palette.normal.right[0]))
-  call s:assert.match(s:hi('LightlineRight_visual_1'), s:pattern(palette.normal.right[1]))
-  call s:assert.match(s:hi('LightlineRight_visual_2'), s:pattern(palette.normal.right[2]))
-  call s:assert.match(s:hi('LightlineRight_visual_3'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineMiddle_normal'), s:pattern(palette.normal.middle[0]))
-endfunction
-
-function! s:suite.replace()
-  let g:lightline = {}
-  call lightline#init()
-  call lightline#colorscheme()
-  call lightline#highlight('replace')
-  let palette = lightline#palette()
-  call s:assert.match(s:hi('LightlineLeft_replace_0'), s:pattern(palette.replace.left[0]))
-  call s:assert.match(s:hi('LightlineLeft_replace_1'), s:pattern(palette.replace.left[1]))
-  call s:assert.match(s:hi('LightlineLeft_replace_2'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineRight_replace_0'), s:pattern(palette.replace.right[0]))
-  call s:assert.match(s:hi('LightlineRight_replace_1'), s:pattern(palette.replace.right[1]))
-  call s:assert.match(s:hi('LightlineRight_replace_2'), s:pattern(palette.replace.right[2]))
-  call s:assert.match(s:hi('LightlineRight_replace_3'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineMiddle_replace'), s:pattern(palette.replace.middle[0]))
-endfunction
-
-function! s:suite.left_right()
-  let g:lightline = {
-        \   'active': {
-        \     'left': [ [ 'mode', 'paste' ], [ 'readonly' ], [ 'filename' ], [ 'modified' ] ],
-        \     'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'fileformat' ], [ 'fileencoding' ], [ 'filetype' ] ]
-        \   },
-        \ }
-  call lightline#init()
-  call lightline#colorscheme()
-  let palette = lightline#palette()
-  call s:assert.match(s:hi('LightlineLeft_normal_0'), s:pattern(palette.normal.left[0]))
-  call s:assert.match(s:hi('LightlineLeft_normal_1'), s:pattern(palette.normal.left[1]))
-  call s:assert.match(s:hi('LightlineLeft_normal_2'), s:pattern(palette.normal.middle[0]))
-  call s:assert.match(s:hi('LightlineLeft_normal_3'), s:pattern(palette.normal.middle[0]))
-  call s:assert.match(s:hi('LightlineLeft_normal_4'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineRight_normal_0'), s:pattern(palette.normal.right[0]))
-  call s:assert.match(s:hi('LightlineRight_normal_1'), s:pattern(palette.normal.right[1]))
-  call s:assert.match(s:hi('LightlineRight_normal_2'), s:pattern(palette.normal.right[2]))
-  call s:assert.match(s:hi('LightlineRight_normal_3'), s:pattern(palette.normal.middle[0]))
-  call s:assert.match(s:hi('LightlineRight_normal_4'), s:pattern(palette.normal.middle[0]))
-  call s:assert.match(s:hi('LightlineRight_normal_5'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineMiddle_normal'), s:pattern(palette.normal.middle[0]))
-endfunction
-
-function! s:suite.no_components()
-  let g:lightline = {
-        \   'active': {
-        \     'left': [],
-        \     'right': []
-        \   },
-        \   'inactive': {
-        \     'left': [],
-        \     'right': []
-        \   },
-        \ }
-  call lightline#init()
-  call lightline#colorscheme()
-  let palette = lightline#palette()
-  call s:assert.match(s:hi('LightlineLeft_normal_0'), s:pattern(palette.normal.left[0]))
-  call s:assert.match(s:hi('LightlineLeft_normal_1'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineRight_normal_0'), s:pattern(palette.normal.right[0]))
-  call s:assert.match(s:hi('LightlineRight_normal_1'), 'E411: highlight group not found\|cleared')
-  call s:assert.match(s:hi('LightlineMiddle_normal'), s:pattern(palette.normal.middle[0]))
-endfunction
-
-function! s:suite.subseparator()
-  let g:lightline = {
-        \   'active': {
-        \     'left': [ [ 'mode', 'paste' ], [ 'readonly' ], [ 'filename' ], [ 'modified' ] ],
-        \     'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'fileformat' ], [ 'fileencoding' ], [ 'filetype' ] ]
-        \   },
-        \ }
-  call lightline#init()
-  call lightline#colorscheme()
-  let palette = lightline#palette()
-  for i in range(4)
-    for j in range(5)
-      if i + 1 == j
-        call s:assert.match(s:hi(printf('LightlineLeft_normal_%s_%s', i, j)), s:pattern(get(palette.normal.left, i, palette.normal.middle[0]), get(palette.normal.left, j, palette.normal.middle[0])))
-      else
-        call s:assert.match(s:hi(printf('LightlineLeft_normal_%s_%s', i, j)), 'E411: highlight group not found\|cleared')
-      endif
-    endfor
+function! s:suite.incremental_separate_highlight()
+  call incsearch#highlight#incremental_highlight('\vpattern_', 1, 1, [2,2])
+  call s:assert.equals(len(getmatches()), 4)
+  let groups = map(getmatches(), 'v:val.group')
+  let patterns = map(getmatches(), 'v:val.pattern')
+  call s:assert.not_equals(index(groups, 'IncSearchMatch'), -1)
+  call s:assert.not_equals(index(groups, 'IncSearchCursor'), -1)
+  call s:assert.not_equals(index(groups, 'IncSearchOnCursor'), -1)
+  call s:assert.not_equals(index(groups, 'IncSearchMatchReverse'), -1)
+  call s:assert.equals(index(patterns, '\vpattern_'), -1)
+  call s:assert.not_equals(index(patterns, '\v(%>2l|%2l%>2c)\m\(\vpattern_\m\)'), -1)
+  call s:assert.not_equals(index(patterns, '\v(%<2l|%2l%<2c)\m\(\vpattern_\m\)'), -1)
+  " Make sure all patterns valid by calling with search() and see
+  " it won't throw any errors
+  for p in patterns
+    normal! gg
+    call search(p, 'n')
   endfor
 endfunction
 
-function! s:suite.component_type()
-  let g:lightline = { 'component_type': { 'error': 'error', 'warning': 'warning' } }
-  call lightline#init()
-  call lightline#colorscheme()
-  let palette = lightline#palette()
-  for type in ['error', 'warning']
-    call s:assert.match(s:hi(printf('LightlineLeft_normal_%s', type)), s:pattern(palette.normal[type][0]))
-    call s:assert.match(s:hi(printf('LightlineLeft_normal_0_%s', type)), s:pattern(palette.normal.left[0], palette.normal[type][0]))
-    call s:assert.match(s:hi(printf('LightlineLeft_normal_1_%s', type)), s:pattern(palette.normal.left[1], palette.normal[type][0]))
-    call s:assert.match(s:hi(printf('LightlineLeft_normal_2_%s', type)), 'E411: highlight group not found\|cleared')
-    call s:assert.match(s:hi(printf('LightlineLeft_normal_%s_0', type)), s:pattern(palette.normal[type][0], palette.normal.left[0]))
-    call s:assert.match(s:hi(printf('LightlineLeft_normal_%s_1', type)), s:pattern(palette.normal[type][0], palette.normal.left[1]))
-    call s:assert.match(s:hi(printf('LightlineLeft_normal_%s_2', type)), s:pattern(palette.normal[type][0], palette.normal.middle[0]))
-    call s:assert.match(s:hi(printf('LightlineLeft_normal_%s_3', type)), 'E411: highlight group not found\|cleared')
+function! s:suite.forward_pattern()
+  let U = incsearch#util#import()
+  let L = vital#of('incsearch').import('Data.List')
+  let from = [3,3]
+  let pat = incsearch#highlight#forward_pattern('pattern', from)
+  :1
+  let pos = searchpos(pat, 'n')
+  let pos2 = searchpos('pattern', 'n')
+  call s:assert.true(U.is_pos_less_equal(from, pos))
+  call s:assert.false(U.is_pos_less_equal(from, pos2))
+  let poses = []
+  for _ in range(10)
+    let poses += [searchpos(pat)]
   endfor
-  for type1 in ['error', 'warning']
-    for type2 in ['error', 'warning']
-      call s:assert.match(s:hi(printf('LightlineLeft_normal_%s_%s', type1, type2)), s:pattern(palette.normal[type1][0], palette.normal[type2][0]))
-    endfor
+  let poses = L.uniq(poses)
+  for p in poses
+    call s:assert.true(U.is_pos_less_equal(from, p))
+  endfor
+  call s:assert.equals(poses, [[4,2],[5,2]])
+endfunction
+
+function! s:suite.backward_pattern()
+  let U = incsearch#util#import()
+  let L = vital#of('incsearch').import('Data.List')
+  let from = [3,3]
+  let pat = incsearch#highlight#backward_pattern('pattern', from)
+  :$
+  let pos = searchpos(pat, 'bn')
+  let pos2 = searchpos('pattern', 'bn')
+  call s:assert.true(U.is_pos_less_equal(pos, from))
+  call s:assert.false(U.is_pos_less_equal(pos2, from))
+  let poses = []
+  for _ in range(10)
+    let poses += [searchpos(pat, 'b')]
+  endfor
+  let poses = L.uniq(poses)
+  for p in poses
+    call s:assert.true(U.is_pos_less_equal(pos, from))
+  endfor
+  call s:assert.equals(poses, [[3, 2], [2, 2], [1, 2]])
+endfunction
+
+function! s:suite.separate_highlight_with_searching()
+  " XXX: it just test scripts works or not
+  let g:incsearch#separate_highlight = 1
+  for keyseq in ['/', '?', 'g/']
+    exec "normal" keyseq . "pattern\<CR>"
+  endfor
+  let g:incsearch#separate_highlight = 0
+  for keyseq in ['/', '?', 'g/']
+    exec "normal" keyseq . "pattern\<CR>"
   endfor
 endfunction

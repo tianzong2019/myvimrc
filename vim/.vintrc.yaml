@@ -1,5 +1,5 @@
-cmdargs:
-  severity: style_problem
-  color: true
-  env:
-    neovim: false
+# Config for vint
+# https://github.com/Kuniwak/vint
+policies:
+  ProhibitImplicitScopeVariable:
+    enabled: false
