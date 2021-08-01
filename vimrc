@@ -1,34 +1,3 @@
-"=========================================================================
-"
-" 描述: 打造适合自己的vim IDE
-"
-" 日期: 2021.6.3
-"
-" 版本: 0.6
-"
-"
-" 使用插件
-"    lightline.vim-master
-"    vim-mark-3.1.1
-"    bufexplorer-7.4.21
-"    nerdcommenter-2.5.2
-"    The-NERD-tree-5.0.0
-"    supertab-2.0
-"    LeaderF-1.23            需要>vim7.4.330
-"    UltiSnips-2.2
-"    a.vim-2.18
-"    taglist_46
-"    Ctags 5.9
-"    cscope 15.8b
-"
-"
-" 升级vim
-"    sudo add-apt-repository ppa:jonathonf/vim
-"    sudo apt update 
-"    sudo apt install vim
-"    #删除源
-"    sudo add-apt-repository -r ppa:jonathonf/vim
-"=========================================================================
 filetype plugin on
 set nocompatible            " 配置不兼容vi
 
@@ -136,7 +105,6 @@ nnoremap zx <esc>:call Zoom() <cr><esc>
 "-------------------------------------------------"
 let g:quickfixname=1
 function! QuickfixFunc()
-    autocmd!
     if g:quickfixname
         let g:quickfixname=0
         exec ":copen 20"
@@ -165,7 +133,6 @@ nnoremap <F8> <esc>:call QuickfixFunc()<cr><esc>
 " \/ 跳转到任一下一个高亮单词
 " /? 跳转到任一上一高亮单词
 "
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -232,14 +199,42 @@ map <F3> <esc>:NERDTreeMirror<CR><esc>
 map <F3> <esc>:NERDTreeToggle<CR><esc>
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"UltiSnips 2.2
+"
+"
+if has('python')
+        let g:UltiSnipsUsePythonVersion=2
+elseif has('python3')
+        let g:UltiSnipsUsePythonVersion=3
+endif
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-"SuperTab-0.41
+"taglist_4.6
 "
-let g:SuperTabDefaultCompletionType="context" " supertab配置
-let g:SuperTabMappingForward = "<s-tab>"
-let g:SuperTabMappingBackward= "<s-tab>"
+"
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'   " Ctags可执行文件的路径，千万要写对了，否则显示no such file
+let Tlist_Show_One_File = 1              " 不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1            " 如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Auto_Open=0                    " 打开文件时候不自动打开Taglist窗口
+let Tlist_Use_Right_Window = 1           " 在右侧窗口中显示taglist窗口
+map <F4> :TlistToggle<CR>
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"Ctags 5.9
+"
+"
+set tags=tags;
+set autochdir
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -274,6 +269,7 @@ let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 let g:Lf_RootMarkers = ['.git', '.hg', '.svn', '.repo', '.project', '.project2']
+let g:Lf_Ctags = "/usr/bin/ctags"
 " 自定义
 let g:Lf_WindowHeight = 0.30
 let g:Lf_WorkingDirectoryMode = 'Ac'
@@ -284,93 +280,30 @@ noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"UltiSnips 2.2
-"
-"
-if has('python')
-        let g:UltiSnipsUsePythonVersion=2
-elseif has('python3')
-        let g:UltiSnipsUsePythonVersion=3
-endif
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"a.vim-2.18
-"
-"
-":A switches to the header file corresponding to the current file being edited
-"(or vise versa)
-":AS splits and switches
-":AV vertical splits and switches
-":AT new tab and switches
-":AN cycles through matches
-":IH switches to file under cursor
-":IHS splits and switches
-":IHV vertical splits and switches
-":IHT new tab and switches
-":IHN cycles through matches
-"<Leader>ih switches to file under cursor
-"<Leader>is switches to the alternate file of file under cursor (e.g. on
-"<foo.h> switches to foo.cpp)
-"<Leader>ihn cycles through matches
-"
-"E.g. if you are editing foo.c and need to edit foo.h simply execute :A and
-"you will be editting foo.h, to switch back to foo.c execute :A again.
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"taglist_4.6
-"
-"
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'   " Ctags可执行文件的路径，千万要写对了，否则显示no such file
-let Tlist_Show_One_File = 1              " 不同时显示多个文件的tag，只显示当前文件的
-let Tlist_Exit_OnlyWindow = 1            " 如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Auto_Open=0                    " 打开文件时候不自动打开Taglist窗口
-let Tlist_Use_Right_Window = 1           " 在右侧窗口中显示taglist窗口
-map <F4> :TlistToggle<CR>
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"Ctags 5.9
-"
-"
-set tags=tags;
-set autochdir
-   
-
 """""""""""""""""""""""""""""""""""""""""""""""""
 "cscope 15.8b
 "
 "
 if has("cscope")
-    set cscoperelative
-    set csprg=/usr/bin/cscope  
-    set csto=0 
-    set cst  
-    set csverb  
-    set cspc=3 
-    "add any database in current dir  
-    if filereadable("cscope.out")  
-        cs add cscope.out  
-    "else search cscope.out elsewhere  
-    else 
-        let cscope_file=findfile("cscope.out",".;")  
-        let cscope_pre=matchstr(cscope_file,".*/")  
-        if !empty(cscope_file) && filereadable(cscope_file)  
-            exe "cs add" cscope_file cscope_pre  
-        endif        
-    endif  
+	"使用autoload_cscope.vim
+	"
+    "set cscoperelative
+    "set csprg=/usr/bin/cscope
+    "set csto=0
+    "set cst
+    "set csverb
+    "set cspc=3
+    ""add any database in current dir
+    "if filereadable("cscope.out")
+        "cs add cscope.out
+    "else search cscope.out elsewhere
+    "else
+        "let cscope_file=findfile("cscope.out",".;")
+        "let cscope_pre=matchstr(cscope_file,".*/")
+        "if !empty(cscope_file) && filereadable(cscope_file)
+            "exe "cs add" cscope_file cscope_pre
+        "endif
+    "endif
     "------------------ cscope key maping
     "set cscoperelative  "一定要配置该项，否则会与leaderf冲突，导致cscope找不到文件
     "
@@ -386,13 +319,10 @@ if has("cscope")
     set cscopequickfix=c-,d-,e-,g-,i-,s-,t-
     nmap qs :cs find s <C-R>=expand("<cword>")<CR><CR>
     nmap qg :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap qd :cs find d <C-R>=expand("<cword>")<CR><CR> 
+    nmap qd :cs find d <C-R>=expand("<cword>")<CR><CR>
     nmap qc :cs find c <C-R>=expand("<cword>")<CR><CR>
     nmap qt :cs find t <C-R>=expand("<cword>")<CR><CR>
     nmap qe :cs find e <C-R>=expand("<cword>")<CR><CR>
     nmap qf :cs find f <C-R>=expand("<cfile>")<CR><CR>
     nmap qi :cs find i ^<C-R>=expand("<cfile>")<CR>{1}lt;CR>
 endif
-
-
-
