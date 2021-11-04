@@ -18,3 +18,4 @@
 - lightline
 - quickfix
 - leaderf
+- neocomplcache  "用于自动补全（https://github.com/Shougo/neocomplcache.vim）
