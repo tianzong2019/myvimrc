@@ -39,6 +39,7 @@ set tabstop=4               " 设定 tab 长度为 4
 " 手动触发放弃当前修改，强制重新载入                
 nnoremap <leader>e :e!<CR> 
 
+let g:neocomplcache_enable_at_startup = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 " 配置代码折叠
