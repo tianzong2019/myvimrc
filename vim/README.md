@@ -1,163 +1,227 @@
-![incsearch.vim](https://raw.githubusercontent.com/haya14busa/i/master/incsearch.vim/incsearch_logo.png)
+Snipmate & UltiSnip Snippets
+============================
 
-[![Build Status](https://travis-ci.org/haya14busa/incsearch.vim.svg?branch=master)](https://travis-ci.org/haya14busa/incsearch.vim)
-[![Build status](https://ci.appveyor.com/api/projects/status/ks6gtsu46c1djoo6/branch/master)](https://ci.appveyor.com/project/haya14busa/incsearch-vim/branch/master)
-[![](http://img.shields.io/github/tag/haya14busa/incsearch.vim.svg)](https://github.com/haya14busa/incsearch.vim/releases)
-[![](http://img.shields.io/github/issues/haya14busa/incsearch.vim.svg)](https://github.com/haya14busa/incsearch.vim/issues)
-[![](http://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![](http://img.shields.io/badge/doc-%3Ah%20incsearch.txt-red.svg)](doc/incsearch.txt)
+This repository contains snippets files for various programming languages.
 
-![](https://raw.githubusercontent.com/haya14busa/i/master/incsearch.vim/incremental_regex_building.gif)
+It is community-maintained and many people have contributed snippet files and
+other improvements already.
 
-Introduction
+Contents
+--------
+
+- `snippets/*`: snippets using snipmate format
+- `UltiSnips/*`: snippets using UltiSnips format
+
+Snippet engines supporting vim-snippets
+----------------------------------------
+
+There are different forks of snippet engines which allow the user to insert
+snippets by typing the name of a snippet hitting the expansion mapping.
+
+- [github.com/SirVer/ultisnips](https://github.com/SirVer/ultisnips):   
+  python, supports all snippets in this repo.
+- [github.com/garbas/vim-snipmate](https://github.com/garbas/vim-snipmate):   
+  VimL, snipmate-snippets, engine sometimes behaves strange. Supports
+  snippets/*
+- [github.com/Shougo/neosnippet](https://github.com/Shougo/neosnippet.vim):   
+  VimL, supports snippets/* with some configuration.
+- [github.com/drmingdrmer/xptemplate](https://github.com/drmingdrmer/xptemplate):
+  Totally different syntax, does not read snippets contained in this file, but
+  it is also very powerful. It does not support vim-snippets (just listing it
+  here for completness)
+ 
+There tries to be a more comprehensive list (which still is incomplete) here:
+http://vim-wiki.mawercer.de/wiki/topic/text-snippets-skeletons-templates.html
+
+UltiSnips has additional features such as high speed, nesting snippets,
+expanding snippets in snippets and offers powerful transformations on text in
+snippets (like visual selections or placeholder texts).
+
+Which one to use? If you have python give
+[SirVer/ultisnips](https://github.com/SirVer/ultisnips) a try because its fast
+and has the most features.
+
+If you have VimL only (vim without python support) your best option is using
+[garbas/vim-snipmate](https://github.com/garbas/vim-snipmate) and cope with the
+minor bugs found in the engine.
+
+
+Q: Should "snipmate be deprecated in favour of UltiSnips"?
+
+A: No, because snimpate is VimL, and UltiSnips requires Python.
+Some people want to use snippets without having to install Vim with Python
+support. Yes - this sucks. 
+
+One solution would be: Use snippets if they are good enough, but allow overriding them
+in UltiSnips. This would avoid most duplication while still serving most users.
+AFAIK there is a nested-placeholder branch for snipmate too. snipmate is still
+improved by Adnan Zafar. So maybe time is not ready to make a final decision yet.
+
+[github issue/discussion](https://github.com/honza/vim-snippets/issues/363)
+
+Installation
 ------------
-incsearch.vim incrementally highlights __ALL__ pattern matches unlike default
-'incsearch'.
 
-Concepts
---------
+First be aware that there are many options, see "Snippet engines" above.
+Second be aware than there are [tons of plugin managers](http://vim-wiki.mawercer.de/wiki/topic/vim%20plugin%20managment.html)
+which is why Marc Weber thinks that it doesn't make sense to repeat the same
+repetitive information everywhere.
 
-### 1. Simple
-incsearch.vim provides simple improved incremental searching.
-
-### 2. Comfortable
-You can use it comfortably like the default search(`/`, `?`).
-It supports all modes (normal, visual, operator-pending mode), dot-repeat `.`,
-`{offset}` flags, and so on.
-
-### 3. Useful
-incsearch.vim aims to be simple, but at the same time, it offers useful features.
-
-#### Incremental regular expression editing
-You can see all patterns that the given regular expression matches all at once
-while incremental searching.
-
-Usage
------
-
-### Installation
-
-[Neobundle](https://github.com/Shougo/neobundle.vim) / [Vundle](https://github.com/gmarik/Vundle.vim) / [vim-plug](https://github.com/junegunn/vim-plug)
-
-```vim
-NeoBundle 'haya14busa/incsearch.vim'
-Plugin 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch.vim'
-```
-
-[pathogen](https://github.com/tpope/vim-pathogen)
+*Recommended way:*
+[vim-addon-manager](vim-addon-manager) (because Marc Weber wrote it for exactly
+this reason, it supports simple dependency management). Eg you're done by this
+line in your .vimrc:
 
 ```
-git clone https://github.com/haya14busa/incsearch.vim ~/.vim/bundle/incsearch.vim
+" assuming you want to use snipmate snippet engine
+ActivateAddons vim-snippets snipmate
 ```
 
-### Basic usage
-```vim
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+[vim-pi](https://bitbucket.org/vimcommunity/vim-pi/issue/90/we-really-need-a-web-interface)
+Is the place to discuss plugin managers and repository resources.
+
+About how to install snipate see [snipmate@garbas](https://github.com/garbas/vim-snipmate)
+
+(Bundle, Pathogen, git clone - keywords to make people find this link by ctrl-f search)
+I know that I should be reading the docs of the snippet engine, just let me copy paste into my .vimrc:
+[See this pull request](https://github.com/honza/vim-snippets/pull/307/files).
+
+TROUBLE
+=======
+If you still have trouble getting this to work create a github ticket, ask on
+irc or the mailinglist.
+
+Policies / for contributors
+---------------------------
+
+Some snippets are useful for almost all languages, so let's try to have the same
+triggers for them:
+
+```
+if : if without else
+ife: if $1 else $2
+eif : else if ($1) { .. }
+el  : else ..
+wh  : while (cond) ...
 ```
 
-`<Plug>(incsearch-stay)` doesn't move the cursor.
+Don't add useless placeholder default texts like
+```
+if (${1:condition}){
+  ${2:some code here}
+}
+```
+instead use:
 
-### Additional usages
-README introduces some features, but please see [:h incsearch.vim](doc/incsearch.txt) for more information.
-
-#### Automatic :nohlsearch
-
-![](https://raw.githubusercontent.com/haya14busa/i/master/incsearch.vim/incsearch_auto_nohlsearch.gif)
-
-Farewell, `nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>`!
-This feature turns 'hlsearch' off automatically after searching-related motions.
-
-```vim
-" :h g:incsearch#auto_nohlsearch
-set hlsearch
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+```
+if (${1}){
+  ${2}
+}
 ```
 
-### Emacs-like incsearch: move the cursor while incremental searching
+Exception: Functions which are used less often, such as Vim's matchall(), matchstr()
+functions which case hints may be helpful to remember order. In the VimL case
+get vim-dev plugin which has function completion
 
-![](https://cloud.githubusercontent.com/assets/3797062/3866152/40e11c48-1fc4-11e4-8cfd-ace452a19f90.gif)
+Thus for conditions (while, if ..) and block bodies just use ${N} - Thanks
 
-Move the cursor to next/previous matches while incremental searching like Emacs.
+Open questions:
+What about one line if ee then .. else .. vs if \n .. then \n ... \n else \n .. ?
+Which additional policies to add?
+Discuss at: https://github.com/honza/vim-snippets/issues/230
 
-| Mapping                  | description                       |
-| ------------------------ | --------------------------------- |
-| `<Over>(incsearch-next)` | to next match. default: `<Tab>`   |
-| `<Over>(incsearch-prev)` | to prev match. default: `<S-Tab>` |
+*folding markers*:
+Until further work is done on `vim-snipmate`, please don't add folding markers
+into snippets. `vim-snipmate` has some comments about how to patch all snippets
+on the fly adding those.
 
-### Scroll-like feature while incremental searching
+Currently all snippets from UltiSnips have been put into UltiSnips - some work
+on merging should be done (dropping duplicates etc). Also see engines section above.
 
-![](https://raw.githubusercontent.com/haya14busa/i/master/incsearch.vim/incremental_move_and_scroll.gif)
+Related repositories
+--------------------
+We also encourage people to maintain sets of snippets for particular use cases
+so that all users can benefit from them.  People can list their snippet repositories here:
 
-| Mapping                      | description                                         |
-| ------------------------     | ---------------------------------                   |
-| `<Over>(incsearch-scroll-f)` | scroll to the next page match. default: `<C-j>`     |
-| `<Over>(incsearch-scroll-b)` | scroll to the previous page match. default: `<C-k>` |
+     * https://github.com/rbonvall/snipmate-snippets-bib (snippets for BibTeX files)
+     * https://github.com/sudar/vim-arduino-snippets (snippets for Arduino files)
+     * https://github.com/zedr/zope-snipmate-bundle.git (snippets for Python, TAL and ZCML)
+     * https://github.com/bonsaiben/bootstrap-snippets (snippets for Twitter Bootstrap markup, in HTML and Haml)
 
-:tada: Version 2.0 :tada:
+Installation using VAM: "github:rbonvall/snipmate-snippets-bib"
+
+Future - ideas - examples
 -------------------------
-Now, incsearch.vim provides some (experimental) API.
-You can implement or use very useful yet another search command :mag_right:
 
-### Experimental API
-- `:h incsearch#go()`
-- `:h incsearch-config`
+[overview snippet engines](http://vim-wiki.mawercer.de/wiki/topic/text-snippets-skeletons-templates.html)
+If you have ideas you can add them to that list of "snippet engine features by example".
 
-Starts incsearch.vim with your custom configuration. See help docs for more detail.
 
-### Converter feature
-- `:h incsearch-config-converters`
-- The list of converter extensions: https://github.com/haya14busa/incsearch.vim/wiki/List-of-plugins-for-incsearch.vim#converter-extensions
+Historical notes
+----------------
 
-#### Example
+[vim-snipmate][1] was originally started by [Michael Sanders][2] who has now
+unfortunately abandoned the project. [Rok Garbas][3] is now maintaining a
+[fork][4] of the project in hopes of improving the existing code base.
+
+Versions / dialects / ..
+========================
+There are some issues, such as newer language versions may require other
+snippets than older. If this exists we currently recommend doing this:
+
+add snippets/ruby.snippets (common snippets)
+add snippets/ruby-1.8.snippets (1.8 only)
+add snippets/ruby-1.9.snippets (1.9 only)
+
+then configure github.com/garbas/vim-snipmate this way:
+
 
 ```vim
-function! s:noregexp(pattern) abort
-  return '\V' . escape(a:pattern, '\')
-endfunction
-
-function! s:config() abort
-  return {'converters': [function('s:noregexp')]}
-endfunction
-
-noremap <silent><expr> z/ incsearch#go(<SID>config())
+let g:snipMate = {}
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['ruby'] = 'ruby,ruby-rails,ruby-1.9'
 ```
 
-incsearch.vim x fuzzy https://github.com/haya14busa/incsearch-fuzzy.vim
-![incsearch-fuzzy.gif](https://raw.githubusercontent.com/haya14busa/i/master/incsearch.vim/extensions/incsearch-fuzzy.gif)
+If it happens that you work on a project requiring ruby-1.8 snippets instead,
+consider using vim-addon-local-vimrc and override the filetypes.
 
-### Module extension
-- `:h incsearch-config-modules`
-- The list of module extentions: https://github.com/haya14busa/incsearch.vim/wiki/List-of-plugins-for-incsearch.vim#module-extensions
+Well - of course it may not make sense to create a new file for each
+ruby-library-version triplet. Sometimes postfixing a name such as
 
-incsearch.vim x fuzzy x vim-easymotion https://github.com/haya14busa/incsearch-easymotion.vim
-![incsearch-fuzzy-easymotion.gif](https://raw.githubusercontent.com/haya14busa/i/master/incsearch.vim/extensions/incsearch-fuzzy-easymotion.gif)
+    migrate_lib_20_down
+    migrate_lib_20_up
 
-Author
-------
-haya14busa (https://github.com/haya14busa)
+will do it then if syntax has changed.
 
-Special thanks
---------------
-osyo-manga(https://github.com/osyo-manga), the author of
-the custom command line library, https://github.com/osyo-manga/vital-over,
-which incsearch.vim heavily depends on.
 
-Links
------
+Language maintainers
+--------------------
 
-### VimConf2014
-- [/-improved](https://docs.google.com/presentation/d/1ie2VCSt9onXmoY3v_zxJdMjYJSbAelVR-QExdUQK-Tw/pub?start=false&loop=false&delayms=3000&slide=id.g4e7add63c_05) at [VimConf 2014](http://vimconf.vim-jp.org/2014/)
-  - I talked in Japanese but wrote slide in English ;)
+No one can really be proficient in all programming languages. If you would like
+to maintain snippets for a language, please get in touch.
 
-Document
---------
-[:h incsearch.vim](doc/incsearch.txt)
+Notes: People are interested in snippets - and their interest may wane again.
+This list is kept up-to-date on a best effort basis.
+
+* Python - [honza](http://github.com/honza)
+* Javascript - [honza](http://github.com/honza)
+* HTML Django - [honza](http://github.com/honza)
+* Markdown - [honza](http://github.com/honza)
+* Ruby - [taq](http://github.com/taq)
+* PHP - [chrisyue](http://github.com/chrisyue)
+* Scala - [gorodinskiy](https://github.com/gorodinskiy)
+* Falcon - [steveno](https://github.com/steveno)
+* Elixir - [iurifq](https://github.com/iurifq)
+
+License
+-------
+
+Just as the original snipMate plugin, all the snippets are licensed under the
+terms of the MIT license.
+
+
+[1]: http://github.com/garbas/vim-snipmate
+[2]: http://github.com/msanders
+[3]: http://github.com/garbas
+[4]: http://github.com/garbas/vim-snipmate
+[7]: http://github.com/SirVer/ultisnips

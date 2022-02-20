@@ -1,32 +1,45 @@
 ---
 name: Bug report
-about: The plugin isn't working at all or shows wrong or unexpected behavior
-title: ''
-labels: ''
-
+about: Create a report to help us improve
 ---
-**Frequent Issues**
 
-* **E117: Unknown function: ingo#...**: Have you installed the [ingo-library plugin](http://www.vim.org/scripts/script.php?script_id=4433) (or via [GitHub](https://github.com/inkarkat/vim-ingo-library)) as well, as documented in the _dependencies_ section of the readme and plugin help?
-* **Sudden problems after updating**: Did you check out the default _master_ branch? Unless you want to participate in feature development and alpha testing, I would recommend that you switch from _master_ to the _stable_ branch; this way, you'll only update to released versions that are (hopefully) better tested and documented.
-* **Neovim**: I don't explicitly consider nor test Neovim compatibility; my plugins are written for Vim. If a plugin can be made to work on Neovim with trivial changes, I wouldn't mind including them, but anything more involved should in my opinion be filed as a compatibility bug against Neovim (as its homepage proclaims: _Fully compatible with Vim's editing model and the Vimscript language._)
+<!--
+**Warning: We will close the bug issue without the issue template and the reproduce ways.**
 
-**Describe the bug**
+If you have question, please ask at https://gitter.im/neoclide/coc.nvim
 
-_A clear and concise description of what the bug is._
+If the problem related to specific language server, please checkout: https://git.io/fjCEM
 
-**How to Reproduce**
+If your have performance issue, checkout: https://git.io/fjCEX & https://git.io/Jfe00
+-->
 
-_Detailed steps to reproduce the behavior._
+## Result from CocInfo
 
-**Expected Behavior**
+<!--Run `:CocInfo` command and paste the content below.-->
 
-_A clear and concise description of what you expected to happen._
+## Describe the bug
 
-**Environment**
- - Plugin version (e.g. stable version _1.10_) / revision _a1b2c3d4_ from the master branch
- - Dependency versions (e.g. [ingo-library plugin](https://github.com/inkarkat/vim-ingo-library), or external tool versions)
- - Vim version (e.g. _8.1.1234_) Or paste the result of `vim --version`.
- - OS: (e.g. _Ubuntu 18.04_, _Windows 10 1809_, _macOS 10.14_)
- - Install method: (e.g. manually via Vimball or ZIP file, GitHub clone as pack plugin, Plugin manager _NAME_)
- - Other plugins / additional context if you think this could be important
+A clear and concise description of what the bug is.
+
+## Reproduce the bug
+
+**We will close your issue when you don't provide minimal vimrc and we can't
+reproduce it**
+
+- Create file `mini.vim` with：
+
+  ```vim
+  set nocompatible
+  set runtimepath^=/path/to/coc.nvim
+  filetype plugin indent on
+  syntax on
+  set hidden
+  ```
+
+- Start (neo)vim with command: `vim -u mini.vim`
+
+- Operate vim.
+
+## Screenshots (optional)
+
+If applicable, add screenshots to help explain your problem.

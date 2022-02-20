@@ -1,19 +1,17 @@
 ---
 name: Feature request
-about: Suggest an enhancement for the plugin
-title: ''
-labels: enhancement
+about: Suggest an idea for this project
 
 ---
 
-**Motivation**
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-_A clear and concise description of what currently is hard to do._
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
 
-**Request and Purpose**
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
 
-_A clear and concise description of what you want to happen. Possible fit criteria._
-
-**Alternatives**
-
-_A clear and concise description of any alternative solutions or features you've considered._
+**Additional context**
+Add any other context or screenshots about the feature request here.
