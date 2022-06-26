@@ -1,0 +1,9 @@
+"To start exploring in the current window, use: >
+" <Leader>be   or   :BufExplorer   or   Your custom key mapping
+"To toggle bufexplorer on or off in the current window, use: >
+" <Leader>bt   or   :ToggleBufExplorer   or   Your custom key mapping
+"To start exploring in a newly split horizontal window, use: >
+" <Leader>bs   or   :BufExplorerHorizontalSplit   or   Your custom key mapping
+"To start exploring in a newly split vertical window, use: >
+" <Leader>bv   or   :BufExplorerVerticalSplit   or   Your custom key mapping
+nnoremap <F9> :ToggleBufExplorer<CR>  "打开关闭bufexplorer

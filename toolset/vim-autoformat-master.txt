@@ -1,0 +1,4 @@
+au BufWrite *.cpp,*.[ch], :Autoformat
+let g:formatdef_otbs = '"astyle --style=otbs --pad-oper --indent=force-tab"'
+let g:formatters_cpp = ['otbs']
+let g:formatters_c = ['otbs']

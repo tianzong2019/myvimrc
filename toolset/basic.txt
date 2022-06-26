@@ -1,0 +1,93 @@
+filetype plugin on
+"set nocompatible            " 配置不兼容vi
+"set pastetoggle=<F7>        " 在粘贴代码之前，进入insert模式，按F7,就可以关闭自动缩进
+
+set nobackup                " 覆盖文件时不备份
+set noswapfile
+set noerrorbells            " 关闭错误信息响铃
+set novisualbell            " 关闭使用可视响铃代替呼叫
+
+set t_Co=256
+set cursorline              " 突出显示当前行
+set cursorcolumn            " 高亮显示光标列
+highlight cursorline cterm=none ctermbg=236    
+highlight cursorcolumn cterm=none ctermbg=236
+
+set ignorecase smartcase    " 搜索时忽略大小写，但在有一个或以上大写字母时仍保持对大小写敏感
+set incsearch               " 输入搜索内容时就显示搜索结果
+set hlsearch                " 搜索时高亮显示被找到的文本
+hi Search term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+
+set magic                   " 显示括号配对情况
+set number                  " 显示行号
+" 用< F2>开启/关闭行号
+nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
+
+syntax on                   " 自动语法高亮
+set autoindent              "设置自动缩进：即每行的缩进值与上一行相等
+set cindent                 "使用 C/C++ 语言的自动缩进方式
+
+set shiftwidth=4            " 设定 << 和 >> 命令移动时的宽度为 4
+set softtabstop=4           " 使得按退格键时可以一次删掉 4 个空格
+set tabstop=4               " 设定 tab 长度为 4
+
+" 手动触发放弃当前修改，强制重新载入                
+nnoremap <leader>e :e!<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" 窗口移动及resize
+"
+nnoremap <c-h>    <esc><c-w>h<esc>
+nnoremap <c-j>    <esc><c-w>j<esc>
+nnoremap <c-k>    <esc><c-w>k<esc>
+nnoremap <c-l>    <esc><c-w>l<esc>
+
+nnoremap <M-left>    <esc><c-w>h<esc>
+nnoremap <M-down>    <esc><c-w>j<esc>
+nnoremap <M-up>    <esc><c-w>k<esc>
+nnoremap <M-right>    <esc><c-w>l<esc>
+
+nmap v=    <esc>:resize +3<cr><esc>
+nmap v-    <esc>:resize -3<cr><esc>
+nmap v,    <esc>:vertical resize +3<cr><esc>
+nmap v.    <esc>:vertical resize -3<cr><esc>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" 最大化当前窗口及返回
+"
+function! Zoom ()
+    " check if is the zoomed state (tabnumber > 1 && window == 1)
+    if tabpagenr('$') > 1 && tabpagewinnr(tabpagenr(), '$') == 1
+        let l:cur_winview = winsaveview()
+        let l:cur_bufname = bufname('')
+        tabclose
+
+        " restore the view
+        if l:cur_bufname == bufname('')
+            call winrestview(cur_winview)
+        endif
+    else
+        tab split
+    endif
+endfunction
+nnoremap zx <esc>:call Zoom() <cr><esc>
+
+
+"-------------------------------------------------"
+" quickfix
+" F8 打开隐藏
+"  
+"-------------------------------------------------"
+let g:quickfixname=1
+function! QuickfixFunc()
+	if g:quickfixname
+		let g:quickfixname=0
+		exec ":copen 20"
+	else
+		let g:quickfixname=1
+		exec ":ccl"
+	endif
+endfunction
+nnoremap <F8> <esc>:call QuickfixFunc()<cr><esc>

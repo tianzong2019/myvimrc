@@ -1,0 +1,29 @@
+"<leader>ca在可选的注释方式之间切换，比如C/C++ 的块注释/* */和行注释//  
+"<leader>cc注释当前行
+"<leader>c<space> 切换注释/非注释状态
+"<leader>cs 以”性感”的方式注释
+"<leader>cA 在当前行尾添加注释符，并进入Insert模式
+"<leader>cu 取消注释
+"<leader>c$ 从光标开始到行尾注释  ，这个要说说因为c$也是从光标到行尾的快捷键，这个按过逗号（，）要快一点按c$
+"2<leader>cc 光标以下count行添加注释 
+"2<leader>cu 光标以下count行取消注释
+"2<leader>cm:光标以下count行添加块注释(2,cm)
+"Normal模式下，几乎所有命令前面都可以指定行数
+"Visual模式下执行命令，会对选中的特定区块进行注释/反注释
+"
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1

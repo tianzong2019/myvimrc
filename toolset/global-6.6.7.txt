@@ -1,0 +1,33 @@
+let g:Gtags_OpenQuickfixWindow = 0  "默认跳转时不打开quickfix窗口
+
+"let $GTAGSLABEL='native'
+"let g:gutentags_define_advanced_commands = 1
+
+let $GTAGSLABEL = 'native-pygments'
+let $GTAGSCONF = '/usr/local/share/gtags/gtags.conf'
+
+"" Gtags func：查看定义处
+"" Gtags -r func：查看引用处
+"" Gtags -s text：查看未被数据库定义的tags
+"" Gtags -g pattern：搜索pattern指定的字符串
+"" Gtags -gie -pattern：-e选项可以用于搜索’-‘字符，但是基础搜索，没有元字符，-i选项忽略大小写，类似于grep的选项
+"" GtagsCuorsor：取决于光标位置，要是在定义处，查询其引用，要是在引用处，跳转至其定义处，否则就是Gtags -s命令
+"" Gtags -P text：查询包含text的路径名,Gtags -P后接/dir/为列出叫做dir目录下文件，后接\.h$列出所有的include文件
+"" Gtags -f file：列出file里的符号，Gtags -f %则列出当前文件的符号
+""
+"" copen：打开quick fix显示窗口
+"" cclose：关闭quick fix显示窗口
+"" cn：下一项
+"" cp：上一项
+"" cl：列出查询到的相关项
+"" ccN：到列表中第N个符号处
+""
+"" use for sp file, 但是gutentags 的 g:gutentags_gtags_options_file 不能为gtags.files
+""    find drivers/dma-buf/ -type f -name "*.c" -o -name "*.h" >gtags.files
+""
+nmap qq :GtagsCursor<CR>
+nmap qg :Gtags <C-R>=expand("<cword>")<CR>
+nmap qc :Gtags -r <C-R>=expand("<cword>")<CR><CR>
+nmap qs :Gtags -s <C-R>=expand("<cword>")<CR><CR>
+nmap qe :Gtags -g <C-R>=expand("<cword>")<CR><CR>
+nmap qf :Gtags -f  <C-R>=expand("<cfile>")<CR><CR>
