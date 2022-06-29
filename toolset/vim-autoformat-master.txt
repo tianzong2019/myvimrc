@@ -1,4 +1,33 @@
 au BufWrite *.cpp,*.[ch], :Autoformat
-let g:formatdef_otbs = '"astyle --style=otbs --pad-oper --indent=force-tab"'
+let g:formatdef_otbs = '"astyle *.c *.cpp *.h --indent=force-tab=4 --indent-namespaces --indent-continuation=4 --style=otbs --attach-closing-while --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --pad-oper --pad-comma --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=name --align-reference=name --attach-return-type-decl --remove-braces"'
 let g:formatters_cpp = ['otbs']
 let g:formatters_c = ['otbs']
+
+"astyle *.c  *.cpp *.h
+"--indent=force-tab=4                           tab缩进，4个空格
+"--indent-namespaces                            缩进命名空间块
+"--indent-continuation=4                        等号=或(结尾后续本语句符号插入空格,默认为1,可取1~4
+"--style=bsd                                    大括号独占一行,上下对齐，只有函数的独占一行，建议使用--style=otbs
+"--attach-closing-while                         while紧贴
+"--indent-preproc-block                         缩进#开头的处理语句
+"--indent-preproc-cond                          预处理语句也缩进
+"--indent-preproc-define                        define语句也缩进
+"--indent-col1-comments                         注释也缩进
+"--pad-oper                                     操作符间插入空格
+"--pad-comma                                    逗号间插入空格(--pad-oper中已有此效果)
+"--pad-paren-in                                 括号里内插入空格，不建议
+"--unpad-paren                                  紧凑括号内外，跟上一条相反，建议使用这一规则
+"--delete-empty-lines                           清除函数间的空行，不建议
+"--align-pointer=name                           指针符号紧贴name
+"--align-reference=name                         引用符号紧贴name
+"--attach-return-type-decl                      返回类型紧贴符号名
+"--remove-braces                                在'if', 'for', 'while'等句块中只有一行删除大括号
+"
+"不建议
+"--recursive
+"--break-elseifs                不建议
+"--add-braces                   在'if', 'for', 'while'等句块中只有一行也加入大括号
+"--add-one-line-braces
+"--indent=spaces=4              缩进4个空格，缩进使用tab，--indent=force-tab
+"--convert-tabs                 将TAB符转化成空格,由转化参数指定,引号内的不转化，不建议
+"--indent-switches              缩进case标签，不建议缩进
