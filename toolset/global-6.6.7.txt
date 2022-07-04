@@ -5,6 +5,7 @@ let g:Gtags_OpenQuickfixWindow = 0  "默认跳转时不打开quickfix窗口
 
 let $GTAGSLABEL = 'native-pygments'
 let $GTAGSCONF = '/usr/local/share/gtags/gtags.conf'
+au BufWritePost *.c,*.cpp,*.h Gtags --single-update % <CR>
 
 "" Gtags func：查看定义处
 "" Gtags -r func：查看引用处
