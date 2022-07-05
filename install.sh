@@ -33,7 +33,7 @@ toolarr=(
 	nerdcommenter-2.5.2
 	nerdtree-6.10.10
 	taglist_46
-	vim-autoformat-master
+#	vim-autoformat-master
 	vim-gutentags-master
 	vim-ingo-library-1.042
 	vim-mark-3.1.1
