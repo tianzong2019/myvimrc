@@ -1,2 +1,8 @@
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.project', 'GTAGS']
 let g:gutentags_modules = ['gtags_cscope']
+
+" 打开trace
+"let g:gutentags_trace = 1
+" 打开后使用，messages 命令列出所有消息记录，即可看到 gtags 的错误输出，方便定位。
+" 执行该插件前，确保，本地先执行过gtags，生成gtag文件
+"let g:gutentags_define_advanced_commands = 1
