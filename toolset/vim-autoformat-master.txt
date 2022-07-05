@@ -1,4 +1,4 @@
-au BufWrite *.cpp,*.[ch], :Autoformat
+" au BufWrite *.cpp,*.[ch], :Autoformat
 let g:formatdef_otbs = '"astyle *.c *.cpp *.h --indent=force-tab=4 --indent-namespaces --indent-continuation=4 --style=otbs --attach-closing-while --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --pad-oper --pad-comma --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=name --align-reference=name --attach-return-type-decl --remove-braces"'
 let g:formatters_cpp = ['otbs']
 let g:formatters_c = ['otbs']
