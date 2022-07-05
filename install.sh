@@ -67,6 +67,7 @@ for tool in ${toolarr[@]};do
 	rm -rf ${tempdir}/${tool}
 done
 
+chmod 777 ${tempdir}/vim/plat/unix/*.sh
 
 # 完整的vim 和 vimrc copy 到${HOME}
 mv ${tempdir}/vim ${HOME}/.vim
