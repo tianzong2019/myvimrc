@@ -1,0 +1,3 @@
+set laststatus=2                                   "startup the lightline.vim
+let g:lightline = { 'colorscheme': 'powerline', }  "set status-line
+let g:Powerline_symbols= 'unicode'
