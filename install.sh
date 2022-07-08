@@ -34,6 +34,7 @@ toolarr=(
 	nerdtree-6.10.10
 	taglist_46
 #	vim-autoformat-master
+	lightline.vim-master
 	vim-gutentags-master
 	vim-ingo-library-1.042
 	vim-mark-3.1.1
