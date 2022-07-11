@@ -74,6 +74,12 @@ chmod 777 ${tempdir}/vim/plat/unix/*.sh
 mv ${tempdir}/vim ${HOME}/.vim
 mv ${tempdir}/vimrc ${HOME}/.vimrc
 
+dejaVu='DejaVu_Sans_Mono_for_Powerline_Nerd_Font'
+unzip -x -o -q ${scdir}/toolset/${dejaVu}.zip -d ${tempdir}
+mkdir -p ~/.fonts
+cp -f ${tempdir}/${dejaVu}/*.ttf ~/.fonts
+fc-cache -vf              #刷新系统字体缓存
+
 rm -rf ${tempdir}
 
 
