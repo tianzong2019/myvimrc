@@ -23,7 +23,10 @@ let g:Lf_IgnoreCurrentBufferName = 1
 "  'popup' - the LeaderF window is a popup window or floating window.
 "let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+" The default value is
+let g:Lf_StlSeparator = { 'left': '►', 'right': '◄', 'font': '' }
+" If you haven't set the global option |guifont|, you can still use the patched fonts
+"let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 let g:Lf_RootMarkers = ['.git', '.hg', '.svn', '.repo', '.project', '.project2']
 let g:Lf_Ctags = "/usr/bin/ctags"
