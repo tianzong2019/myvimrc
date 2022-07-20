@@ -93,3 +93,36 @@ rm -rf ${tempdir}
 # cd ../
 # rm -rf ${dst}*
 
+
+# alias cyimg='cyimgfunc(){ \
+#     dstdir="/home/cv_common/tftp/liuxiaobo" ;   \
+#     srcdir=`date +%Y%m%d_%H%M%S.%N`"_out_put" ; \
+#     rm -rf ${dstdir}/"out_put"; \
+#     mkdir -p ${dstdir}/"out_put"; \
+#     if test -d "out_put" ; \
+#     then \
+#             cp -rf "out_put" ${dstdir}/${srcdir} ;  \
+#     else \
+#             echo "current No out_put" ; \
+#             return 0 ;                    \
+#     fi; \
+#     for itm in `ls ${dstdir}/${srcdir}` ;do \
+#             ln -fn ${dstdir}/${srcdir}/$itm ${dstdir}/out_put/$itm; \
+#     done; \
+#     ln -fs ${dstdir}/${srcdir} ${dstdir}/out_put; \
+# };cyimgfunc'
+#  
+#  
+#  
+# alias crootinit='croot(){ \
+#     cd ${rootdir};   \
+# };rootdir=`pwd`'
+#  
+#  
+# alias cpvs='cp -rf ~/0617-vscode/ .vscode'
+#  
+# alias bdtb='git clean -fdx . ;cpvs ;./mk_testbench.sh ;compiledb -p compile_log.txt'
+#  
+# alias bdker='git clean -fdx . ;cpvs ;./mk_kernel.sh -m; ./mk_kernel.sh -j; cyimg ;./.vscode/generate_compdb.py'
+
+
