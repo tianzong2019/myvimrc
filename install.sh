@@ -83,3 +83,13 @@ fc-cache -vf              #刷新系统字体缓存
 rm -rf ${tempdir}
 
 
+# lobal-6.6.8
+# wget https://ftp.gnu.org/pub/gnu/global/${dst}.tar.gz
+# tar -zxf ${dst}.tar.gz
+# cd ${dst}
+# ./configure
+# make -j4 
+# sudo make install 
+# cd ../
+# rm -rf ${dst}*
+
