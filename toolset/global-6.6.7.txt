@@ -1,3 +1,4 @@
+set autochdir
 let g:Gtags_OpenQuickfixWindow = 0  "默认跳转时不打开quickfix窗口
 
 "let $GTAGSLABEL='native'
