@@ -26,6 +26,7 @@ nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
 syntax on                   " 自动语法高亮
 set autoindent              "设置自动缩进：即每行的缩进值与上一行相等
 set cindent                 "使用 C/C++ 语言的自动缩进方式
+set cc=120                  " 120字符分割线
 
 set shiftwidth=4            " 设定 << 和 >> 命令移动时的宽度为 4
 set softtabstop=4           " 使得按退格键时可以一次删掉 4 个空格
