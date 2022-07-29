@@ -1,20 +1,33 @@
-" http://astyle.sourceforge.net/astyle.html
-" au BufWrite *.cpp,*.[ch], :Autoformat
-" let g:formatdef_otbs = '"astyle *.c *.cpp *.h --indent=force-tab=4 --indent-namespaces --indent-continuation=4 --style=otbs --attach-closing-while --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --pad-oper --pad-comma --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=name --align-reference=name --attach-return-type-decl --remove-braces"'
-let g:formatdef_otbs = '"astyle *.c *.cpp *.h --max-code-length=120"'
-let g:formatters_cpp = ['otbs']
-let g:formatters_c = ['otbs']
+"let g:autoformat_verbosemode=1  " 输出辅助定位的error info
+au BufWrite *.cpp,*.[ch], :Autoformat
+let b:formatdef_custom_c='"astyle --mode=c --max-code-length=120 --indent=force-tab=4 --indent-namespaces --indent-continuation=4 --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --attach-closing-while --pad-oper --pad-comma --pad-paren-in --unpad-paren --delete-empty-lines --align-pointer=name --align-reference=name --attach-return-type-decl --remove-braces"'
+let b:formatters_c = ['custom_c']
+let b:formatters_cpp = ['custom_c']
 
+" astyle格式，http://astyle.sourceforge.net/astyle.html
+" 安装依赖，sudo apt install astyle clang-format python-pep8 python3-pep8 python-autopep8 yapf
+" 自定义format, for c style
+" au BufWrite *.cpp,*.[ch], :Autoformat
+" let b:formatdef_custom_c='"astyle --mode=c --max-code-length=120"'
+" let b:formatters_c = ['custom_c']
+" let b:formatters_cpp = ['custom_c']
+"
+" 设定以allman(ansi)的风格格式化C/C++代码同时在操作符两边加入空格(即--pad-oper参数)
+" au BufWrite *.cpp,*.[ch], :Autoformat
+" let g:formatdef_allman = '"astyle --style=allman --pad-oper"'
+" let g:formatters_cpp = ['allman']
+" let g:formatters_c = ['allman']
+"
 "astyle *.c  *.cpp *.h
 "--indent=force-tab=4                           tab缩进，4个空格
 "--indent-namespaces                            缩进命名空间块
 "--indent-continuation=4                        等号=或(结尾后续本语句符号插入空格,默认为1,可取1~4
-"--style=bsd                                    大括号独占一行,上下对齐，只有函数的独占一行，建议使用--style=otbs
-"--attach-closing-while                         while紧贴
 "--indent-preproc-block                         缩进#开头的处理语句
 "--indent-preproc-cond                          预处理语句也缩进
 "--indent-preproc-define                        define语句也缩进
 "--indent-col1-comments                         注释也缩进
+"--style=bsd                                    大括号独占一行,上下对齐，只有函数的独占一行，建议使用--style=otbs，linux标准 --style=kr
+"--attach-closing-while                         while紧贴
 "--pad-oper                                     操作符间插入空格
 "--pad-comma                                    逗号间插入空格(--pad-oper中已有此效果)
 "--pad-paren-in                                 括号里内插入空格，不建议
