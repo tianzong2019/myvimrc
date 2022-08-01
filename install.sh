@@ -9,7 +9,7 @@ tempdir=${scdir}/.temp
 rm -rf ${tempdir}
 mkdir -p ${tempdir}/vim
 cp -rf ${scdir}/toolset/basic.txt ${tempdir}/vimrc
-cp -rf ${scdir}/toolset/cus.clang-format ${HOME}/cus.clang-format
+cp -rf ${scdir}/toolset/cus.clang-format ${HOME}/.config/cus.clang-format
 
 #### 插件列表 ###########################################################
 #  bufexplorer-7.4.21
