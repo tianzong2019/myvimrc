@@ -69,7 +69,7 @@ AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
  
 # 总是在多行string字面量前换行
-AlwaysBreakBeforeMultilineStrings: false
+AlwaysBreakBeforeMultilineStrings: true
  
 # 总是在template声明后换行
 AlwaysBreakTemplateDeclarations: false
@@ -107,7 +107,7 @@ BraceWrapping:
   # else之前
   BeforeElse: false
   # 缩进大括号(整个大括号框起来的部分都缩进)
-  IndentBraces: false
+  IndentBraces: true
   # 空函数的大括号是否可以在一行
   SplitEmptyFunction: false
   # 空记录体(struct/class/union)的大括号是否可以在一行
@@ -136,7 +136,7 @@ BreakConstructorInitializersBeforeComma: false
 BreakConstructorInitializers: BeforeComma
  
 # 每行字符的限制，0表示没有限制
-ColumnLimit: 100
+ColumnLimit: 120
  
 # 描述具有特殊意义的注释的正则表达式，它不应该被分割为多行或以其它方式改变
 # CommentPragmas: ''
@@ -203,10 +203,10 @@ MacroBlockBegin: ''
 MacroBlockEnd: ''
  
 # 连续空行的最大数量
-MaxEmptyLinesToKeep: 10
+MaxEmptyLinesToKeep: 2
  
 # 命名空间的缩进: None, Inner(缩进嵌套的命名空间中的内容), All
-# NamespaceIndentation: Inner
+NamespaceIndentation: Inner
  
 # 使用ObjC块时缩进宽度
 ObjCBlockIndentWidth: 4
@@ -221,19 +221,19 @@ ObjCSpaceBeforeProtocolList: true
 PenaltyBreakBeforeFirstCallParameter: 2
  
 # 在一个注释中引入换行的penalty
-PenaltyBreakComment: 300
+PenaltyBreakComment: 120
  
 # 第一次在<<前换行的penalty
 PenaltyBreakFirstLessLess:  120
  
 # 在一个字符串字面量中引入换行的penalty
-PenaltyBreakString: 1000
+PenaltyBreakString: 120
  
 # 对于每个在行字符数限制之外的字符的penalty
 PenaltyExcessCharacter: 1000000
  
 # 对每一个空格缩进字符的penalty(相对于前导的非空格列计算)
-# PenaltyIndentedWhitespace: 0 
+PenaltyIndentedWhitespace: 4 
  
 # 将函数的返回类型放到它自己的行的penalty
 PenaltyReturnTypeOnItsOwnLine: 120
@@ -249,7 +249,7 @@ ReflowComments: true
 SortIncludes: true
  
 # 允许排序 using 声明顺序
-SortUsingDeclarations: false
+SortUsingDeclarations: true
  
 # 在C风格类型转换后添加空格
 SpaceAfterCStyleCast: false
@@ -292,7 +292,7 @@ SpacesInContainerLiterals:  false
 SpacesInCStyleCastParentheses: false
  
 # 如果为true，将在If/for/switch/while条件括号前后插入空格。
-SpacesInConditionalStatement: false
+SpacesInConditionalStatement: true
  
 # 在圆括号的(后和)前添加空格
 SpacesInParentheses: false
@@ -307,4 +307,4 @@ Standard: Cpp11
 TabWidth: 4
  
 # 使用tab字符: Never, ForIndentation, ForContinuationAndIndentation, Always
-UseTab: Never
+UseTab: Always
