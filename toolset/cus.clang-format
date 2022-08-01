@@ -42,8 +42,7 @@ AllowAllConstructorInitializersOnNextLine: true
  
 # 允许函数声明的所有参数在放在下一行
 AllowAllParametersOfDeclarationOnNextLine: true
- 
- 
+
 # 允许短的块放在同一行(Always 总是将短块合并成一行，Empty 只合并空块)
 AllowShortBlocksOnASingleLine: Empty
  
@@ -51,7 +50,7 @@ AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
  
 # 允许短的函数放在同一行: None, InlineOnly(定义在类中), Empty(空函数), Inline(定义在类中，空函数), All
-AllowShortFunctionsOnASingleLine: Inline
+AllowShortFunctionsOnASingleLine: None
  
 # 允许短的if语句保持在同一行
 AllowShortIfStatementsOnASingleLine: false
@@ -69,7 +68,7 @@ AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
  
 # 总是在多行string字面量前换行
-AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakBeforeMultilineStrings: false
  
 # 总是在template声明后换行
 AlwaysBreakTemplateDeclarations: false
@@ -107,7 +106,7 @@ BraceWrapping:
   # else之前
   BeforeElse: false
   # 缩进大括号(整个大括号框起来的部分都缩进)
-  IndentBraces: true
+  IndentBraces: false
   # 空函数的大括号是否可以在一行
   SplitEmptyFunction: false
   # 空记录体(struct/class/union)的大括号是否可以在一行
@@ -292,7 +291,7 @@ SpacesInContainerLiterals:  false
 SpacesInCStyleCastParentheses: false
  
 # 如果为true，将在If/for/switch/while条件括号前后插入空格。
-SpacesInConditionalStatement: true
+SpacesInConditionalStatement: false
  
 # 在圆括号的(后和)前添加空格
 SpacesInParentheses: false
