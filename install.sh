@@ -9,6 +9,7 @@ tempdir=${scdir}/.temp
 rm -rf ${tempdir}
 mkdir -p ${tempdir}/vim
 cp ${scdir}/toolset/basic.txt ${tempdir}/vimrc
+cp ${scdir}/toolset/cus.clang-format ${HOME}/cus.clang-format
 
 #### 插件列表 ###########################################################
 #  bufexplorer-7.4.21
@@ -29,7 +30,7 @@ toolarr=(
 	DoxygenToolkit.vim-master
 	global-6.6.7
 	LeaderF-1.23
-	neocomplete.vim-master
+#	neocomplete.vim-master
 	nerdcommenter-2.5.2
 	nerdtree-6.10.10
 	taglist_46
