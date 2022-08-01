@@ -1,9 +1,14 @@
 "let g:autoformat_verbosemode=1  " 输出辅助定位的error info
 " au BufWrite *.cpp,*.[ch], :Autoformat
-let b:formatdef_custom_c='"astyle --mode=c --max-code-length=120 --indent=force-tab=4 --indent-namespaces --indent-continuation=4 --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --attach-closing-while --pad-oper --pad-header --unpad-paren --delete-empty-lines --align-pointer=name --align-reference=name --attach-return-type-decl --remove-braces"'
-let b:formatters_c = ['custom_c']
-let b:formatters_cpp = ['custom_c']
-
+let g:formatdef_my_clang = '"clang-format -style=file:${HOME}/.config/cus.clang-format"'
+let g:formatters_cpp = ['my_clang']
+let g:formatters_c = ['my_clang']
+noremap <F12> :Autoformat<cr>
+"
+" let b:formatdef_custom_c='"astyle --mode=c --max-code-length=120 --indent=force-tab=4 --indent-namespaces --indent-continuation=4 --indent-preproc-block --indent-preproc-cond --indent-preproc-define --indent-col1-comments --attach-closing-while --pad-oper --pad-header --unpad-paren --delete-empty-lines --align-pointer=name --align-reference=name --attach-return-type-decl --remove-braces"'
+" let b:formatters_c = ['custom_c']
+" let b:formatters_cpp = ['custom_c']
+"
 " astyle格式，http://astyle.sourceforge.net/astyle.html
 " 安装依赖，sudo apt install astyle clang-format python-pep8 python3-pep8 python-autopep8 yapf
 " 自定义format, for c style
