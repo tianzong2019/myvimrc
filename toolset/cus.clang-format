@@ -306,4 +306,17 @@ Standard: Cpp11
 TabWidth: 4
  
 # 使用tab字符: Never, ForIndentation, ForContinuationAndIndentation, Always
-UseTab: Always
+UseTab: ForIndentation
+
+AlignArrayOfStructures: Right
+AlignConsecutiveMacros: AcrossEmptyLines
+AlignEscapedNewlines: Right
+AlignOperands: Align
+BreakBeforeBinaryOperators: All
+AlwaysBreakBeforeMultilineStrings: false
+BreakBeforeTernaryOperators: true
+ReflowComments: true
+AlignConsecutiveDeclarations: true
+SeparateDefinitionBlocks: Always
+AllowShortEnumsOnASingleLine: false
+BreakBeforeBraces: Linux
