@@ -320,3 +320,4 @@ AlignConsecutiveDeclarations: true
 SeparateDefinitionBlocks: Always
 AllowShortEnumsOnASingleLine: false
 BreakBeforeBraces: Linux
+BreakStringLiterals: true
