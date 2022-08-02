@@ -310,7 +310,6 @@ UseTab: ForIndentation
 
 AlignArrayOfStructures: Right
 AlignConsecutiveMacros: AcrossEmptyLines
-AlignEscapedNewlines: Right
 AlignOperands: Align
 BreakBeforeBinaryOperators: All
 AlwaysBreakBeforeMultilineStrings: false
