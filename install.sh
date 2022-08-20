@@ -96,7 +96,7 @@ rm -rf ${tempdir}
 
 
 # alias cyimg='cyimgfunc(){ \
-#     dstdir="/home/cv_common/tftp/liuxiaobo" ;   \
+#     dstdir="/home/xxx/tftp" ;   \
 #     srcdir=`date +%Y%m%d_%H%M%S.%N`"_out_put" ; \
 #     rm -rf ${dstdir}/"out_put"; \
 #     mkdir -p ${dstdir}/"out_put"; \
