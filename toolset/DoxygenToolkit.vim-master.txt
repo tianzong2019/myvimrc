@@ -4,13 +4,21 @@
 " :DoxUndoc(DEBUG)    Ignore code fragment (C/C++ Only), 如果想忽略调试部分的代码，那么只需要执行命令
 " :DoxBlock           Group, 输入命令 DoxBlock 来插入一个注释块
 "
-" 版权说明，需要修改DoxygenToolkit.vim 解决
-"
-let g:DoxygenToolkit_companyName="xxx"
-let g:DoxygenToolkit_authorName="你的名字，邮箱"
-let g:DoxygenToolkit_briefTag_funcName = "yes"    " 或者no，这个是指, 是否在注释中 自动 包含函数名称
+let g:DoxygenToolkit_companyName="xxxx"
+let g:DoxygenToolkit_authorName="name, email"
+let g:DoxygenToolkit_briefTag_funcName = "yes"        " 或者no，这个是指, 是否在注释中 自动 包含函数名称
 let g:DoxygenToolkit_paramTag_pre="@Param "
-let g:DoxygenToolkit_returnTag="@Returns   "
+let g:DoxygenToolkit_returnTag="@Returns "
 " License
-let s:licenseTag = "All rights reserved.\<enter>"
-let s:licenseTag = s:licenseTag . "Call Center On Demand Product Series\<enter>"
+let s:licenseTag = "xxx\<enter>\<enter>"
+let s:licenseTag = s:licenseTag . "Copyright (C) 2022 xxx\<enter>"
+let s:licenseTag = s:licenseTag . "All rights reserved.\<enter>\<enter>"
+let s:licenseTag = s:licenseTag . "This program is free software; you can redistribute it and/or modify\<enter>"
+let s:licenseTag = s:licenseTag . "it under the terms of the GNU General Public License as published by\<enter>"
+let s:licenseTag = s:licenseTag . "the Free Software Foundation; either version 2 of the License, or\<enter>"
+let s:licenseTag = s:licenseTag . "(at your option) any later version.\<enter>"
+let g:DoxygenToolkit_licenseTag = s:licenseTag
+" 格式
+let g:DoxygenToolkit_fileTag = "@file\t"
+let g:DoxygenToolkit_authorTag = "@author\t"
+let g:DoxygenToolkit_dateTag = "@date\t"
