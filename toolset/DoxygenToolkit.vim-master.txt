@@ -8,4 +8,9 @@
 "
 let g:DoxygenToolkit_companyName="xxx"
 let g:DoxygenToolkit_authorName="你的名字，邮箱"
-let g:DoxygenToolkit_briefTag_funcName = "yes"        " 或者no    // 这个是指, 是否在注释中 自动 包含函数名称
+let g:DoxygenToolkit_briefTag_funcName = "yes"    " 或者no，这个是指, 是否在注释中 自动 包含函数名称
+let g:DoxygenToolkit_paramTag_pre="@Param "
+let g:DoxygenToolkit_returnTag="@Returns   "
+" License
+let s:licenseTag = "All rights reserved.\<enter>"
+let s:licenseTag = s:licenseTag . "Call Center On Demand Product Series\<enter>"
