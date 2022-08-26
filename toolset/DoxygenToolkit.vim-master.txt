@@ -1,5 +1,11 @@
-" License, 将光标放在需要生成 License 的地方，然后输入命令 :DoxLic
-" Author, 将光标放在合适的地方，然后输入命令 :DoxAuthor
-" Function / Class, 将光标放在 function 或者 class 的名字所在的一行，然后输入命令 :Dox
-" Ignore code fragment (C/C++ Only), 如果想忽略调试部分的代码，那么只需要执行命令 :DoxUndoc(DEBUG) 即可
-" Group, 输入命令 DoxBlock 来插入一个注释块
+" :DoxLic    License，将光标放在需要生成 License 的地方，然后输入命令
+" :DoxAuthor Author, 将光标放在合适的地方，然后输入命令
+" :Dox       Function / Class, 将光标放在 function 或者 class 的名字所在的一行，然后输入命令
+" :DoxUndoc(DEBUG)    Ignore code fragment (C/C++ Only), 如果想忽略调试部分的代码，那么只需要执行命令
+" :DoxBlock           Group, 输入命令 DoxBlock 来插入一个注释块
+"
+" 版权说明，需要修改DoxygenToolkit.vim 解决
+"
+let g:DoxygenToolkit_companyName="xxx"
+let g:DoxygenToolkit_authorName="你的名字，邮箱"
+let g:DoxygenToolkit_briefTag_funcName = "yes"        " 或者no    // 这个是指, 是否在注释中 自动 包含函数名称
