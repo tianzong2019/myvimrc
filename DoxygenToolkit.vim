@@ -463,12 +463,12 @@ function! <SID>DoxygenLicenseFunc()
   " exec "normal o".s:interCommentTag.l:copyright."\<enter>".s:interCommentTag
   exec "normal o".s:interCommentTag.l:license
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_fileTag.l:fileName
-  exec "normal o".s:interCommentTag.g:DoxygenToolkit_briefTag_pre
-  mark d
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_authorTag.g:DoxygenToolkit_authorName
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_versionTag.g:DoxygenToolkit_versionString
   let l:date = strftime("%Y-%m-%d")
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_dateTag.l:date
+  exec "normal o".s:interCommentTag.g:DoxygenToolkit_briefTag_pre
+  mark d
   if( s:endCommentBlock != "" )
     exec "normal o".s:endCommentBlock
   endif
