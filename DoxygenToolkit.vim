@@ -265,30 +265,20 @@
 "endif
 let loaded_DoxygenToolkit = 1
 "echo 'Loading DoxygenToolkit...'
-"let s:licenseTag = "Copyright (C) \<enter>\<enter>"
-"let s:licenseTag = s:licenseTag . "This program is free software; you can redistribute it and/or\<enter>"
-"let s:licenseTag = s:licenseTag . "modify it under the terms of the GNU General Public License\<enter>"
-"let s:licenseTag = s:licenseTag . "as published by the Free Software Foundation; either version 2\<enter>"
-"let s:licenseTag = s:licenseTag . "of the License, or (at your option) any later version.\<enter>\<enter>"
-"let s:licenseTag = s:licenseTag . "This program is distributed in the hope that it will be useful,\<enter>"
-"let s:licenseTag = s:licenseTag . "but WITHOUT ANY WARRANTY; without even the implied warranty of\<enter>"
-"let s:licenseTag = s:licenseTag . "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\<enter>"
-"let s:licenseTag = s:licenseTag . "GNU General Public License for more details.\<enter>\<enter>"
-"let s:licenseTag = s:licenseTag . "You should have received a copy of the GNU General Public License\<enter>"
-"let s:licenseTag = s:licenseTag . "along with this program; if not, write to the Free Software\<enter>"
-"let s:licenseTag = s:licenseTag . "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.\<enter>"
-"
-let s:licenseTag = "Unpublished copyright. All rights reserved. This material contains\<enter>"
-let s:licenseTag = s:licenseTag . "proprietary information that should be used or copied only within\<enter>"
-let s:licenseTag = s:licenseTag . "COMPANY, except with written permission of COMPANY.\<enter>"
+let s:licenseTag = "Copyright (C) \<enter>\<enter>"
+let s:licenseTag = s:licenseTag . "This program is free software; you can redistribute it and/or\<enter>"
+let s:licenseTag = s:licenseTag . "modify it under the terms of the GNU General Public License\<enter>"
+let s:licenseTag = s:licenseTag . "as published by the Free Software Foundation; either version 2\<enter>"
+let s:licenseTag = s:licenseTag . "of the License, or (at your option) any later version.\<enter>\<enter>"
+let s:licenseTag = s:licenseTag . "This program is distributed in the hope that it will be useful,\<enter>"
+let s:licenseTag = s:licenseTag . "but WITHOUT ANY WARRANTY; without even the implied warranty of\<enter>"
+let s:licenseTag = s:licenseTag . "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\<enter>"
+let s:licenseTag = s:licenseTag . "GNU General Public License for more details.\<enter>\<enter>"
+let s:licenseTag = s:licenseTag . "You should have received a copy of the GNU General Public License\<enter>"
+let s:licenseTag = s:licenseTag . "along with this program; if not, write to the Free Software\<enter>"
+let s:licenseTag = s:licenseTag . "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.\<enter>"
 
 " Common standard constants
-if !exists("g:DoxygenToolkit_briefTag_lic_pre")
-  let g:DoxygenToolkit_briefTag_lic_pre = "@brief:   "
-endif
-if !exists("g:DoxygenToolkit_briefTag_pre")
-  let g:DoxygenToolkit_briefTag_pre = "@brief "
-endif
 if !exists("g:DoxygenToolkit_briefTag_pre")
   let g:DoxygenToolkit_briefTag_pre = "@brief "
 endif
@@ -308,10 +298,10 @@ if !exists("g:DoxygenToolkit_paramTag_post")
   let g:DoxygenToolkit_paramTag_post = ""
 endif
 if !exists("g:DoxygenToolkit_returnTag")
-  let g:DoxygenToolkit_returnTag = "@return:\t"
+  let g:DoxygenToolkit_returnTag = "@return "
 endif
 if !exists("g:DoxygenToolkit_throwTag_pre")
-  let g:DoxygenToolkit_throwTag_pre = "@throw:\t" " @exception is also valid
+  let g:DoxygenToolkit_throwTag_pre = "@throw " " @exception is also valid
 endif
 if !exists("g:DoxygenToolkit_throwTag_post")
   let g:DoxygenToolkit_throwTag_post = ""
@@ -326,25 +316,25 @@ if !exists("g:DoxygenToolkit_licenseTag")
   let g:DoxygenToolkit_licenseTag = s:licenseTag
 endif
 if !exists("g:DoxygenToolkit_fileTag")
-  let g:DoxygenToolkit_fileTag = "@file:\t"
+  let g:DoxygenToolkit_fileTag = "@file "
 endif
 if !exists("g:DoxygenToolkit_authorTag")
-  let g:DoxygenToolkit_authorTag = "@author:\t"
+  let g:DoxygenToolkit_authorTag = "@author "
 endif
 if !exists("g:DoxygenToolkit_dateTag")
-  let g:DoxygenToolkit_dateTag = "@date:\t"
+  let g:DoxygenToolkit_dateTag = "@date "
 endif
 if !exists("g:DoxygenToolkit_versionTag")
-  let g:DoxygenToolkit_versionTag = "@version:"
+  let g:DoxygenToolkit_versionTag = "@version "
 endif
 if !exists("g:DoxygenToolkit_undocTag")
   let g:DoxygenToolkit_undocTag = "DOX_SKIP_BLOCK"
 endif
 if !exists("g:DoxygenToolkit_blockTag")
-  let g:DoxygenToolkit_blockTag = "@name:\t"
+  let g:DoxygenToolkit_blockTag = "@name "
 endif
 if !exists("g:DoxygenToolkit_classTag")
-  let g:DoxygenToolkit_classTag = "@class:\t"
+  let g:DoxygenToolkit_classTag = "@class "
 endif
 
 if !exists("g:DoxygenToolkit_cinoptions")
@@ -455,17 +445,6 @@ function! <SID>DoxygenLicenseFunc()
   if !exists("g:DoxygenToolkit_authorName")
     let g:DoxygenToolkit_authorName = input("Enter name of the author (generally yours...) : ")
   endif
-  mark d
-"  let l:date = strftime("%Y")
-"  exec "normal O".strpart( s:startCommentBlock, 0, 1 )
-"  exec "normal A".strpart( s:startCommentBlock, 1 ).substitute( g:DoxygenToolkit_licenseTag, "\<enter>", "\<enter>".s:interCommentBlock, "g" )
-"  if( s:endCommentBlock != "" )
-"    exec "normal o".s:endCommentBlock
-"  endif
-"  if( g:DoxygenToolkit_licenseTag == s:licenseTag )
-"    exec "normal %jA".l:date." - ".g:DoxygenToolkit_authorName
-"  endif
-"  exec "normal `d"
 
   " Test versionString variable
   if !exists("g:DoxygenToolkit_versionString")
@@ -475,15 +454,16 @@ function! <SID>DoxygenLicenseFunc()
   " Get file name
   let l:fileName = expand('%:t')
   let l:year = strftime("%Y")
-  let l:copyright = "Copyright (c) "
+  let l:copyright = "Copyright (C) "
   let l:copyright = l:copyright.l:year." ".g:DoxygenToolkit_companyName."."
+  let l:copyright = ""
   let l:license = substitute( g:DoxygenToolkit_licenseTag, "\<enter>", "\<enter>".s:interCommentBlock, "g" )
   let l:license = substitute( l:license, "COMPANY", g:DoxygenToolkit_companyName, "g" )
   exec "normal O".s:startCommentBlock
-  exec "normal o".s:interCommentTag.l:copyright."\<enter>".s:interCommentTag
+  " exec "normal o".s:interCommentTag.l:copyright."\<enter>".s:interCommentTag
   exec "normal o".s:interCommentTag.l:license
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_fileTag.l:fileName
-  exec "normal o".s:interCommentTag.g:DoxygenToolkit_briefTag_lic_pre
+  exec "normal o".s:interCommentTag.g:DoxygenToolkit_briefTag_pre
   mark d
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_authorTag.g:DoxygenToolkit_authorName
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_versionTag.g:DoxygenToolkit_versionString
@@ -492,17 +472,12 @@ function! <SID>DoxygenLicenseFunc()
   if( s:endCommentBlock != "" )
     exec "normal o".s:endCommentBlock
   endif
+
+  " Move the cursor to the rigth position
   exec "normal `d"
 
-
-
-
-
-
   call s:RestoreParameters()
-  startinsert!
 endfunction
-
 
 """"""""""""""""""""""""""
 " Doxygen author comment
