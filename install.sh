@@ -128,7 +128,9 @@ rm -rf ${tempdir}
 
 
 # ubuntu 18.04 安装clang-format-13、14、15、16
-# 首先需要删除已有版本: sudo apt remove --purge clang-format*
+# 首先需要删除已有版本: 
+#   sudo apt remove --purge clang-format*
+#   sudo apt autoremove
 # 步骤一: 运行 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - 获取key.
 # 步骤二: 在 /etc/apt/sources.list中添加下列文本
 # ubuntu18.04
@@ -149,11 +151,13 @@ rm -rf ${tempdir}
 #	deb-src http://apt.llvm.org/bionic/ llvm-toolchain-bionic-15 main
 # 步骤三: sudo apt update
 # 步骤四: apt search clang-format 检查所有可用版本
-# 步骤五: 使用sudo apt install clang-format-14 安装,
+# 步骤五: 使用sudo apt install clang-format-13 安装,
 # 步骤六：使用update-alternatives管理clang-format版本
-# 添加， sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-14 1
+# 添加， sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-13 1
 # 删除，sudo update-alternatives --remove clang-format /usr/bin/clang-forma
 #    or sudo update-alternatives --remove-all clang-format
+#
+# Note：clang-format-13/14 不支持-style=file:<filepath> 功能，需要把clang-format格式文件，copy到${HOME}/.clang-format执行
 
 
 # 用法：update-alternatives [<选项> ...] <命令>
