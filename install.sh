@@ -127,3 +127,50 @@ rm -rf ${tempdir}
 # alias bdker='git clean -fdx . ;cpvs ;./mk_kernel.sh -m; ./mk_kernel.sh -j; cyimg ;./.vscode/generate_compdb.py'
 
 
+# ubuntu 18.04 安装clang-format-13、14、15、16
+# 首先需要删除已有版本: sudo apt remove --purge clang-format*
+# 步骤一: 运行 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - 获取key.
+# 步骤二: 在 /etc/apt/sources.list中添加下列文本
+# ubuntu18.04
+#	deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main
+#	deb-src http://apt.llvm.org/bionic/ llvm-toolchain-bionic main
+#	# Needs 'sudo add-apt-repository ppa:ubuntu-toolchain-r/test' for libstdc++ with C++20 support
+#	# 12
+#	deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-12 main
+#	deb-src http://apt.llvm.org/bionic/ llvm-toolchain-bionic-12 main
+#	# 13
+#	deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-13 main
+#	deb-src http://apt.llvm.org/bionic/ llvm-toolchain-bionic-13 main
+#	# 14
+#	deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-14 main
+#	deb-src http://apt.llvm.org/bionic/ llvm-toolchain-bionic-14 main
+#	# 15
+#	deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-15 main
+#	deb-src http://apt.llvm.org/bionic/ llvm-toolchain-bionic-15 main
+# 步骤三: sudo apt update
+# 步骤四: apt search clang-format 检查所有可用版本
+# 步骤五: 使用sudo apt install clang-format-14 安装,
+# 步骤六：使用update-alternatives管理clang-format版本
+# 添加， sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-14 1
+# 删除，sudo update-alternatives --remove clang-format /usr/bin/clang-forma
+#    or sudo update-alternatives --remove-all clang-format
+
+
+# 用法：update-alternatives [<选项> ...] <命令>
+# 
+# 命令：
+#   --install <链接> <名称> <路径> <优先级>
+#     [--slave <链接> <名称> <路径>] ...
+#                            在系统中加入一组候选项。
+#   --remove <名称> <路径>   从 <名称> 替换组中去除 <路径> 项。
+#   --remove-all <名称>      从替换系统中删除 <名称> 替换组。
+#   --auto <名称>            将 <名称> 的主链接切换到自动模式。
+#   --display <名称>         显示关于 <名称> 替换组的信息。
+#   --query <名称>           机器可读版的 --display <名称>.
+#   --list <名称>            列出 <名称> 替换组中所有的可用候选项。
+#   --get-selections         列出主要候选项名称以及它们的状态。
+#   --set-selections         从标准输入中读入候选项的状态。
+#   --config <名称>          列出 <名称> 替换组中的可选项，并就使用其中
+#                            哪一个，征询用户的意见。
+#   --set <名称> <路径>      将 <路径> 设置为 <名称> 的候选项。
+#   --all                    对所有可选项一一调用 --config 命令。
