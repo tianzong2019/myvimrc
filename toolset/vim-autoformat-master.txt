@@ -1,6 +1,7 @@
 "let g:autoformat_verbosemode=1  " 输出辅助定位的error info
 " au BufWrite *.cpp,*.[ch], :Autoformat
-let g:formatdef_my_clang = '"clang-format -style=file:${HOME}/.config/cus.clang-format"'
+" let g:formatdef_my_clang = '"clang-format -style=file:${HOME}/.config/cus.clang-format"'
+let g:formatdef_my_clang = '"clang-format -style=file"'
 let g:formatters_cpp = ['my_clang']
 let g:formatters_c = ['my_clang']
 noremap <F12> :Autoformat<cr>
