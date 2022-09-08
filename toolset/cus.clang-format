@@ -1,4 +1,5 @@
 # clang-format version 13.0.1
+# https://releases.llvm.org/13.0.0/tools/clang/docs/ClangFormatStyleOptions.html
 ---
 # 语言: None, Cpp, Java, JavaScript, ObjC, Proto, TableGen, TextProto ...
 Language:        Cpp
@@ -20,7 +21,6 @@ AccessModifierOffset: -1
 # BAS_AlwaysBreak (文件配置项: AlwaysBreak) 若参数不适合一行，将在左圆括号后换行。
 # BAS_BlockIndent (文件配置项: BlockIndent) 如果参数不适合单行，则始终在左圆括号后换行。右括号将放置在新行上。注意: 该项当前只适用于圆括号。
 AlignAfterOpenBracket: Align
-AlignAfterOpenBracket: Align
 
 # 说明: 当使用数组初始化Struct时，对齐数组每一列元素。
 # 类型: ArrayInitializerAlignmentStyle
@@ -28,7 +28,7 @@ AlignAfterOpenBracket: Align
 # AIAS_None  (文件配置项: None ) 不对齐数组初始值设定项列。
 # AIAS_Left  (文件配置项: Left ) 对齐数组列并左对齐列。
 # AIAS_Right (文件配置项: Right) 对齐数组列并右对齐列。
-AlignArrayOfStructures: None
+AlignArrayOfStructures: Left
 
 # 说明: 对齐连续的宏定义。
 # 类型: AlignConsecutiveStyle
@@ -41,7 +41,7 @@ AlignArrayOfStructures: None
 # Enabled: Boolean            (团员项)对齐开关。
 # AlignCompound: Boolean      (团员项)+=, <<= 之类的复合赋值符是否与 = 对齐。
 # PadOperators: Boolean       (团员项)短赋值运算符左侧填充空格，使得与长赋值运算符等宽。
-AlignConsecutiveMacros: None
+AlignConsecutiveMacros: Consecutive
 
 # 说明: 对齐连续的赋值运算符。
 # 类型: AlignConsecutiveStyle
@@ -63,7 +63,7 @@ AlignConsecutiveMacros: None
 #   Enabled: true
 #   AcrossEmptyLines: true
 #   AcrossComments: false
-AlignConsecutiveAssignments: None
+AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
 
 # 说明: 对齐连续的位域分隔符(:)。
 # 类型: AlignConsecutiveStyle
@@ -97,7 +97,7 @@ AlignConsecutiveDeclarations: None
 # ENAS_DontAlign (文件配置项: DontAlign) 不对齐。
 # ENAS_Left      (文件配置项: Left     ) 尽可能向左对齐转义的换行符。
 # ENAS_Right     (文件配置项: Right    ) 在最右边的列中对齐转义的换行符。
-AlignEscapedNewlines: Left
+AlignEscapedNewlines: Right
 
 # 说明: 水平对齐二目运算符和三目运算符的操作数。
 # 类型: OperandAlignmentStyle
@@ -161,7 +161,7 @@ AllowShortLambdasOnASingleLine: All
 # SIS_WithoutElse   (文件配置项: WithoutElse  ) 仅当没有 else 分句时才将短 if 语句放在同一行。
 # SIS_OnlyFirstIf   (文件配置项: OnlyFirstIf  ) 将 if 分句放在同一行，但不包括 else if 或 else 语句。if 分句包括 if (条件表达式) 和 执行语句。
 # SIS_AllIfsAndElse (文件配置项: AllIfsAndElse) 所有if分句放在同一行，所有else if分句放在同一行，所有 else 分句放在同一行。
-AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortIfStatementsOnASingleLine: Never
 
 # 说明: 是否将简短的循环语句 (while (true) continue;) 压缩为一行。
 AllowShortLoopsOnASingleLine: true
@@ -188,7 +188,7 @@ AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 
 # 说明: 总是在多行字符串文字之前换行。
-AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakBeforeMultilineStrings: false
 
 # 说明: 模板(Template)的换行方式。
 # 类型: BreakTemplateDeclarationsStyle
@@ -213,8 +213,8 @@ BinPackArguments: true
 # 类型: Boolean
 # 取值:
 # false: 函数声明或函数定义中的参数要么都在同一行，要么各占一行。
-#  true: 函数声明或函数定义中的参数挤满一行再换行。
-BinPackParameters: true
+# true: 函数声明或函数定义中的参数挤满一行再换行。
+BinPackParameters: false
 
 # 说明: 每个单独的大括号的换行方式，当 BreakBeforeBraces 设置为 BS_Custom 时生效。
 # 类型: BraceWrappingFlags
@@ -229,7 +229,7 @@ BraceWrapping:
   # enum定义后面
   AfterEnum:       false
   # 函数定义后面
-  AfterFunction:   false
+  AfterFunction:   true
   # 命名空间定义后面
   AfterNamespace:  false
   # ObjC定义后面
@@ -258,10 +258,10 @@ BraceWrapping:
 # 说明: 二目运算符发生折行(wrap)时的换行方式。
 # 类型: BinaryOperatorStyle
 # 取值:
-# BOS_None          (文件配置项: BOS_None         ) 在运算符之后换行。
-# BOS_NonAssignment (文件配置项: BOS_NonAssignment) 在不是赋值的运算符之前换行。
-# BOS_All           (文件配置项: BOS_All          ) 在运算符之前换行。
-BreakBeforeBinaryOperators: None
+# BOS_None          (文件配置项: None         ) 在运算符之后换行。
+# BOS_NonAssignment (文件配置项: NonAssignment) 在不是赋值的运算符之前换行。
+# BOS_All           (文件配置项: All          ) 在运算符之前换行。
+BreakBeforeBinaryOperators: NonAssignment
 
 # 说明: Concept 声明的换行方式。
 # 类型: BreakBeforeConceptDeclarationsStyle
@@ -287,7 +287,7 @@ BreakBeforeConceptDeclarations: true
 # 之前换行，之后换不换行？右大括号如何？
 # Attach: do {} while(); 等，左括号贴在同一行，右括号贴在同一行。 if...else, try ... catch 等类似。
 # Allman: 无法控制 typedef struct a {} a;  // 隔行的a 会紧贴 }
-BreakBeforeBraces: Attach
+BreakBeforeBraces: Custom
 
 # 说明: 是否在类的继承列表的每个逗号(,)之前换行
 BreakBeforeInheritanceComma: false
@@ -328,7 +328,7 @@ BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
 
 # 说明: 列数限制。0表示无限制。
-ColumnLimit:     80
+ColumnLimit:     110
 
 # 说明: 在注释中使用正则表达式，特别用于表示当前行内容不应被分行或以其他方式更改。
 #       该项要写在代码文件中。
@@ -537,7 +537,7 @@ IncludeIsMainSourceRegex: ''
 IndentAccessModifiers: false
 
 # 说明: 是否缩进 case 标签。
-IndentCaseLabels: true
+IndentCaseLabels: false
 
 # 说明: 是否缩进 case 定义块。
 IndentCaseBlocks: false
@@ -568,7 +568,7 @@ IndentExternBlock: AfterExternBlock
 IndentRequires:  false
 
 # 说明: 缩进字符数。
-IndentWidth:     2
+IndentWidth:     8
 
 # 说明: 是否缩进折行的函数名。
 IndentWrappedFunctionNames: false
@@ -618,7 +618,7 @@ MaxEmptyLinesToKeep: 1
 # NI_None  (文件配置项: None ) 不缩进。
 # NI_Inner (文件配置项: Inner) 缩进内层命名空间的内容(当有多重嵌套的命名空间时)。
 # NI_All   (文件配置项: All  ) 缩进全部命名空间的内容。
-NamespaceIndentation: None
+NamespaceIndentation: All
 
 # 说明: 适用协议(protocol conformance)列表项的"堆积占行(Bin-Pack)"方式。
 # 类型: BinPackStyle
@@ -878,7 +878,7 @@ SpaceBeforeRangeBasedForLoopColon: true
 SpaceInEmptyBlock: false
 
 # 说明: 是否在空块 () 之中留有空格。
-SpaceInEmptyParentheses: false
+SpaceInEmptyParentheses: true
 
 # 说明: 是否在注释符 // 之后注释内容之前有空格。
 SpacesBeforeTrailingComments: 2
@@ -974,7 +974,7 @@ UseCRLF:         false
 # UT_ForContinuationAndIndentation (文件配置项: ForContinuationAndIndentation) 用制表符填充所有前导空白，并使用空格进行一行内出现的对齐(例如，连续的赋值和声明)。
 # UT_AlignWithSpaces               (文件配置项: AlignWithSpaces              ) 使用制表符进行续行和缩进，使用空格进行对齐。
 # UT_Always                        (文件配置项: Always                       ) 当我们需要填充至少从一个制表位到下一个制表位的空白时，请使用制表符。
-UseTab:          Never
+UseTab:          ForIndentation
 
 # 说明: 指明对空格敏感且不应被更改的宏的数组。
 # 例1:
@@ -985,4 +985,5 @@ WhitespaceSensitiveMacros:
   - NS_SWIFT_NAME
   - CF_SWIFT_NAME
 ...
+
 
