@@ -63,7 +63,7 @@ AlignConsecutiveMacros: Consecutive
 #   Enabled: true
 #   AcrossEmptyLines: true
 #   AcrossComments: false
-AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
+AlignConsecutiveAssignments: Consecutive
 
 # 说明: 对齐连续的位域分隔符(:)。
 # 类型: AlignConsecutiveStyle
@@ -78,7 +78,7 @@ AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
 # PadOperators: Boolean       (团员项)短赋值运算符左侧填充空格，使得与长赋值运算符等宽。
 AlignConsecutiveBitFields: None
 
-# 说明: 对齐连续的声明(变量名)。
+# 说明: 对齐连续的声明(变量名), 包括结构体成员
 # 类型: AlignConsecutiveStyle
 # 取值:
 # None                        (单独项)保持原样。
@@ -89,7 +89,7 @@ AlignConsecutiveBitFields: None
 # Enabled: Boolean            (团员项)对齐开关。
 # AlignCompound: Boolean      (团员项)+=, <<= 之类的复合赋值符是否与 = 对齐。
 # PadOperators: Boolean       (团员项)短赋值运算符左侧填充空格，使得与长赋值运算符等宽。
-AlignConsecutiveDeclarations: None
+AlignConsecutiveDeclarations: Consecutive
 
 # 说明: 对齐转义换行符(反斜杠)。
 # 类型: EscapedNewlineAlignmentStyle
@@ -352,10 +352,10 @@ CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 
 # 说明: 构造函数(Constructor)初始化列表和继承(Inheritance)列表的缩进字符数。
-ConstructorInitializerIndentWidth: 4
+ConstructorInitializerIndentWidth: 8
 
 # 说明: 续行的缩进字符数。
-ContinuationIndentWidth: 4
+ContinuationIndentWidth: 8
 
 # 说明: 将大括号列表格式化为最适合 C++11 的大括号列表。
 #       大括号内列表元组将紧贴大括号。
@@ -815,7 +815,7 @@ ShortNamespaceLines: 1
 # SI_Never           (文件配置项: Never          ) 从不排序。
 # SI_CaseSensitive   (文件配置项: CaseSensitive  ) 按字母顺序或区分大小写的方式排序。
 # SI_CaseInsensitive (文件配置项: CaseInsensitive) 按 ASCII 或不区分大小写的方式排序。
-SortIncludes:    CaseSensitive
+SortIncludes:    Never
 
 # 说明: 静态导入(import static)语句的排序方式。
 # 类型: SortJavaStaticImportOptions
