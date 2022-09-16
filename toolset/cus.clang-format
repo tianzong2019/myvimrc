@@ -1,102 +1,105 @@
-# clang-format version 13.0.1
-# https://releases.llvm.org/13.0.0/tools/clang/docs/ClangFormatStyleOptions.html
----
-# 语言: None, Cpp, Java, JavaScript, ObjC, Proto, TableGen, TextProto ...
-Language:        Cpp
+## clang-format version 13.0.1
+## https://releases.llvm.org/13.0.0/tools/clang/docs/ClangFormatStyleOptions.html
 
-# 支持风格: LLVM, Chromium, GNU, Google, Microsoft, Mozilla, WebKit
-# BasedOnStyle:  Google
+#################################################
+# 类似于Linux Kernel 风格的风格：
+#
+#BasedOnStyle: LLVM
+#IndentWidth: 8
+#UseTab: Always
+#BreakBeforeBraces: Linux
+#AllowShortIfStatementsOnASingleLine: false
+#IndentCaseLabels: false
+
+#################################################
+# 类似于默认 Visual Studio 格式化样式的样式：
+#
+#UseTab: Never
+#IndentWidth: 4
+#BreakBeforeBraces: Allman
+#AllowShortIfStatementsOnASingleLine: false
+#IndentCaseLabels: false
+#ColumnLimit: 0
+
+#---
+## 语言: None, Cpp, Java, JavaScript, ObjC, Proto, TableGen, TextProto ...
+#Language:        Cpp
+#
+## 支持风格: LLVM, Chromium, GNU, Google, Microsoft, Mozilla, WebKit
+## BasedOnStyle:  Google
 
 # 说明: 访问修饰符的缩进或凸出的字符数。
 #       访问修饰符: public, private, protected...
 # 类型: Integer
 AccessModifierOffset: -1
 
-# 说明: 在左圆括号后保持水平对齐。
-# 类型: ArrayInitializerAlignmentStyle
-#       这适用于圆括号(brackets)、尖括号(angle brackets)和方括号(square brackets)。圆括号 也称为 括号(parentheses)。
+# 说明: 如果true, 在左括号后水平对齐参数,这适用于圆括号（括号）、尖括号和方括号。
+# 类型: BracketAlignmentStyle
 # 取值:
-# BAS_Align       (文件配置项: Align      ) 第一个参数紧跟左圆括号，后面参数水平对齐第一个参数。
-# BAS_DontAlign   (文件配置项: DontAlign  ) 不对齐，而是使用 ContinuationIndentWidth.
-# BAS_AlwaysBreak (文件配置项: AlwaysBreak) 若参数不适合一行，将在左圆括号后换行。
-# BAS_BlockIndent (文件配置项: BlockIndent) 如果参数不适合单行，则始终在左圆括号后换行。右括号将放置在新行上。注意: 该项当前只适用于圆括号。
+#   BAS_Align（在配置中Align：）对齐左括号上的参数
+#   BAS_DontAlign（在配置中DontAlign：）不要对齐，而是使用ContinuationIndentWidth
+#   BAS_AlwaysBreak（在配置中AlwaysBreak：）如果参数不适合单行，则始终在左括号后中断
 AlignAfterOpenBracket: Align
 
-# 说明: 当使用数组初始化Struct时，对齐数组每一列元素。
+# 说明: 续行的缩进字符数。
+# 类型: unsigned
+# 取值:
+ContinuationIndentWidth: 8
+
+# 说明: 如果不是None，则在对结构数组使用初始化时，会将字段对齐到列中
 # 类型: ArrayInitializerAlignmentStyle
 # 取值:
-# AIAS_None  (文件配置项: None ) 不对齐数组初始值设定项列。
-# AIAS_Left  (文件配置项: Left ) 对齐数组列并左对齐列。
-# AIAS_Right (文件配置项: Right) 对齐数组列并右对齐列。
+#   AIAS_Left（在配置中Left：）对齐数组列并左对齐列
+#   AIAS_Right（在配置中Right：）对齐数组列并右对齐列
+#   AIAS_None（在配置中None：）不要对齐数组初始值设定项列。
 AlignArrayOfStructures: Left
 
-# 说明: 对齐连续的宏定义。
+# 说明: 对齐连续赋值的样式。
 # 类型: AlignConsecutiveStyle
 # 取值:
-# None                        (单独项)保持原样。
-# Consecutive                 (单独项)对齐连续多行。
-# AcrossEmptyLinesAndComments (单独项)跨空行和跨注释对齐。
-# AcrossEmptyLines: Boolean   (团或单)跨空行对齐。
-# AcrossComments: Boolean     (团或单)跨注释对齐。
-# Enabled: Boolean            (团员项)对齐开关。
-# AlignCompound: Boolean      (团员项)+=, <<= 之类的复合赋值符是否与 = 对齐。
-# PadOperators: Boolean       (团员项)短赋值运算符左侧填充空格，使得与长赋值运算符等宽。
-AlignConsecutiveMacros: Consecutive
-
-# 说明: 对齐连续的赋值运算符。
-# 类型: AlignConsecutiveStyle
-# 取值:
-# None                        (单独项)保持原样。
-# Consecutive                 (单独项)对齐连续多行。
-# AcrossEmptyLinesAndComments (单独项)跨空行和跨注释对齐。
-# AcrossEmptyLines: Boolean   (团或单)跨空行对齐。
-# AcrossComments: Boolean     (团或单)跨注释对齐。
-# Enabled: Boolean            (团员项)对齐开关。
-# AlignCompound: Boolean      (团员项)+=, <<= 之类的复合赋值符是否与 = 对齐。
-# PadOperators: Boolean       (团员项)短赋值运算符左侧填充空格，使得与长赋值运算符等宽。
-#
-# 例1: 作为单独项使用。
-# AlignConsecutiveAssignments: AcrossEmptyLines
-# AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
-# 例2: Enabled 值若为 true, 则跨空行而不是跨注释对齐。
-# AlignConsecutiveAssignments:
-#   Enabled: true
-#   AcrossEmptyLines: true
-#   AcrossComments: false
+#   ACS_None（在配置中None：），不要在连续的行上对齐分配。
+#   ACS_Consecutive（在配置中Consecutive：），在连续的行上对齐分配。
+#   ACS_AcrossEmptyLines（在配置中AcrossEmptyLines：），与 ACS_Consecutive 相同，但也跨越空行
+#   ACS_AcrossComments（在配置中AcrossComments：），与 ACS_Consecutive 相同，但也跨越仅包含注释的行
+#   ACS_AcrossEmptyLinesAndComments （在配置中AcrossEmptyLinesAndComments：），与 ACS_Consecutive 相同，但也跨越仅包含注释和空行的行
 AlignConsecutiveAssignments: Consecutive
 
-# 说明: 对齐连续的位域分隔符(:)。
+# 说明: 对齐连续位字段的样式
 # 类型: AlignConsecutiveStyle
 # 取值:
-# None                        (单独项)保持原样。
-# Consecutive                 (单独项)对齐连续多行。
-# AcrossEmptyLinesAndComments (单独项)跨空行和跨注释对齐。
-# AcrossEmptyLines: Boolean   (团或单)跨空行对齐。
-# AcrossComments: Boolean     (团或单)跨注释对齐。
-# Enabled: Boolean            (团员项)对齐开关。
-# AlignCompound: Boolean      (团员项)+=, <<= 之类的复合赋值符是否与 = 对齐。
-# PadOperators: Boolean       (团员项)短赋值运算符左侧填充空格，使得与长赋值运算符等宽。
-AlignConsecutiveBitFields: None
+#   ACS_None（在配置中None：）, 不要在连续行上对齐位域。
+#   ACS_Consecutive（在配置中Consecutive：）,对齐连续行上的位域。
+#   ACS_AcrossEmptyLines（在配置中AcrossEmptyLines：）,与 ACS_Consecutive 相同，但也跨越空行
+#   ACS_AcrossComments（在配置中AcrossComments：）,与 ACS_Consecutive 相同，但也跨越仅包含注释的行
+#   ACS_AcrossEmptyLinesAndComments （在配置中AcrossEmptyLinesAndComments：）, 与 ACS_Consecutive 相同，但也跨越仅包含注释和空行的行
+AlignConsecutiveBitFields: Consecutive
 
-# 说明: 对齐连续的声明(变量名), 包括结构体成员
+# 说明: 对齐连续声明的样式。
 # 类型: AlignConsecutiveStyle
 # 取值:
-# None                        (单独项)保持原样。
-# Consecutive                 (单独项)对齐连续多行。
-# AcrossEmptyLinesAndComments (单独项)跨空行和跨注释对齐。
-# AcrossEmptyLines: Boolean   (团或单)跨空行对齐。
-# AcrossComments: Boolean     (团或单)跨注释对齐。
-# Enabled: Boolean            (团员项)对齐开关。
-# AlignCompound: Boolean      (团员项)+=, <<= 之类的复合赋值符是否与 = 对齐。
-# PadOperators: Boolean       (团员项)短赋值运算符左侧填充空格，使得与长赋值运算符等宽。
+#  ACS_None（在配置中None：）, 不要在连续的行上对齐位声明。
+#  ACS_Consecutive（在配置中Consecutive：）, 在连续的行上对齐声明。
+#  ACS_AcrossEmptyLines（在配置中AcrossEmptyLines：）, 与 ACS_Consecutive 相同，但也跨越空行
+#  ACS_AcrossComments（在配置中AcrossComments：）, 与 ACS_Consecutive 相同，但也跨越仅包含注释的行
+#  ACS_AcrossEmptyLinesAndComments （在配置中AcrossEmptyLinesAndComments：）, 与 ACS_Consecutive 相同，但也跨越仅包含注释和空行的行
 AlignConsecutiveDeclarations: Consecutive
 
-# 说明: 对齐转义换行符(反斜杠)。
+# 说明: 对齐连续宏定义的样式
+# 类型: AlignConsecutiveStyle
+# 取值:
+#   ACS_None（在配置中None：）, 不要在连续的行上对齐宏定义。
+#   ACS_Consecutive（在配置中Consecutive：）, 在连续行上对齐宏定义。
+#   ACS_AcrossEmptyLines（在配置中AcrossEmptyLines：）, 与 ACS_Consecutive 相同，但也跨越空行
+#   ACS_AcrossComments（在配置中AcrossComments：）, 与 ACS_Consecutive 相同，但也跨越仅包含注释的行
+#   ACS_AcrossEmptyLinesAndComments （在配置中AcrossEmptyLinesAndComments：）, 与 ACS_Consecutive 相同，但也跨越仅包含注释和空行的行
+AlignConsecutiveMacros: Consecutive
+
+# 说明: 在转义换行符中对齐反斜杠的选项
 # 类型: EscapedNewlineAlignmentStyle
 # 取值:
-# ENAS_DontAlign (文件配置项: DontAlign) 不对齐。
-# ENAS_Left      (文件配置项: Left     ) 尽可能向左对齐转义的换行符。
-# ENAS_Right     (文件配置项: Right    ) 在最右边的列中对齐转义的换行符。
+#   ENAS_DontAlign（在配置中DontAlign：）不要对齐转义的换行符。
+#   ENAS_Left（在配置中Left：）尽可能向左对齐转义的换行符。
+#   ENAS_Right（在配置中Right：）在最右边的列中对齐转义的换行符。
 AlignEscapedNewlines: Right
 
 # 说明: 水平对齐二目运算符和三目运算符的操作数。
@@ -107,42 +110,138 @@ AlignEscapedNewlines: Right
 # OAS_AlignAfterOperator (文件配置项: AlignAfterOperator) 水平对齐操作符。设置 BreakBeforeBinaryOperators 时，运算符会缩进，导致无法对齐。
 AlignOperands:   Align
 
-# 说明: 对齐行尾注释。
+# 说明: 二目运算符发生折行(wrap)时的换行方式。
+# 类型: BinaryOperatorStyle
+# 取值:
+# BOS_None          (文件配置项: None         ) 在运算符之后换行。
+# BOS_NonAssignment (文件配置项: NonAssignment) 在不是赋值的运算符之前换行。
+# BOS_All           (文件配置项: All          ) 在运算符之前换行。
+BreakBeforeBinaryOperators: NonAssignment
+
+# 说明: 如果true, 对齐行尾注释
+# 类型: bool
+# 取值:
+#   true:                                   false:
+#   int a;     // My comment a      vs.     int a; // My comment a
+#   int b = 2; // comment  b                int b = 2; // comment about b
 AlignTrailingComments: true
 
-# 说明: 如果函数调用或括号内的初始化列表不适合一行，则允许将所有参数放在下一行，即使 BinPackArguments 为 false 时。
+# 说明: 如果函数调用或括号内的初始化列表不适合一行，则允许将所有参数放在下一行，即使 BinPackArguments 为 false
+# 类型: bool
+# 取值:
+#   true:
+#   callFunction(
+#       a, b, c, d);
+#
+#   false:
+#   callFunction(a,
+#                b,
+#                c,
+#                d);
 AllowAllArgumentsOnNextLine: true
 
-# 说明: 此选项已弃用(deprecated)。请参阅 PackConstructorInitializers 的 NextLine。
-# 允许构造函数的初始化参数放在下一行
+# 说明: 如果具有成员初始化器列表的构造函数定义不能放在一行中，则允许将所有成员初始化器放在下一行，
+#      如果`ConstructorInitializerAllOnOneLineOrOnePerLine`为真。
+#      `ConstructorInitializerAllOnOneLineOrOnePerLine`请注意，如果为 false ，则此参数无效 。
+#      允许构造函数的初始化参数放在下一行
+# 类型: bool
+# 取值:
+#   true:
+#   MyClass::MyClass() :
+#       member0(0), member1(2) {}
+#
+#   false:
+#   MyClass::MyClass() :
+#       member0(0),
+#       member1(2) {}
 AllowAllConstructorInitializersOnNextLine: true
 
-# 说明: 如果函数声明不适合一行，即使 BinPackParameters 为 false, 也允许将函数声明的所有参数放到下一行。
-AllowAllParametersOfDeclarationOnNextLine: true
+# 说明: 构造函数的初始化列表要么都在同一行，要么都各自一行
+# 类型: bool
+# 取值:
+#   true:
+#   SomeClass::Constructor()
+#       : aaaaaaaa(aaaaaaaa), aaaaaaaa(aaaaaaaa), aaaaaaaa(aaaaaaaaaaaaaaaaaaaaaaaaa) {
+#     return 0;
+#   }
+#
+#   false:
+#   SomeClass::Constructor()
+#       : aaaaaaaa(aaaaaaaa), aaaaaaaa(aaaaaaaa),
+#         aaaaaaaa(aaaaaaaaaaaaaaaaaaaaaaaaa) {
+#     return 0;
+#   }
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
 
-# 说明: 是否将简短的枚举(Enum)定义压缩为一行。
-AllowShortEnumsOnASingleLine: true
+# 说明: 如果函数声明不适合一行，即使 BinPackParameters 为 false, 也允许将函数声明的所有参数放到下一行。
+# 类型: bool
+# 取值:
+#   rue:
+#   oid myFunction(
+#      int a, int b, int c, int d, int e);
+#
+#   alse:
+#   oid myFunction(int a,
+#                  int b,
+#                  int c,
+#                  int d,
+#                  int e);
+AllowAllParametersOfDeclarationOnNextLine: true
 
 # 说明: 简短语句块 {...} 的占行方式。
 # 类型: ShortBlockStyle
 # 取值:
-# SBS_Never  (文件配置项: Never ) 从不合并为一行。
-# SBS_Empty  (文件配置项: Empty ) 只合并空块。
-# SBS_Always (文件配置项: Always) 总是合并为一行。
-AllowShortBlocksOnASingleLine: Never
+#   SBS_Never  (文件配置项: Never ) 从不合并为一行。
+#   SBS_Empty  (文件配置项: Empty ) 只合并空块。
+#   SBS_Always (文件配置项: Always) 总是合并为一行。
+AllowShortBlocksOnASingleLine: Empty
 
-# 说明: 是否将简短的 Case(in Switch) 分块压缩为一行。
+# 说明: 如果为true，将简短的 Case(in Switch) 分块压缩为一行。
+# 类型: bool
+# 取值:
+#   true:                                   false:
+#   switch (a) {                    vs.     switch (a) {
+#   case 1: x = 1; break;                   case 1:
+#   case 2: return;                           x = 1;
+#   }                                         break;
+#                                           case 2:
+#                                             return;
+#                                           }
 AllowShortCaseLabelsOnASingleLine: false
+
+# 说明: 如果为true，将简短的枚举(Enum)定义压缩为一行。
+# 类型: bool
+# 取值:
+#   true:
+#   enum { A, B } myEnum;
+#
+#   false:
+#   enum
+#   {
+#     A,
+#     B
+#   } myEnum;
+AllowShortEnumsOnASingleLine: false
 
 # 说明: 简短的函数(Function)定义的占行方式。
 # 类型: ShortFunctionStyle
 # 取值:
-# SFS_None       (文件配置项: None      ) 从不合并为一行。
-# SFS_Empty      (文件配置项: Empty     ) 仅合并空函数。
-# SFS_InlineOnly (文件配置项: InlineOnly) 仅合并在类中定义的函数。不在类中的函数，即使为空函数也不合并。
-# SFS_Inline     (文件配置项: Inline    ) 合并在类中定义的函数及合并空函数。
-# SFS_All        (文件配置项: All       ) 合并所有函数。
-AllowShortFunctionsOnASingleLine: All
+#   SFS_None       (文件配置项: None      ) 从不合并为一行。
+#   SFS_Empty      (文件配置项: Empty     ) 仅合并空函数。
+#   SFS_InlineOnly (文件配置项: InlineOnly) 仅合并在类中定义的函数。不在类中的函数，即使为空函数也不合并。
+#   SFS_Inline     (文件配置项: Inline    ) 合并在类中定义的函数及合并空函数。
+#   SFS_All        (文件配置项: All       ) 合并所有函数。
+AllowShortFunctionsOnASingleLine: Empty
+
+# 说明: 简短的 if 语句的占行方式。
+#       “简短”的解释是 if 后面的语句没有包含在大括号{}内。
+# 类型: ShortIfStyle
+# 取值:
+#   SIS_Never         (文件配置项: Never        ) 从不合并为一行。
+#   SIS_WithoutElse   (文件配置项: WithoutElse  ) 仅当没有 else 分句时才将短 if 语句放在同一行。
+#   SIS_OnlyFirstIf   (文件配置项: OnlyFirstIf  ) 将 if 分句放在同一行，但不包括 else if 或 else 语句。if 分句包括 if (条件表达式) 和 执行语句。
+#   SIS_AllIfsAndElse (文件配置项: AllIfsAndElse) 所有if分句放在同一行，所有else if分句放在同一行，所有 else 分句放在同一行。
+AllowShortIfStatementsOnASingleLine: Never
 
 # 说明: 简短的 Lambda 表达式的占行方式。
 # 类型: ShortLambdaStyle
@@ -151,22 +250,14 @@ AllowShortFunctionsOnASingleLine: All
 # SLS_Empty  (文件配置项: Empty ) 仅合并空的 Lambda 表达式。
 # SLS_Inline (文件配置项: Inline) 仅 Lambda 表达式是函数的参数时才将Lambda 表达式放在同一行。
 # SLS_All    (文件配置项: All   ) 合并所有 Lambda 表达式
-AllowShortLambdasOnASingleLine: All
+AllowShortLambdasOnASingleLine: Inline
 
-# 说明: 简短的 if 语句的占行方式。
-#       “简短”的解释是 if 后面的语句没有包含在大括号{}内。
-# 类型: ShortIfStyle
+# 说明: 如果为true，将简短的循环语句 (while (true) continue;) 压缩为一行。
+# 类型: bool
 # 取值:
-# SIS_Never         (文件配置项: Never        ) 从不合并为一行。
-# SIS_WithoutElse   (文件配置项: WithoutElse  ) 仅当没有 else 分句时才将短 if 语句放在同一行。
-# SIS_OnlyFirstIf   (文件配置项: OnlyFirstIf  ) 将 if 分句放在同一行，但不包括 else if 或 else 语句。if 分句包括 if (条件表达式) 和 执行语句。
-# SIS_AllIfsAndElse (文件配置项: AllIfsAndElse) 所有if分句放在同一行，所有else if分句放在同一行，所有 else 分句放在同一行。
-AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
 
-# 说明: 是否将简短的循环语句 (while (true) continue;) 压缩为一行。
-AllowShortLoopsOnASingleLine: true
-
-# 已弃用(deprecated)
+# 此选项已弃用(deprecated)并保留以实现向后兼容性
 # 说明: 函数定义中返回类型的换行方式。
 # 类型: DefinitionReturnTypeBreakingStyle
 # 取值:
@@ -188,33 +279,52 @@ AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 
 # 说明: 总是在多行字符串文字之前换行。
+# 类型: bool
+# 取值:
+#   true:                                  false:
+#   aaaa =                         vs.     aaaa = "bbbb"
+#       "bbbb"                                    "cccc";
+#       "cccc";
 AlwaysBreakBeforeMultilineStrings: false
 
 # 说明: 模板(Template)的换行方式。
 # 类型: BreakTemplateDeclarationsStyle
 # 取值:
-# BTDS_Yes       (文件配置项: Yes      ) 模板声明总是换行。即 template <...> 之后总是换行。
+# BTDS_Yes       (文件配置项: Yes      ) 模板声明总是换行。即 template <...> 之后总是换行。PenaltyBreakTemplateDeclaration被考虑在内
 # BTDS_No        (文件配置项: No       ) 模板声明从不换行。即 template <...> 之后从不换行。
 # BTDS_MultiLine (文件配置项: MultiLine) 仅当其后声明跨越多行时，模板声明后才强制换行。
-AlwaysBreakTemplateDeclarations: Yes
+AlwaysBreakTemplateDeclarations: No
 
 # 说明: 应被解析为属性/限定符而不是宏名的字符串数组。这对于语言扩展或静态分析器注释很有用。
+# 类型: std::vector<std::string>
+# 取值:
+#   在 .clang-format 配置文件中，可以这样配置：
+#   AttributeMacros: ['__capability', '__output', '__ununsed']
 AttributeMacros:
   - __capability
 
 # 说明: 函数调用中的参数(arguments)的"堆积占行(Bin-Pack)"方式。
 # 类型: Boolean
 # 取值:
-# false: 函数调用中的参数要么都在同一行，要么各占一行。
-# true: 函数调用中的参数挤满一行再换行。
+#   false: 函数调用中的参数要么都在同一行，要么各占一行。
+#   true: 函数调用中的参数挤满一行再换行。
 BinPackArguments: true
 
 # 说明: 函数中的参数(Parameters)的"堆积占行(Bin-Pack)"方式。包括 函数声明 和 函数定义。
 # 类型: Boolean
 # 取值:
-# false: 函数声明或函数定义中的参数要么都在同一行，要么各占一行。
-# true: 函数声明或函数定义中的参数挤满一行再换行。
+#   false: 函数声明或函数定义中的参数要么都在同一行，要么各占一行。
+#   true: 函数声明或函数定义中的参数挤满一行再换行。
 BinPackParameters: false
+
+# 说明: 位域分隔符(:)的空格填补方式。
+# 类型:
+# 取值:
+# BFCS_Both   (文件配置项: Both  ) 分隔符左右各保留一个空格。
+# BFCS_None   (文件配置项: None  ) 分隔符左右都去除空格。设置 AlignConsecutiveBitFields 项时除外。
+# BFCS_Before (文件配置项: Before) 分隔符左边保留一个空格。
+# BFCS_After  (文件配置项: After ) 分隔符右边保留一个空格。设置 AlignConsecutiveBitFields 项时除外。
+BitFieldColonSpacing: Both
 
 # 说明: 每个单独的大括号的换行方式，当 BreakBeforeBraces 设置为 BS_Custom 时生效。
 # 类型: BraceWrappingFlags
@@ -224,7 +334,7 @@ BraceWrapping:
   AfterCaseLabel:  false
   # class定义后面
   AfterClass:      false
-  # 控制语句后面
+  # 控制语句后面, 控制语句（if/ for/ while/ switch/..）
   AfterControlStatement: Never
   # enum定义后面
   AfterEnum:       false
@@ -255,22 +365,6 @@ BraceWrapping:
   # 空名字空间的大括号是否可以在一行
   SplitEmptyNamespace: true
 
-# 说明: 二目运算符发生折行(wrap)时的换行方式。
-# 类型: BinaryOperatorStyle
-# 取值:
-# BOS_None          (文件配置项: None         ) 在运算符之后换行。
-# BOS_NonAssignment (文件配置项: NonAssignment) 在不是赋值的运算符之前换行。
-# BOS_All           (文件配置项: All          ) 在运算符之前换行。
-BreakBeforeBinaryOperators: NonAssignment
-
-# 说明: Concept 声明的换行方式。
-# 类型: BreakBeforeConceptDeclarationsStyle
-# 取值:
-# BBCDS_Never   (文件配置项: Never  ) 将模板(template)声明与 concept 保持在一行。
-# BBCDS_Allowed (文件配置项: Allowed) 在模板(template)声明与 concept 之间换行是允许的。实际上取决于内容宽度限制、行宽限制和换行规则。
-# BBCDS_Always  (文件配置项: Always ) 始终在 concept 之前换行。
-BreakBeforeConceptDeclarations: true
-
 # 说明: 大括号(Braces)的换行方式。
 # 类型: BraceBreakingStyle
 # 取值:
@@ -289,8 +383,43 @@ BreakBeforeConceptDeclarations: true
 # Allman: 无法控制 typedef struct a {} a;  // 隔行的a 会紧贴 }
 BreakBeforeBraces: Custom
 
-# 说明: 是否在类的继承列表的每个逗号(,)之前换行
-BreakBeforeInheritanceComma: false
+# 说明: true, 让每个注释字段独立一行。
+#       注释字段: 以@开头的标签为 Javadoc 标记，由@和标记类型组成，缺一不可
+# 类型: bool
+# 取值:
+BreakAfterJavaFieldAnnotations: false
+
+# 说明: true, Concept放在一个新行上
+# 类型: bool
+# 取值:
+#   template<typename T>
+#   concept ...
+#
+#  false:
+#   template<typename T> concept ...
+BreakBeforeConceptDeclarations: false
+
+# 说明: true, 在三目运算符(? 及 :)之前换行。
+# 类型: bool
+# 取值:
+#  true:
+#  veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongDescription
+#      ? firstValue
+#      : SecondValueVeryVeryVeryVeryLong;
+#
+#  false:
+#  veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongDescription ?
+#      firstValue :
+#      SecondValueVeryVeryVeryVeryLong;
+BreakBeforeTernaryOperators: true
+
+# 说明: 构造函数(Constructor)初始化列表的分行方式。
+# 类型: BreakConstructorInitializersStyle
+# 取值:
+# BCIS_BeforeColon (文件配置项: BeforeColon) 在构造函数初始化列表的冒号(Colon)之前和逗号(Comma)之后换行。
+# BCIS_BeforeComma (文件配置项: BeforeComma) 在冒号(Colon)和逗号(Comma)之前换行并对齐冒号(Colon)和逗号(Comma)。
+# BCIS_AfterColon  (文件配置项: AfterColon ) 在冒号(Colon)和逗号(Comma)之后换行。
+BreakConstructorInitializers: AfterColon
 
 # 说明: 类(Class)继承列表的分行方式。
 # 类型: BreakInheritanceListStyle
@@ -301,26 +430,9 @@ BreakBeforeInheritanceComma: false
 # BILS_AfterComma  (文件配置项: AfterComma ) 仅在逗号(Comma)之后换行。
 BreakInheritanceList: BeforeColon
 
-# 说明: 是否在三目运算符(? 及 :)之前换行。
-BreakBeforeTernaryOperators: true
-
-# 说明: 在构造函数(Constructor)初始化列表的每个逗号(,)前换行。
-BreakConstructorInitializersBeforeComma: false
-
-# 说明: 构造函数(Constructor)初始化列表的分行方式。
-# 类型: BreakConstructorInitializersStyle
-# 取值:
-# BCIS_BeforeColon (文件配置项: BeforeColon) 在构造函数初始化列表的冒号(Colon)之前和逗号(Comma)之后换行。
-# BCIS_BeforeComma (文件配置项: BeforeComma) 在冒号(Colon)和逗号(Comma)之前换行并对齐冒号(Colon)和逗号(Comma)。
-# BCIS_AfterColon  (文件配置项: AfterColon ) 在冒号(Colon)和逗号(Comma)之后换行。
-BreakConstructorInitializers: BeforeColon
-
-# 说明: 指定是否让每个注释字段独立一行。
-#       注释字段: 以@开头的标签为 Javadoc 标记，由@和标记类型组成，缺一不可
-BreakAfterJavaFieldAnnotations: false
-
 # 说明: 字符串(String)的每一个字面量(Literal)都单独一行。
-# 列1:
+# 类型: bool
+# 例1:
 # "apple" "orange""banana" =>
 #  "apple"
 #  "orange"
@@ -328,48 +440,63 @@ BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
 
 # 说明: 列数限制。0表示无限制。
+# 类型: unsigned
+# 取值:
 ColumnLimit:     110
 
 # 说明: 在注释中使用正则表达式，特别用于表示当前行内容不应被分行或以其他方式更改。
 #       该项要写在代码文件中。
 # 类型: String
 # 例1:
-# CommentPragmas: '^ Comment pragma: keep'
-# #include <vector> // Comment pragma: keep
-# 把这个字符串写在注释里，该行不会被格式化。
+#   CommentPragmas: '^ Comment pragma: keep'
+#   #include <vector> // Comment pragma: keep
+#   把这个字符串写在注释里，该行不会被格式化。
 CommentPragmas:  '^ IWYU pragma:'
 
 # 说明: 是否压缩命名空间(Namespaces)。
 # 类型: Boolean
 # 取值:
-# false: 在新行上声明每个命名空间。
+#  false: 在新行上声明每个命名空间。
 #  true: 连续的命名空间声明将在同一行。
 CompactNamespaces: false
 
-# 说明: 已弃用(deprecated)
-# 参阅: PackConstructorInitializers 的 CurrentLine.
-# 构造函数的初始化列表要么都在同一行，要么都各自一行
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
-
 # 说明: 构造函数(Constructor)初始化列表和继承(Inheritance)列表的缩进字符数。
-ConstructorInitializerIndentWidth: 8
+# 类型: unsigned
+# 取值:
+ConstructorInitializerIndentWidth: 4
 
-# 说明: 续行的缩进字符数。
-ContinuationIndentWidth: 8
-
-# 说明: 将大括号列表格式化为最适合 C++11 的大括号列表。
+# 说明: true, 将大括号列表格式化为最适合 C++11 的大括号列表。
 #       大括号内列表元组将紧贴大括号。
+# 类型: Boolean
+# 取值:
+#   true:                                  false:
+#   vector<int> x{1, 2, 3, 4};     vs.     vector<int> x{ 1, 2, 3, 4 };
+#   vector<T> x{{}, {}, {}, {}};           vector<T> x{ {}, {}, {}, {} };
+#   f(MyMap[{composite, key}]);            f(MyMap[{ composite, key }]);
+#   new int[3]{1, 2, 3};                   new int[3]{ 1, 2, 3 };
 Cpp11BracedListStyle: true
 
 # 说明: 分析并以文件中最常用的行尾(\r\n 或 \n)格式化文件。
 #       UseCRLF 仅在无法分析时用作后备选项。
+# 类型: Boolean
+# 取值:
 DeriveLineEnding: true
+
+# 说明: 使用 \n 替换 \r\n 作为换行符。
+#       作为 DeriveLineEnding 失效时的后备选项。
+# 类型: Boolean
+# 取值:
+UseCRLF: false
 
 # 说明: 分析并以文件中最常用的指针(Pointer *)或引用(Reference &)的对齐方式格式化文件。
 #       PointerAlignment 仅在无法分析时用作后备选项。
+# 类型: Boolean
+# 取值:
 DerivePointerAlignment: true
 
 # 说明: 完全禁用格式化
+# 类型: Boolean
+# 取值:
 # 例1:
 # // clang-format off 或者 /* clang-format off */
 # // clang-format on  或者 /* clang-format on */
@@ -398,11 +525,15 @@ EmptyLineBeforeAccessModifier: LogicalBlock
 # 说明: 当为 true 时，检测函数调用和定义是否以每行一个参数进行格式化。
 #       每个函数调用的参数排列方式可以是打包(bin-packed)、每行一个和不确定的。
 #       如果不确定，例如完全在一行上，但需要做出决定，则clang format会分析输入文件中是否存在其它打包(bin-packed)用例，并相应采取行动。
+# 类型: Boolean
+# 取值:
 # 注意: 这是一个实验选项，可能会消失或重命名。请勿在配置文件等中使用此选项。使用时请自行承担风险。
 ExperimentalAutoDetectBinPacking: false
 
-# 说明: 为较长的命名空间(Namespace)添加缺少的命名空间结尾注释并修复无效的现有注释。
+# 说明: 当为 true 时，为较长的命名空间(Namespace)添加缺少的命名空间结尾注释并修复无效的现有注释。
 #       最短行数由 ShortNamespaceLines 选项决定。
+# 类型: Boolean
+# 取值:
 # 注意：低于此值的被视为短命名空间，即在一页内首尾可见，不需要加结尾注释。
 FixNamespaceComments: true
 
@@ -542,6 +673,14 @@ IndentCaseLabels: false
 # 说明: 是否缩进 case 定义块。
 IndentCaseBlocks: false
 
+# 说明: extern "c" 定义块的缩进。
+# 类型: IndentExternBlockStyle
+# 取值:
+# IEBS_AfterExternBlock (文件配置项: AfterExternBlock) 大括号独立一行时缩进内容 (参阅: BraceWrapping.AfterExternBlock)。
+# IEBS_NoIndent         (文件配置项: NoIndent        ) 不缩进大括号里的内容。
+# IEBS_Indent           (文件配置项: Indent          ) 缩进大括号里的内容。
+IndentExternBlock: AfterExternBlock
+
 # 说明: 是否缩进 goto 的标签。
 IndentGotoLabels: true
 
@@ -553,17 +692,8 @@ IndentGotoLabels: true
 # PPDIS_BeforeHash (文件配置项: BeforeHash) 在 # 前缩进指令。
 IndentPPDirectives: None
 
-# 说明: extern "c" 定义块的缩进。
-# 类型: IndentExternBlockStyle
-# 取值:
-# IEBS_AfterExternBlock (文件配置项: AfterExternBlock) 大括号独立一行时缩进内容 (参阅: BraceWrapping.AfterExternBlock)。
-# IEBS_NoIndent         (文件配置项: NoIndent        ) 不缩进大括号里的内容。
-# IEBS_Indent           (文件配置项: Indent          ) 缩进大括号里的内容。
-IndentExternBlock: AfterExternBlock
-
 # 说明: 是否缩进 requires 语句。
 #       仅 RequiresClausePosition 为 OwnLine 或 WithFollowing 时生效。
-# 版本: 15.0.0
 # IndentRequiresClause: false
 IndentRequires:  false
 
@@ -582,8 +712,17 @@ IndentWrappedFunctionNames: false
 # TCS_Wrapped (文件配置项: Wrapped) 在跨多行换行的容器文字（数组和对象）中插入尾随逗号。
 InsertTrailingCommas: None
 
+# 说明: 由 Java 导入所需的组排序的前缀向量。一个组的前缀可以是另一个组的子集 - 总是匹配最长的前缀。在一个组中，
+#      导入按字典顺序排列。静态导入单独分组并遵循相同的分组规则。默认情况下，静态导入放在非静态导入之前，
+#      但此行为由另一个选项更改， SortJavaStaticImport.
+# 类型: std::vector<std::string>
+# 取值:
+# 例1:
+#    JavaImportGroups: ['com.example', 'com', 'org']
+JavaImportGroups: ['com.example', 'com', 'org']
+
 # 说明: JavaScript 字符串引号的样式。
-# 类型:
+# 类型: JavaScriptQuoteStyle
 # 取值:
 # JSQS_Leave  (文件配置项: Leave ) 保持原样。
 # JSQS_Single (文件配置项: Single) 使用单引号。
@@ -620,6 +759,11 @@ MaxEmptyLinesToKeep: 1
 # NI_All   (文件配置项: All  ) 缩进全部命名空间的内容。
 NamespaceIndentation: All
 
+# 说明: 用于打开命名空间块的宏向量。
+# 类型: std::vector<std::string>
+# 取值: 未知
+#NamespaceMacros
+
 # 说明: 适用协议(protocol conformance)列表项的"堆积占行(Bin-Pack)"方式。
 # 类型: BinPackStyle
 # 取值:
@@ -640,6 +784,11 @@ ObjCSpaceAfterProperty: false
 # 说明: 是否在 Objc 协议列表前留有空格。
 #       <protocol1, protocol2>的 < 前留空格。
 ObjCSpaceBeforeProtocolList: true
+
+# 说明: 用于缩进预处理器语句的列数。当设置为 -1（默认）时IndentWidth，也用于预处理器语句。
+# 类型: int
+# 取值:
+PPIndentWidth: -1
 
 # 说明: 有些情况下你会觉得怎么排版都达不到完美，只能各方面妥协一下（例如你限定了行宽，但注释想放宽松点允许超一些）。
 #       penalty 简单来说就是給每一次“违规”设定一个罚分, clang-format 帮你选择最终吃到的总罚分最少的策略。
@@ -669,128 +818,123 @@ PenaltyBreakTemplateDeclaration: 10
 #       行限制字符数有多种情况: ColumnLimit、...
 PenaltyExcessCharacter: 1000000
 
-# 说明: 指定函数返回类型单独一行的行为的罚分。
-PenaltyReturnTypeOnItsOwnLine: 200
-
 # 说明: 指定对每一个空格缩进字符的罚分(相对于前导的非空格列计算)。
 PenaltyIndentedWhitespace: 0
 
-# 说明: 指针(Pointer *)的对齐方式。
-# 类型: PointerAlignmentStyle
-# 取值:
-# PAS_Left   (文件配置项: Left  ) 指针向左紧贴类型。
-# PAS_Right  (文件配置项: Right ) 指针向右紧贴变量。
-# PAS_Middle (文件配置项: Middle) 指针居中两边留空。
-PointerAlignment: Left
+# 说明: 指定函数返回类型单独一行的行为的罚分。
+PenaltyReturnTypeOnItsOwnLine: 200
 
-# 说明: 预处理语句的缩进字符数。
-#       当设置为 -1(默认)时, IndentWidth 也用于预处理器语句。
-PPIndentWidth:   -1
-
-# 说明: 指定表示 原始字符串中支持的语言代码块 的格式。
-#       原始字串字面量(Raw String Literals) 及包含它的语言 代码块(code blocks), 示例:
-#       <prefix>R"<delimiter>(<raw_string_literals>)<delimiter>"
-#       注意!  < 和 > 实际是不存在的，这里只是为了能区分开各个字段。
-#       clang-format 通过以上 包含形式 匹配代码中的字符串，并将它们重新格式化为指定语言(Language)的样式。
-#       如果配置文件没有为指定语言定义样式，则使用"BasedOnStyle"的预定义样式。
-#       如果未找到“BasedOnStyle”, 则格式化为基于"llvm"的样式。
-#       匹配顺序 <Delimiters> 优先于 <Enclosing Functions>。
-# 类型: List of RawStringFormats
-# 取值:
-# <raw_string_literals>: 原始字符串字面常量。
-#                        这样的字符串被 <prefix>R"<delimiter>( 和 )<delimiter>" 的代码块(code blocks)包裹起来。
-#                        字符串里的字符不使用转义，即是说 \ 反斜杠是一个普通的字符。 " 双引号也是普通字符，而不是用来包裹字符串。
-#                        \n, \f, \t, \v, \s 等都被认为是两个字符。若要换行，那就换行，允许换行，只要被上面的代码块包裹即可。
-#                        定义这样的代码块，目的就是为了消除因'转义'带来的阅读困难。
-#              <prefix>: 前缀，用于声明字符串的字符类型，如: L, u8, u, U.
-#                        这里不需要用 <prefix> 来识别出 <Raw String Literals>，所以 clang-format 不给出这个类型。
-#                     R: 在 C++ 里与 "( )" 结合，作为包裹 <Raw String Literals> 的代码块(code blocks)。
-#          <Delimiters>: 是指定界符，定界符默认为空。
-#                        当字面常量中有普通字串如 "( 和 )" , 这与 包含形式 重复，需要自定义 Delimiter 来区分边界。
-#                        定界符是一个不包含 空格、 控制字符、 (、 )、 \ 5种字符的普通字串。长度限制16个字符.
-#                        "<delimiter> 及 <delimiter>" 不能再与字面常量中的字串有重复。
-#  <CanonicalDelimiter>: 规范定界符。如果指定了该值，在可能的情况下，同一语言的其他定界符将更新为规范值。
-#  <EnclosingFunctions>: 闭包函数, 即是函数里的函数。
-#            <Language>: 设定要格式成为哪种语言样式。
-#        <BasedOnStyle>: 指定语言格式失败后的备选样式。
-# 例1:
-# RawStringFormats:
-#   - Language: Cpp
-#       Delimiters:
-#         - cc
-#         - CC
-#         - cpp
-#         - Cpp
-#         - CPP
-#         - 'c++'
-#         - 'C++'
-#       CanonicalDelimiter: 'cc'
-#       BasedOnStyle: google
-#   - Language: TextProto
-#       Delimiters:
-#         - pb
-#         - PB
-#         - proto
-#         - PROTO
-#       EnclosingFunctions:
-#         - EqualsProto
-#         - EquivToProto
-#         - PARSE_PARTIAL_TEXT_PROTO
-#         - PARSE_TEST_PROTO
-#         - PARSE_TEXT_PROTO
-#         - ParseTextOrDie
-#         - ParseTextProtoOrDie
-#         - ParseTestProto
-#         - ParsePartialTestProto
-#       BasedOnStyle: llvm
-# 原始串: "(fruit\apple)(fruit\banana)(fruit\bromel)"
-# 转义串: \"(fruit\\apple)(fruit\\banana)(fruit\\bromel)\"
-# Regex: \"\(fruit\\apple\)\(fruit\\banana\)\(fruit\\bromel\)\"
-# 代码里: R"cc("(fruit\apple)(fruit\banana)(fruit\bromel)")cc"
-#         R"cpp("(fruit\apple)(fruit\banana)(fruit\bromel)")cpp"
-#         由于设定了 CanonicalDelimiter, cpp 最终会被转换为 cc.
-# 参阅: cpp11 "Raw string literals" 一节
-#       https://isocpp.org/wiki/faq/cpp11-language-misc
-#       https://en.cppreference.com/w/cpp/language/string_literal
-#       https://m.tw.llhlf.com/baike-C++11#新的字串字面值
-#       https://m.tw.llhlf.com/baike-字面常量_(C语言)
-#       https://www.codercto.com/a/67794.html
-#       闭包函数: c++11的闭包(lambda、function、bind)
-#       https://blog.csdn.net/u010246947/article/details/80046365
-#       Python闭包(Closure)详解
-#       https://zhuanlan.zhihu.com/p/453787908
-#       go语言里的TextProto函数: PARSE_TEXT_PROTO(R"(...)");
-#       https://blog.csdn.net/feihe0755/article/details/122864884
-RawStringFormats:
-  - Language:        Cpp
-    Delimiters:
-      - cc
-      - CC
-      - cpp
-      - Cpp
-      - CPP
-      - 'c++'
-      - 'C++'
-    CanonicalDelimiter: ''
-    BasedOnStyle:    google
-  - Language:        TextProto
-    Delimiters:
-      - pb
-      - PB
-      - proto
-      - PROTO
-    EnclosingFunctions:
-      - EqualsProto
-      - EquivToProto
-      - PARSE_PARTIAL_TEXT_PROTO
-      - PARSE_TEST_PROTO
-      - PARSE_TEXT_PROTO
-      - ParseTextOrDie
-      - ParseTextProtoOrDie
-      - ParseTestProto
-      - ParsePartialTestProto
-    CanonicalDelimiter: pb
-    BasedOnStyle:    google
+## 说明: 指针(Pointer *)的对齐方式。
+## 类型: PointerAlignmentStyle
+## 取值:
+## PAS_Left   (文件配置项: Left  ) 指针向左紧贴类型。
+## PAS_Right  (文件配置项: Right ) 指针向右紧贴变量。
+## PAS_Middle (文件配置项: Middle) 指针居中两边留空。
+#PointerAlignment: Right
+## 说明: 指定表示 原始字符串中支持的语言代码块 的格式。
+##       原始字串字面量(Raw String Literals) 及包含它的语言 代码块(code blocks), 示例:
+##       <prefix>R"<delimiter>(<raw_string_literals>)<delimiter>"
+##       注意!  < 和 > 实际是不存在的，这里只是为了能区分开各个字段。
+##       clang-format 通过以上 包含形式 匹配代码中的字符串，并将它们重新格式化为指定语言(Language)的样式。
+##       如果配置文件没有为指定语言定义样式，则使用"BasedOnStyle"的预定义样式。
+##       如果未找到“BasedOnStyle”, 则格式化为基于"llvm"的样式。
+##       匹配顺序 <Delimiters> 优先于 <Enclosing Functions>。
+## 类型: List of RawStringFormats
+## 取值:
+## <raw_string_literals>: 原始字符串字面常量。
+##                        这样的字符串被 <prefix>R"<delimiter>( 和 )<delimiter>" 的代码块(code blocks)包裹起来。
+##                        字符串里的字符不使用转义，即是说 \ 反斜杠是一个普通的字符。 " 双引号也是普通字符，而不是用来包裹字符串。
+##                        \n, \f, \t, \v, \s 等都被认为是两个字符。若要换行，那就换行，允许换行，只要被上面的代码块包裹即可。
+##                        定义这样的代码块，目的就是为了消除因'转义'带来的阅读困难。
+##              <prefix>: 前缀，用于声明字符串的字符类型，如: L, u8, u, U.
+##                        这里不需要用 <prefix> 来识别出 <Raw String Literals>，所以 clang-format 不给出这个类型。
+##                     R: 在 C++ 里与 "( )" 结合，作为包裹 <Raw String Literals> 的代码块(code blocks)。
+##          <Delimiters>: 是指定界符，定界符默认为空。
+##                        当字面常量中有普通字串如 "( 和 )" , 这与 包含形式 重复，需要自定义 Delimiter 来区分边界。
+##                        定界符是一个不包含 空格、 控制字符、 (、 )、 \ 5种字符的普通字串。长度限制16个字符.
+##                        "<delimiter> 及 <delimiter>" 不能再与字面常量中的字串有重复。
+##  <CanonicalDelimiter>: 规范定界符。如果指定了该值，在可能的情况下，同一语言的其他定界符将更新为规范值。
+##  <EnclosingFunctions>: 闭包函数, 即是函数里的函数。
+##            <Language>: 设定要格式成为哪种语言样式。
+##        <BasedOnStyle>: 指定语言格式失败后的备选样式。
+## 例1:
+## RawStringFormats:
+##   - Language: Cpp
+##       Delimiters:
+##         - cc
+##         - CC
+##         - cpp
+##         - Cpp
+##         - CPP
+##         - 'c++'
+##         - 'C++'
+##       CanonicalDelimiter: 'cc'
+##       BasedOnStyle: google
+##   - Language: TextProto
+##       Delimiters:
+##         - pb
+##         - PB
+##         - proto
+##         - PROTO
+##       EnclosingFunctions:
+##         - EqualsProto
+##         - EquivToProto
+##         - PARSE_PARTIAL_TEXT_PROTO
+##         - PARSE_TEST_PROTO
+##         - PARSE_TEXT_PROTO
+##         - ParseTextOrDie
+##         - ParseTextProtoOrDie
+##         - ParseTestProto
+##         - ParsePartialTestProto
+##       BasedOnStyle: llvm
+## 原始串: "(fruit\apple)(fruit\banana)(fruit\bromel)"
+## 转义串: \"(fruit\\apple)(fruit\\banana)(fruit\\bromel)\"
+## Regex: \"\(fruit\\apple\)\(fruit\\banana\)\(fruit\\bromel\)\"
+## 代码里: R"cc("(fruit\apple)(fruit\banana)(fruit\bromel)")cc"
+##         R"cpp("(fruit\apple)(fruit\banana)(fruit\bromel)")cpp"
+##         由于设定了 CanonicalDelimiter, cpp 最终会被转换为 cc.
+## 参阅: cpp11 "Raw string literals" 一节
+##       https://isocpp.org/wiki/faq/cpp11-language-misc
+##       https://en.cppreference.com/w/cpp/language/string_literal
+##       https://m.tw.llhlf.com/baike-C++11#新的字串字面值
+##       https://m.tw.llhlf.com/baike-字面常量_(C语言)
+##       https://www.codercto.com/a/67794.html
+##       闭包函数: c++11的闭包(lambda、function、bind)
+##       https://blog.csdn.net/u010246947/article/details/80046365
+##       Python闭包(Closure)详解
+##       https://zhuanlan.zhihu.com/p/453787908
+##       go语言里的TextProto函数: PARSE_TEXT_PROTO(R"(...)");
+##       https://blog.csdn.net/feihe0755/article/details/122864884
+#RawStringFormats:
+#  - Language:        Cpp
+#    Delimiters:
+#      - cc
+#      - CC
+#      - cpp
+#      - Cpp
+#      - CPP
+#      - 'c++'
+#      - 'C++'
+#    CanonicalDelimiter: ''
+#    BasedOnStyle:    google
+#  - Language:        TextProto
+#    Delimiters:
+#      - pb
+#      - PB
+#      - proto
+#      - PROTO
+#    EnclosingFunctions:
+#      - EqualsProto
+#      - EquivToProto
+#      - PARSE_PARTIAL_TEXT_PROTO
+#      - PARSE_TEST_PROTO
+#      - PARSE_TEXT_PROTO
+#      - ParseTextOrDie
+#      - ParseTextProtoOrDie
+#      - ParseTestProto
+#      - ParsePartialTestProto
+#    CanonicalDelimiter: pb
+#    BasedOnStyle:    google
 
 # 说明: 引用(Reference &)的对齐方式。
 # 类型: ReferenceAlignmentStyle
@@ -836,6 +980,15 @@ SpaceAfterLogicalNot: false
 # 说明: 是否在模板 (Template) 关键字之后留有一个空格。
 SpaceAfterTemplateKeyword: true
 
+# 说明: 在哪些情况下在指针(*)限定符之前或之后留有一个空格。
+# 类型: SpaceAroundPointerQualifiersStyle
+# 取值:
+# SAPQ_Default (文件配置项: Default) 使用 PointerAlignment。
+# SAPQ_Before  (文件配置项: Before ) 确保指针前面有空格。
+# SAPQ_After   (文件配置项: After  ) 确保指针后面有空格。
+# SAPQ_Both    (文件配置项: Both   ) 确保指针前后有空格。
+SpaceAroundPointerQualifiers: Default
+
 # 说明: 赋值操作符前面是否有空格。
 SpaceBeforeAssignmentOperators: true
 
@@ -862,23 +1015,18 @@ SpaceBeforeInheritanceColon: true
 # SBPO_Custom                               (文件配置项: Custom                              ) 由 SpaceBeforeParensOptions 决定。
 SpaceBeforeParens: ControlStatements
 
-# 说明: 在哪些情况下在指针(*)限定符之前或之后留有一个空格。
-# 类型: SpaceAroundPointerQualifiersStyle
-# 取值:
-# SAPQ_Default (文件配置项: Default) 使用 PointerAlignment。
-# SAPQ_Before  (文件配置项: Before ) 确保指针前面有空格。
-# SAPQ_After   (文件配置项: After  ) 确保指针后面有空格。
-# SAPQ_Both    (文件配置项: Both   ) 确保指针前后有空格。
-SpaceAroundPointerQualifiers: Default
-
 # 说明: 范围形式的 for 之后左圆括号之前是否有空格。
 SpaceBeforeRangeBasedForLoopColon: true
+
+# 说明: 一个方括号 [ 前是否有空格。
+#       Lambdas 表达式不受影响。
+SpaceBeforeSquareBrackets: false
 
 # 说明: 是否在空块 {} 之中留有空格。
 SpaceInEmptyBlock: false
 
 # 说明: 是否在空块 () 之中留有空格。
-SpaceInEmptyParentheses: true
+SpaceInEmptyParentheses: false
 
 # 说明: 是否在注释符 // 之后注释内容之前有空格。
 SpacesBeforeTrailingComments: 2
@@ -891,6 +1039,12 @@ SpacesBeforeTrailingComments: 2
 # SIAS_Never  (文件配置项: Never ) 移除空格。
 SpacesInAngles:  Never
 
+# 说明: 是否在 C 风格的类型强制转换的圆括号中留有空格。
+# 例1:
+# true:                                  false:
+# x = ( int32 )y                 vs.     x = (int32)y
+SpacesInCStyleCastParentheses: false
+
 # 说明: 是否在条件语句的圆括号里留有空格。
 #       形式如: if( ... ), for( ... ), switch( ... ), while( ... )
 SpacesInConditionalStatement: false
@@ -900,13 +1054,7 @@ SpacesInConditionalStatement: false
 # true:                                  false:
 # var arr = [ 1, 2, 3 ];         vs.     var arr = [1, 2, 3];
 # f({a : 1, b : 2, c : 3});              f({a: 1, b: 2, c: 3});
-SpacesInContainerLiterals: true
-
-# 说明: 是否在 C 风格的类型强制转换的圆括号中留有空格。
-# 例1:
-# true:                                  false:
-# x = ( int32 )y                 vs.     x = (int32)y
-SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
 
 # 说明: 行注释开头允许有多少个空格。
 #       要禁用最大值，请将其设置为 -1, 除此之外，最大值优先于最小值。
@@ -922,19 +1070,6 @@ SpacesInParentheses: false
 # 说明: 是否在 [ 之前 和 ] 之后插入空格。
 #       没有参数的 Lambdas 表达式和未指定大小的数组声明不受影响。
 SpacesInSquareBrackets: false
-
-# 说明: 一个方括号 [ 前是否有空格。
-#       Lambdas 表达式不受影响。
-SpaceBeforeSquareBrackets: false
-
-# 说明: 位域分隔符(:)的空格填补方式。
-# 类型:
-# 取值:
-# BFCS_Both   (文件配置项: Both  ) 分隔符左右各保留一个空格。
-# BFCS_None   (文件配置项: None  ) 分隔符左右都去除空格。设置 AlignConsecutiveBitFields 项时除外。
-# BFCS_Before (文件配置项: Before) 分隔符左边保留一个空格。
-# BFCS_After  (文件配置项: After ) 分隔符右边保留一个空格。设置 AlignConsecutiveBitFields 项时除外。
-BitFieldColonSpacing: Both
 
 # 说明: 解析和格式化与此标准兼容的 C++ 结构。
 # 类型: LanguageStandard
@@ -962,19 +1097,20 @@ StatementMacros:
 # 说明: 制表符占用的列数。
 TabWidth:        8
 
-# 说明: 使用 \n 替换 \r\n 作为换行符。
-#       作为 DeriveLineEnding 失效时的后备选项。
-UseCRLF:         false
+# 说明: 应该被解释为类型声明而不是函数调用的宏向量。
+# 类型: std::vector<std::string>
+# 取值:
+TypenameMacros: ['STACK_OF', 'LIST', LIST_ENTRY]
 
 # 说明: 在结果文件中使用制表符的方式。
-# 类型:
+# 类型: UseTabStyle
 # 取值:
 # UT_Never                         (文件配置项: Never                        ) 从不使用Tab, 使用空格。
 # UT_ForIndentation                (文件配置项: ForIndentation               ) 仅将制表符用于缩进。
 # UT_ForContinuationAndIndentation (文件配置项: ForContinuationAndIndentation) 用制表符填充所有前导空白，并使用空格进行一行内出现的对齐(例如，连续的赋值和声明)。
 # UT_AlignWithSpaces               (文件配置项: AlignWithSpaces              ) 使用制表符进行续行和缩进，使用空格进行对齐。
 # UT_Always                        (文件配置项: Always                       ) 当我们需要填充至少从一个制表位到下一个制表位的空白时，请使用制表符。
-UseTab:          ForIndentation
+UseTab: AlignWithSpaces
 
 # 说明: 指明对空格敏感且不应被更改的宏的数组。
 # 例1:
@@ -984,6 +1120,3 @@ WhitespaceSensitiveMacros:
   - BOOST_PP_STRINGIZE
   - NS_SWIFT_NAME
   - CF_SWIFT_NAME
-...
-
-
