@@ -1,6 +1,10 @@
 ## clang-format version 13.0.1
 ## https://releases.llvm.org/13.0.0/tools/clang/docs/ClangFormatStyleOptions.html
 
+## // clang-format off 或者 /* clang-format off */
+## // clang-format on  或者 /* clang-format on */
+## 注释写在代码里，可以禁用两行之间的代码格式化
+
 #################################################
 # 类似于Linux Kernel 风格的风格：
 #
@@ -13,6 +17,16 @@ IndentCaseLabels: false
 # follow is custom
 UseTab: AlignWithSpaces
 ColumnLimit: 110
+AllowShortFunctionsOnASingleLine: Empty
+AlignArrayOfStructures: Left
+SortIncludes:    Never
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveBitFields: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignEscapedNewlines: Right
+ContinuationIndentWidth: 8
+AllowShortEnumsOnASingleLine: false
 
 
 ##################################################
@@ -812,7 +826,7 @@ ColumnLimit: 110
 #PenaltyBreakFirstLessLess: 120
 #
 ## 说明: 因一行字符串(String)的某一个字面量(Literal)发生折行而换行时的罚分。
-#PenaltyBreakString: 1000
+#PenaltyBreakString: 10000
 #
 ## 说明: 因在模板(Template)声明后发生折行而换行时的罚分。
 #PenaltyBreakTemplateDeclaration: 10
